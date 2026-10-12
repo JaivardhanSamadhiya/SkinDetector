@@ -10,6 +10,14 @@ Latest frontend checks verified October 12, 2026 (America/Los_Angeles). Earlier 
 
 ## Frontend
 
+### Priced options and result-aware education — October 12
+
+- `npm run test:unit`: **119 passed**, including 33 new result-guidance checks, nine offer/selection checks, and one additional routine-choice check. Guidance validates the response and supported task; uncertain, rejected, malformed, or mismatched outputs never receive label-specific care. Product selections cannot bypass ingredient exclusions or owned-product reuse. Prices are exact integer cents, with HTTPS provenance and explicit missing-price refusal.
+- `npm run typecheck` and `npm run build`: **passed**; 18 pages exported and 16 static segment aliases prepared. No model or backend inputs changed.
+- `npm run test:e2e` against the production export: **18 passed (39.6 seconds)**. Real inference reaches result-aware education and automatically displayed priced choices. Tests cover shopping URLs/package sizes, subtotal changes, preference resets, exclusions, quote-form synchronization, a real uncertain sample, unsupported images, mobile layouts, deletion, and all existing model/upload checks.
+- `node scripts/capture-preview.mjs`: **passed**. Real seven-score PyTorch parity, result-aware guidance, selected rich-texture example, documented item subtotal, and **zero application image POSTs** were verified. Twelve desktop/mobile captures include focused price-option views; the product comparison was visually reviewed at both widths. Chromium's offscreen fixed skip-link artifact is hidden only in the element captures while unfocused; keyboard navigation remains independently tested.
+- The six retail listings are manually verified **12 October 2026 US-dollar price snapshots** for exact package sizes, not a live price/stock feed or an available checkout. Selection totals exclude tax and delivery. This update provides educational context, not image-based skincare treatment, and does not expand the classifier to selfies, acne, rosacea, or eczema.
+
 ### Retailer direction and standalone routine update — October 12
 
 - `npm run test:unit`: **76 passed**, including 21 new budget tests. Integer-cent calculations cover required quotes/fees, explicit zero amounts, reuse of owned basics, missing matches, invalid decimal formats, limits, and supported currencies.

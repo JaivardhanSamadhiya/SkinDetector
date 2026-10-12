@@ -31,12 +31,28 @@ test("survey carries into real results, displays a combination, and edits withou
   await expect(page.locator('[data-routine-step="cleanser"]')).toContainText("Keep your existing cleanser");
   await expect(page.locator('[data-routine-step="cleanser"]').getByRole("link")).toHaveCount(0);
   await expect(page.locator('[data-routine-step="moisturizer"]')).toContainText("Vanicream Moisturizing Cream");
+  await expect(page.getByRole("radio", { name: "Choose Vanicream Moisturizing Cream", exact: true })).toBeChecked();
+  await expect(page.getByTestId("result-care-guidance")).toHaveAttribute("data-label-id", "nv");
+  await expect(page.getByTestId("result-care-guidance")).toContainText("cannot establish that a spot is benign");
+  await expect(page.getByTestId("routine-subtotal")).toContainText("$28.67");
+  const cream = page.locator('[data-product-option="vanicream-moisturizing-cream"]');
+  await expect(cream).toContainText("$13.19");
+  await expect(cream).toContainText("16 oz jar");
+  await expect(cream.getByRole("link", { name: "View at Target", exact: true })).toHaveAttribute("href", "https://www.target.com/p/-/A-14768513");
+  await page.getByRole("radio", { name: "Choose Vanicream Daily Facial Moisturizer", exact: true }).check();
+  await expect(page.getByTestId("routine-subtotal")).toContainText("$29.47");
   await expect(page.getByText("For your everyday routine, independent of the lesion result.",{exact:true})).toBeVisible();
   await expect(page.locator(".score-row")).toHaveCount(7);
   const beforeEdit = modelRequests;
   await page.getByRole("button",{name:"Adjust preferences",exact:true}).click();
   await page.getByLabel("Preferred moisturizer feel").selectOption("light");
   await expect(page.locator('[data-routine-step="moisturizer"]')).toContainText("Vanicream Daily Facial Moisturizer");
+  await expect(page.getByRole("radio", { name: "Choose Vanicream Daily Facial Moisturizer", exact: true })).toBeChecked();
+  await page.getByRole("checkbox", { name: "Niacinamide", exact: true }).uncheck();
+  await page.getByRole("checkbox", { name: "Cleanser", exact: true }).uncheck();
+  await expect(page.getByRole("radio", { name: "Choose CeraVe Foaming Facial Cleanser", exact: true })).toBeVisible();
+  await page.getByRole("checkbox", { name: "Niacinamide", exact: true }).check();
+  await expect(page.getByRole("radio", { name: "Choose CeraVe Foaming Facial Cleanser", exact: true })).toHaveCount(0);
   expect(modelRequests).toBe(beforeEdit);
   expect(posts).toEqual([]);
   await page.getByRole("link",{name:"Delete image and result",exact:true}).click();
@@ -53,6 +69,24 @@ test("an unsupported image still offers independent general care without pretend
   await expect(page.locator(".score-row")).toHaveCount(0);
   await expect(page.getByRole("heading",{name:"Your skincare starting point.",exact:true})).toBeVisible();
   await expect(page.getByText("For your everyday routine, independent of the lesion result.",{exact:true})).toBeVisible();
+  await expect(page.getByTestId("result-care-guidance")).toHaveAttribute("data-label-id", "none");
+  await expect(page.getByTestId("result-care-guidance")).toContainText("cannot identify acne, rosacea, eczema");
+  await expect(page.getByTestId("routine-subtotal")).toContainText("$39.46");
+});
+
+test("a real uncertain model output never supplies label-specific care or treatment products", async ({ page }) => {
+  await page.goto("/analysis/");
+  await page.getByLabel("Choose a skin image", { exact:true }).setInputFiles(join("public/demo", manifest.samples[2].filename));
+  await page.getByRole("radio", { name:"Dermoscopic image", exact:true }).check();
+  await page.getByRole("checkbox", { name:consent, exact:true }).check();
+  await page.getByRole("button", { name:"Analyze image", exact:true }).click();
+  await expect(page).toHaveURL(/\/results\/$/);
+  await expect(page.getByRole("heading", { name:"Unable to assess reliably.", exact:true })).toBeVisible();
+  await expect(page.getByTestId("result-care-guidance")).toHaveAttribute("data-label-id", "none");
+  await expect(page.getByTestId("result-care-guidance")).toContainText("uncertainty rule rejected");
+  await expect(page.getByTestId("result-care-guidance")).not.toContainText("highest-ranked dataset category");
+  await expect(page.locator(".score-row")).toHaveCount(7);
+  await expect(page.getByTestId("routine-subtotal")).toContainText("$39.46");
 });
 
 test("mobile survey preserves owned basics and refresh erases the session", async ({ page }) => {

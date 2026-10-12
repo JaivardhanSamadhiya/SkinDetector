@@ -1,5 +1,23 @@
 import { test, expect } from "@playwright/test";
 
+test("priced choices update the combination and manual quote form together without carrying old quotes", async ({ page }) => {
+  await page.goto("/routine/");
+  await expect(page.getByTestId("routine-subtotal")).toContainText("$39.46");
+  const budget = page.getByTestId("routine-budget");
+  await budget.getByRole("textbox", { name: "Price for Vanicream Gentle Facial Cleanser", exact: true }).fill("9.99");
+  await page.getByRole("radio", { name: "Choose CeraVe Foaming Facial Cleanser", exact: true }).check();
+  await expect(page.getByTestId("routine-subtotal")).toContainText("$43.26");
+  await expect(budget.getByRole("textbox", { name: "Price for Vanicream Gentle Facial Cleanser", exact: true })).toHaveCount(0);
+  await expect(budget.getByRole("textbox", { name: "Price for CeraVe Foaming Facial Cleanser", exact: true })).toHaveValue("");
+  await page.getByRole("checkbox", { name: "Niacinamide", exact: true }).check();
+  await expect(page.getByRole("radio", { name: "Choose CeraVe Foaming Facial Cleanser", exact: true })).toHaveCount(0);
+  await expect(page.getByRole("radio", { name: "Choose Vanicream Gentle Facial Cleanser", exact: true })).toBeChecked();
+  await expect(page.getByTestId("routine-subtotal")).toContainText("$39.46");
+  await page.getByRole("button", { name: "Clear this session", exact: true }).click();
+  await expect(page.getByRole("checkbox", { name: "Niacinamide", exact: true })).not.toBeChecked();
+  await expect(page.getByRole("radio", { name: "Choose Vanicream Gentle Facial Cleanser", exact: true })).toBeChecked();
+});
+
 test("standalone routine planner checks real entered quotes, reuses basics, and clears session data without model access", async ({ page }) => {
   const unexpectedRequests: string[] = [];
   page.on("request", request => {

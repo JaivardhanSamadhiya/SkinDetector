@@ -4,6 +4,7 @@ import {
   type SkincarePreferences,
   type SkincareStepId,
 } from "@/lib/skincare-preferences";
+import { getProductOffer, type ProductOffer } from "@/lib/product-offers";
 
 export type SkincareProduct = {
   id: string;
@@ -13,6 +14,7 @@ export type SkincareProduct = {
   description: string;
   ingredientNote: string;
   sourceDate: string;
+  offer?: ProductOffer;
 };
 
 type CatalogProduct = SkincareProduct & {
@@ -47,7 +49,8 @@ const NO_SELECTED_INGREDIENTS = { fragrance: false, niacinamide: false, oat: fal
 /**
  * A small educational catalog, not a store or a clinical formulary.
  * Manufacturer facts are documented in docs/SKINCARE_RECOMMENDATIONS.md.
- * No price, availability, review score, affiliate attribution or efficacy rank.
+ * Dated retail listings are separate from manufacturer ingredient facts.
+ * No live availability, review score, affiliate attribution or efficacy rank.
  */
 export const SKINCARE_PRODUCT_CATALOG: readonly CatalogProduct[] = [
   {
@@ -151,7 +154,7 @@ const REFERENCES: SkincareRoutine["references"] = [
 
 function publicProduct(product: CatalogProduct): SkincareProduct {
   const { step: _step, texture: _texture, contains: _contains, botanicalIngredients: _botanical, ...facts } = product;
-  return facts;
+  return { ...facts, offer: getProductOffer(product.id) };
 }
 
 function orderedCandidates(step: SkincareStepId, profile: SkincarePreferences): CatalogProduct[] {
@@ -228,7 +231,7 @@ export function buildSkincareRoutine(preferences: SkincarePreferences): Skincare
       reason,
       reuseOwned,
       product,
-      alternatives: reuseOwned || profile.budget === "minimal" ? [] : candidates.slice(1, 2).map(publicProduct),
+      alternatives: reuseOwned ? [] : candidates.slice(1, 2).map(publicProduct),
     };
   });
   return {
@@ -241,7 +244,7 @@ export function buildSkincareRoutine(preferences: SkincarePreferences): Skincare
       "Product combinations are educational examples, not a clinically validated best combination. A larger budget does not add more treatment steps or imply better outcomes.",
       "Ingredient filters cover fragrance, niacinamide and oat only. They do not guarantee allergy safety; if you have other allergies or unexplained reactions, ask a qualified professional to review the full label before choosing a product.",
       "Test a new product on a small area first, following AAD guidance for seven to ten days and the product's directions. Stop if a reaction develops; get professional help for severe or persistent reactions.",
-      "Examples use US manufacturer information checked on 11 October 2026. Formulations and local labels can change; verify your package. Prices, stock and regional availability are not checked. No affiliate links or checkout are used.",
+      "Examples use dated US manufacturer ingredient information. Retail prices are dated US-dollar snapshots for the stated sizes, excluding tax and delivery; prices, sellers, stock and local formulas can change. Recheck the linked listing and your package. No affiliate links or checkout are used.",
       profile.budget === "minimal"
         ? "The budget choice minimizes extra products and avoids duplicate purchases; it does not calculate the cheapest basket. Compare current local prices and sizes before buying."
         : "Alternatives are optional texture or formulation examples, not add-on purchases. Compare current local costs if you choose to buy.",

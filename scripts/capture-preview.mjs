@@ -70,7 +70,13 @@ try {
   await page.getByRole('heading', { name: 'Model ranking', exact: true }).waitFor();
   await page.getByRole('heading', { name: 'Your skincare starting point.', exact: true }).waitFor();
   if (await page.locator('[data-routine-step]').count() !== 3) throw new Error('The personalized product combination was not displayed automatically.');
-  if (!(await page.locator('[data-routine-step="moisturizer"]').textContent()).includes('Vanicream Moisturizing Cream')) throw new Error('The saved rich-texture preference did not reach the routine.');
+  if (!(await page.getByRole('radio', { name: 'Choose Vanicream Moisturizing Cream', exact: true }).isChecked())) throw new Error('The saved rich-texture preference did not reach the selected routine.');
+  if (!(await page.getByTestId('routine-subtotal').textContent()).includes('$38.66')) throw new Error('The selected product price subtotal did not match the documented snapshots.');
+  if (await page.getByTestId('result-care-guidance').getAttribute('data-label-id') !== 'nv') throw new Error('The valid model result did not reach its educational care guidance.');
+  // Chromium element captures can paint a fixed, offscreen skip link inside
+  // a tall clip. Keep its actual unfocused visibility during these captures.
+  const optionCaptureStyle = '.skip-link:not(:focus) { visibility: hidden !important; }';
+  await page.locator('[data-routine-step="moisturizer"]').screenshot({ path: `${destination}/${prefix}priced-options.png`, style: optionCaptureStyle });
   if (!modelDownloaded || posts.length) throw new Error(`Expected genuine browser inference without an image POST: ${JSON.stringify({ model_downloaded: modelDownloaded, post_paths: posts })}`);
   const parity = JSON.parse(await readFile('models/browser_parity.json', 'utf8'));
   const expected = parity.samples.find(s => s.filename === sample.path.split('/').pop());
@@ -83,6 +89,7 @@ try {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.evaluate(() => { document.activeElement?.blur(); window.scrollTo({ top: 0, behavior: 'instant' }); });
   await page.screenshot({ path: `${destination}/${prefix}mobile-results.png`, fullPage: true });
+  await page.locator('[data-routine-step="moisturizer"]').screenshot({ path: `${destination}/${prefix}mobile-priced-options.png`, style: optionCaptureStyle });
   if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)) throw new Error('Mobile results overflow horizontally.');
   await page.goto(new URL('/', baseURL).href);
   await page.evaluate(() => document.fonts.ready);
@@ -91,5 +98,5 @@ try {
   await page.goto(new URL('/analysis/', baseURL).href);
   await page.screenshot({ path: `${destination}/${prefix}mobile-survey.png`, fullPage: true });
   if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)) throw new Error('Mobile survey overflows horizontally.');
-  console.log(JSON.stringify({ origin, real_inference: true, browser_pytorch_score_parity: true, personalized_routine: true, image_posts: posts.length, hosting_security_posts: hostingSecurityPosts, desktop_mobile_screenshots: 10 }));
+  console.log(JSON.stringify({ origin, real_inference: true, browser_pytorch_score_parity: true, personalized_routine: true, priced_product_options: true, result_aware_guidance: true, image_posts: posts.length, hosting_security_posts: hostingSecurityPosts, desktop_mobile_screenshots: 12 }));
 } finally { await browser.close(); }

@@ -5,10 +5,11 @@ import { useAnalysis } from "@/components/analysis-provider";
 import { buildSkincareRoutine, type SkincareRoutineStep } from "@/lib/skincare-routine";
 import { calculateRoutineBudget, formatBudgetMoney, ROUTINE_CURRENCIES, type RoutineCurrency } from "@/lib/routine-budget";
 import styles from "@/components/routine-planner.module.css";
+import { selectRoutineProducts } from "@/lib/routine-selection";
 
 export function RoutineBudget() {
-  const { preferences } = useAnalysis();
-  const steps = buildSkincareRoutine(preferences).steps;
+  const { preferences, productChoices } = useAnalysis();
+  const steps = selectRoutineProducts(buildSkincareRoutine(preferences), productChoices).steps;
   const [currency, setCurrency] = useState<RoutineCurrency>("USD");
   const signature = steps.map(step => step.reuseOwned ? `${step.id}:reuse` : `${step.id}:${step.product?.id ?? "unmatched"}`).join("|");
   return <section className={styles.budget} aria-labelledby="budget-title" data-testid="routine-budget">

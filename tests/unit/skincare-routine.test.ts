@@ -80,13 +80,23 @@ describe("survey-driven educational skin care", () => {
     }
   });
 
-  it("fills only unowned steps and keeps minimal-budget alternatives empty", () => {
+  it("fills only unowned steps and offers comparisons without adding purchase steps", () => {
     const routine = buildSkincareRoutine(profile({ owned: ["cleanser", "moisturizer"] }));
     expect(routine.steps[0].product).toBeNull();
     expect(routine.steps[1].product).toBeNull();
     expect(routine.steps[2].product?.id).toBe("blue-lizard-sensitive-spf50");
-    expect(routine.steps.every((step) => step.alternatives.length === 0)).toBe(true);
+    expect(routine.steps.filter(step => step.product)).toHaveLength(1);
     expect(routine.notes.join(" ")).toContain("does not calculate the cheapest basket");
+  });
+
+  it("shows alternative examples at either purchasing priority while keeping one selected item per step", () => {
+    for (const budget of ["minimal", "flexible"] as const) {
+      const routine = buildSkincareRoutine(profile({ budget }));
+      expect(routine.steps[0].alternatives).toHaveLength(1);
+      expect(routine.steps[1].alternatives).toHaveLength(1);
+      expect(routine.steps[2].alternatives).toHaveLength(0);
+      expect(routine.steps.filter(step => step.product)).toHaveLength(3);
+    }
   });
 
   it("never accepts diagnosis or model output as a recommendation input", () => {
