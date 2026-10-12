@@ -46,7 +46,7 @@ try {
     else posts.push(path);
   });
   page.on('response', response => { if (new URL(response.url()).pathname.endsWith('/model/model.onnx') && response.ok()) modelDownloaded = true; });
-  for (const [name, route] of [['landing', '/'], ['analysis', '/analysis/'], ['research', '/research/'], ['startup', '/startup/']]) {
+  for (const [name, route] of [['landing', '/'], ['analysis', '/analysis/'], ['research', '/research/'], ['startup', '/startup/'], ['routine', '/routine/']]) {
     await page.goto(new URL(route, baseURL).href);
     await page.evaluate(() => document.fonts.ready);
     if (name === 'research') await page.locator('.metric-card').first().waitFor();
@@ -91,5 +91,5 @@ try {
   await page.goto(new URL('/analysis/', baseURL).href);
   await page.screenshot({ path: `${destination}/${prefix}mobile-survey.png`, fullPage: true });
   if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)) throw new Error('Mobile survey overflows horizontally.');
-  console.log(JSON.stringify({ origin, real_inference: true, browser_pytorch_score_parity: true, personalized_routine: true, image_posts: posts.length, hosting_security_posts: hostingSecurityPosts, desktop_mobile_screenshots: 9 }));
+  console.log(JSON.stringify({ origin, real_inference: true, browser_pytorch_score_parity: true, personalized_routine: true, image_posts: posts.length, hosting_security_posts: hostingSecurityPosts, desktop_mobile_screenshots: 10 }));
 } finally { await browser.close(); }

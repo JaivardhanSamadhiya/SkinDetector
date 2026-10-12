@@ -4,7 +4,7 @@ An education-first skin health website and reproducible dermoscopic image-classi
 
 The original January 2024 prototype and Git history are preserved in `legacy/`. The new repository is [SkinDetector](https://github.com/JaivardhanSamadhiya/SkinDetector); the original is [SkinSnap](https://github.com/JaivardhanSamadhiya/SkinSnap). [Read the audit and reuse disclosure](docs/REPOSITORY_AUDIT.md).
 
-**Private demo:** [Open SkinSnap](https://skinsnap-research-lab.jauntyghost8.chatgpt.site). The hosting gate permits the owner; no audience expansion was made. The guided-care update passed **55 unit tests, 14 browser tests, production build and typecheck**. Real browser inference matched executed PyTorch scores and the survey produced its product combination with zero application image POSTs. The unchanged model/backend previously passed 67 backend checks and held-out reproduction; see the [validation record](docs/VALIDATION.md) for deployment and Linux CI evidence.
+**Private demo:** [Open SkinSnap](https://skinsnap-research-lab.jauntyghost8.chatgpt.site). The hosting gate permits the owner; no audience expansion was made. The retailer-direction update passed **76 unit tests, 16 browser tests, production build and typecheck**. Real browser inference matched executed PyTorch scores, and the independent routine planner checked entered prices without model or image access. The unchanged model/backend previously passed 67 backend checks and held-out reproduction; see the [validation record](docs/VALIDATION.md) for deployment and Linux CI evidence.
 
 ## Implemented application
 
@@ -16,6 +16,7 @@ The original January 2024 prototype and Git history are preserved in `legacy/`. 
 - Session-only selected images/results with a deletion action; no image history database, retail checkout or invented purchase confirmations.
 - A short optional preferences survey and an automatically displayed morning/evening routine with a three-product combination, manufacturer-verified examples, ingredient filters and reuse of owned basics. Personalization uses self-reported preferences, never a lesion label; no clinical suitability or exact-price optimization is claimed. [Recommendation rules and sources](docs/SKINCARE_RECOMMENDATIONS.md).
 - A startup presentation with an initial buyer, proposed revenue model, pilot targets and commercialization gates, all explicitly separated from measured traction.
+- A standalone `/routine/` flow for shoppers, requiring no photo or model execution, with a manual budget checker for missing basics, tax and delivery. All amounts are entered by the user; live prices, stock, exact-budget optimization and checkout are not implemented.
 - Evidence-linked educational content, measured-report charts, dataset/model provenance, deployment templates and automated tests.
 
 The supplied trained artifact has executed successfully in PyTorch and browser ONNX. Browser outputs for all three licensed demo images matched executed PyTorch scores within display rounding. Read the [validation record](docs/VALIDATION.md) for the tested workflow and boundaries. If the installed manifest/weights are unavailable, the app reports that no prediction was generated.
@@ -87,7 +88,7 @@ Unit tests cover file validation, bounded decoding, preprocessing/quality and ou
 
 [Deployment instructions](docs/DEPLOYMENT.md) cover Vercel static export, Docker, local compose and the optional Render API blueprint. [Security/privacy](docs/SECURITY_AND_PRIVACY.md) describes local versus server processing, transient buffers and operational logging. Do not claim a public deployment exists until its live upload flow has been verified.
 
-[The 90-second demo script](docs/DEMO_SCRIPT.md) uses actual model output, including the survey, routine, errors and uncertainty. Current submission preparation focuses on **UnivaBio and Next Founders**; Banana Hacks is archived after the missed deadline. [Competition notes](docs/COMPETITION_NOTES.md) record event-specific rules, conflicting UnivaBio deadlines and unresolved prior-work/cross-submission questions. [Startup notes](docs/STARTUP_POSITIONING.md) describe the proposed nonclinical education business, validation targets and unresolved commercial model rights without invented traction.
+[The 90-second demo script](docs/DEMO_SCRIPT.md) uses actual model output, including the survey, routine, errors and uncertainty. Current submission preparation focuses on **UnivaBio and Next Founders**; Banana Hacks is archived after the missed deadline. [Competition notes](docs/COMPETITION_NOTES.md) record event-specific rules, conflicting UnivaBio deadlines and unresolved prior-work/cross-submission questions. [Startup notes](docs/STARTUP_POSITIONING.md) describe the replacement retailer-funded routine-planning business, competitor evidence, validation targets and unresolved commercial model rights without invented traction. Shoppers would use a future integrated tool free; a proposed $49/store/month merchant plan is a test assumption, unavailable for purchase. No store partnership or conversion benefit has been established.
 
 ## Remaining limitations
 

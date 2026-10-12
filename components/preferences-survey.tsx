@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useId, useState } from "react";
 import { Check, SlidersHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAnalysis } from "@/components/analysis-provider";
@@ -8,14 +8,15 @@ import styles from "@/components/skincare-routine.module.css";
 
 export function PreferencesSurvey({ compact = false, disabled = false, editing = false }: { compact?: boolean; disabled?: boolean; editing?: boolean }) {
   const { preferences, hasPreferences, setPreferences, resetPreferences } = useAnalysis();
+  const formId = useId();
   const [expanded, setExpanded] = useState(!compact);
   function update<K extends keyof SkincarePreferences>(key: K, value: SkincarePreferences[K]) { setPreferences({ ...preferences, [key]: value }); }
   function toggle<K extends "avoid" | "owned">(key: K, value: SkincarePreferences[K][number]) {
     const current: string[] = preferences[key];
     update(key, (current.includes(value) ? current.filter(item => item !== value) : [...current, value]) as SkincarePreferences[K]);
   }
-  return <section className={styles.survey} aria-labelledby={compact ? "edit-preferences-title" : "preferences-title"}>
-    <div className={styles.heading}><div><span className="eyebrow">{compact || editing ? "YOUR PREFERENCES" : "STEP 01 · A 30-SECOND START"}</span><h2 id={compact ? "edit-preferences-title" : "preferences-title"}>{compact || editing ? "Adjust your routine" : "A routine that fits your day."}</h2></div><SlidersHorizontal size={24}/></div>
+  return <section className={styles.survey} aria-labelledby={`${formId}-title`}>
+    <div className={styles.heading}><div><span className="eyebrow">{compact || editing ? "YOUR PREFERENCES" : "STEP 01 · A 30-SECOND START"}</span><h2 id={`${formId}-title`}>{compact || editing ? "Adjust your routine" : "A routine that fits your day."}</h2></div><SlidersHorizontal size={24}/></div>
     <p>Tell us about comfort, ingredients, and purchases. These answers shape general care suggestions; the image model does not choose treatments.</p>
     {!expanded ? <div className={styles.summary}><span><Check size={17}/>{hasPreferences ? "Preferences saved for this session" : "Using general care basics"}</span><Button variant="outline" size="sm" onClick={() => setExpanded(true)} disabled={disabled}>Edit preferences</Button></div> : <>
       <fieldset className={styles.surveyFields} disabled={disabled}><legend className="visually-hidden">Skincare preferences</legend>
@@ -28,6 +29,6 @@ export function PreferencesSurvey({ compact = false, disabled = false, editing =
       </fieldset>
       <div className={styles.actions}><Button size="sm" disabled={disabled} onClick={() => { setPreferences(preferences); setExpanded(false); }}>Save preferences <Check size={16}/></Button><Button variant="ghost" size="sm" disabled={disabled} onClick={() => { resetPreferences(); setExpanded(false); }}>Skip · use general basics</Button></div>
     </>}
-    <p className={styles.privacy}>Optional, held only in this page session, and never sent to the inference API. Deleting your image clears these preferences too.</p>
+    <p className={styles.privacy}>Optional and held only in this page session. Clearing the session or deleting an image clears these preferences; no survey answers are sent to the inference API.</p>
   </section>;
 }

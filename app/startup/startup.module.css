@@ -24,6 +24,8 @@
 .featureGrid svg { color: #447a68; }
 .featureGrid h3, .plan h3, .milestones h3 { font-size: 19px; color: #2c4c40; margin: 17px 0 13px; }
 .quietNote { font-size: 12px; color: #6b786e; line-height: 1.8; margin-top: 20px; }
+.quietNote a { color: #315d4c; text-decoration: underline; text-underline-offset: 3px; }
+.quietNote a:focus-visible { outline: 2px solid #286451; outline-offset: 3px; }
 .sectionIntro { max-width: 760px; margin-bottom: 27px; }
 .planGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 .plan { border: 1px solid #dbe5dc; border-radius: 23px; padding: 32px; background: #fffefa; }

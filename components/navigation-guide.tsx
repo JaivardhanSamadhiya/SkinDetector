@@ -40,6 +40,7 @@ export function NavigationGuide() {
             <X size={19} aria-hidden="true" />
           </button>
         </div>
+        <p className={styles.note}>Want a routine without an image? <Link href="/routine/" onClick={() => close()}>Build a routine</Link> from your preferences, reuse your existing basics, and check a budget using prices you enter. The research image workflow below is optional.</p>
         <ol className={styles.steps}>
           <li>
             <span className={styles.number} aria-hidden="true">01</span>
@@ -58,6 +59,7 @@ export function NavigationGuide() {
           </li>
         </ol>
         <div className={styles.destinations}>
+          <Link href="/routine/" onClick={() => close()}><span><strong>Build a routine</strong><small>Choose everyday basics without uploading a photo.</small></span><ArrowUpRight size={16} aria-hidden="true" /></Link>
           <Link href="/conditions/" onClick={() => close()}><span><strong>Skin library</strong><small>Learn about conditions and when to seek evaluation.</small></span><ArrowUpRight size={16} aria-hidden="true" /></Link>
           <Link href="/skincare/" onClick={() => close()}><span><strong>Everyday care</strong><small>Explore cleansers, moisturizers and sunscreen.</small></span><ArrowUpRight size={16} aria-hidden="true" /></Link>
           <Link href="/how-it-works/" onClick={() => close()}><span><strong>How it works</strong><small>Understand the upload and analysis workflow.</small></span><ArrowUpRight size={16} aria-hidden="true" /></Link>

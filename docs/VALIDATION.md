@@ -1,6 +1,6 @@
 # Executed validation record
 
-Verified October 11, 2026 (America/Los_Angeles). This records executed checks, not proposed tests or clinical validation.
+Latest frontend checks verified October 12, 2026 (America/Los_Angeles). Earlier model/backend and rebuild checks below were executed October 11. This records executed checks, not proposed tests or clinical validation.
 
 ## Model and backend
 
@@ -9,6 +9,15 @@ Verified October 11, 2026 (America/Los_Angeles). This records executed checks, n
 - Real PyTorch inference ran on all three licensed demo samples. The first two produced an assessed research output; the basal-cell-carcinoma reference sample produced an uncertain output. `models/browser_parity.json` records those executed outputs solely for test comparisons; the live app never reads them.
 
 ## Frontend
+
+### Retailer direction and standalone routine update — October 12
+
+- `npm run test:unit`: **76 passed**, including 21 new budget tests. Integer-cent calculations cover required quotes/fees, explicit zero amounts, reuse of owned basics, missing matches, invalid decimal formats, limits, and supported currencies.
+- `npm run typecheck` and `npm run build`: **passed**. The production export includes `/routine/`; 16 static segment aliases were prepared.
+- `npm run test:e2e` against the fresh production export: **16 passed (18.8 seconds)**. Two new tests verify the standalone mobile routine flow, arithmetic from synthetic user-entered prices, reset on product/currency changes, reuse, full-session deletion, and absence of model/image API requests. The existing real-model, upload, navigation, error, and personalized-result checks also passed.
+- `node scripts/capture-preview.mjs`: **passed**. Ten desktop/mobile screenshots were captured. Real seven-score PyTorch parity, the automatically displayed care combination, and **zero application image POSTs** were verified. The revised landing, routine, and startup pages were visually reviewed; mobile layout checks passed at 390 pixels.
+- Retail pricing, willingness to pay, customer acquisition, conversion lift, and paid pilots remain hypotheses. The budget inputs in automated tests are synthetic arithmetic fixtures, not claims about product prices or availability. No catalog/stock feed, merchant embed, automatic basket search, billing, or checkout was implemented.
+- No training, checkpoint, inference API, dataset split, or evaluation metrics changed in this update. Backend and held-out checks below remain the earlier executed validation.
 
 ### Guided-care and startup update
 

@@ -1,83 +1,84 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowUpRight, BookOpen, Check, Fingerprint, GraduationCap, Lightbulb, MoveRight, ShieldCheck } from "lucide-react";
+import { ArrowUpRight, Check, Fingerprint, Lightbulb, MoveRight, PackageCheck, ShieldCheck, Store, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Eyebrow, SafetyNote } from "@/components/shared";
 import styles from "./startup.module.css";
 
 export const metadata: Metadata = {
   title: "The startup idea",
-  description: "SkinSnap's education-first business hypothesis, proposed buyer, validation plan, and commercial licensing requirements.",
+  description: "A proposed skincare shopping assistant for independent retailers: customer constraints, a clear basket, and a business hypothesis to test.",
 };
 
 const milestones = [
-  { number: "01", title: "Listen before selling", target: "10 instructor interviews", body: "Find out how university health and AI courses teach image-model limitations today, what preparation takes time, and who controls the budget." },
-  { number: "02", title: "Test the learning experience", target: "20 supervised learner sessions", body: "Measure whether learners can complete the flow, distinguish a dataset label from a diagnosis, and explain why a selfie is unsupported." },
-  { number: "03", title: "Check a reason to return", target: "3 noncommercial workshop trials", body: "Observe repeat use, instructor preparation time, support requests, and whether preference-based routine education is useful alongside the research lesson." },
-  { number: "04", title: "Earn the right to charge", target: "Rights clearance + purchase-intent testing", body: "Obtain suitable data/model rights or replace the research model, test willingness to pay with budget holders, and measure delivery costs before a paid launch." },
+  { number: "01", title: "Find a costly shopping problem", target: "5 merchant interviews", body: "Ask independent multi-brand skincare stores about product-selection enquiries, their existing quizzes, support time, purchasing authority, and whether a different tool would earn its fee." },
+  { number: "02", title: "Observe real decisions", target: "20 adult beginner shoppers", body: "Use a merchant-approved catalog to compare the current shopping flow with the prototype. Observe completion, decision time, budget comprehension, and whether shoppers understand that a routine is not diagnosis." },
+  { number: "03", title: "Test willingness to pay", target: "2 contingent paid-pilot commitments", body: "Ask for specific commitments at the proposed price, contingent on a usable integration. A conversation or letter of intent is not a paying customer, a contract, or revenue." },
+  { number: "04", title: "Measure value before scaling", target: "A properly planned storefront experiment", body: "After integration, randomize eligible sessions against the store's current flow. Predefine the sample and decision rule; measure incremental gross margin, support time, returns, and misunderstanding—not just clicks or basket size." },
 ];
 
 export default function StartupPage() {
   return (
-    <div className={`container ${styles.page}`}>
+    <div className={"container " + styles.page}>
       <section className={styles.hero} aria-labelledby="startup-title">
         <div>
           <Eyebrow>THE STARTUP IDEA</Eyebrow>
-          <h1 id="startup-title">Better skin literacy.<br /><em>A business to test.</em></h1>
-          <p className={styles.lead}>Help educators turn confusing skin information and opaque image AI into a clear, practical learning experience.</p>
-          <p className={styles.status}><span /> Working research prototype · Business model unvalidated</p>
+          <h1 id="startup-title">A simpler routine.<br /><em>A clearer purchase.</em></h1>
+          <p className={styles.lead}>Help skincare beginners use what they own, understand their options, and buy only the basics they need within their chosen budget.</p>
+          <p className={styles.status}><span /> Working routine prototype · Retail business unvalidated</p>
           <div className={styles.actions}>
-            <Button asChild><Link href="/analysis/">Experience the product <MoveRight size={17} /></Link></Button>
+            <Button asChild><Link href="/routine/">Try the routine planner <MoveRight size={17} /></Link></Button>
             <Link className="text-link" href="#business-model">Explore the business <ArrowUpRight size={17} /></Link>
           </div>
         </div>
         <aside className={styles.buyerCard} aria-label="Initial customer hypothesis">
-          <GraduationCap size={33} strokeWidth={1.4} />
+          <Store size={33} strokeWidth={1.4} />
           <span className={styles.smallLabel}>ONE INITIAL BUYER</span>
-          <h2>University course instructors</h2>
-          <p>Teaching introductory health literacy or medical-image AI, with a department budget for learning resources.</p>
-          <div className={styles.buyerDetail}><strong>The job to do</strong><span>Run an understandable lesson without rebuilding an image-model demo from scratch.</span></div>
-          <div className={styles.buyerDetail}><strong>The users</strong><span>Students and workshop learners. The instructor is the proposed buyer.</span></div>
+          <h2>Independent skincare retailers</h2>
+          <p>Small online stores with a multi-brand catalog and shoppers who need help choosing a simple routine.</p>
+          <div className={styles.buyerDetail}><strong>The proposed payer</strong><span>The retailer pays for a storefront assistant only if it earns its cost through measured shopping value or support savings.</span></div>
+          <div className={styles.buyerDetail}><strong>The shopper</strong><span>An adult beginner, using the assistant free to choose everyday care. No skin image is needed.</span></div>
         </aside>
       </section>
 
       <section className={styles.problemSection} aria-labelledby="problem-title">
-        <div><Eyebrow>THE PROBLEM TO VALIDATE</Eyebrow><h2 id="problem-title">Information is everywhere.<br />Context takes work.</h2></div>
-        <div><p>Skin information, product marketing, and image-model demos often arrive separately. An educator must explain what an image can support, what a score means, and why a product suggestion is not treatment.</p><p>SkinSnap brings those lessons into one workflow: preferences, a documented research task, clear limitations, and a simple care routine. Whether this saves preparation time or improves understanding still needs to be measured.</p></div>
+        <div><Eyebrow>THE PROBLEM TO VALIDATE</Eyebrow><h2 id="problem-title">A full shelf.<br />An unfinished decision.</h2></div>
+        <div><p>A shopper may already own a moisturizer, have a strict spending limit, and want to avoid particular ingredients. A list of individually recommended products does not necessarily answer what is missing, what the complete basket costs, or why each item belongs.</p><p>The proposed job is a clear purchase decision: reuse existing basics, fill the gaps, and explain the full combination. Whether this reduces confusion, support work, or abandoned purchases is a question to test with stores and shoppers.</p></div>
       </section>
 
       <section className={styles.section} aria-labelledby="difference-title">
-        <Eyebrow>THE PROPOSED DIFFERENCE</Eyebrow>
-        <h2 id="difference-title">Clarity at every step.</h2>
+        <Eyebrow>THE PRODUCT DIRECTION</Eyebrow>
+        <h2 id="difference-title">Start with constraints.<br />Explain the whole routine.</h2>
         <div className={styles.featureGrid}>
-          <article><BookOpen size={25} strokeWidth={1.5} /><h3>A lesson people can follow</h3><p>Navigation guidance, real model outputs, source-linked education, and a routine that explains its choices.</p></article>
-          <article><ShieldCheck size={25} strokeWidth={1.5} /><h3>Evidence people can inspect</h3><p>Reproducible training, actual held-out evaluation, visible uncertainty, and an explicitly limited dermoscopic task.</p></article>
-          <article><Fingerprint size={25} strokeWidth={1.5} /><h3>Less personal data</h3><p>Default inference stays on the device; image and survey preferences stay in memory and can be cleared.</p></article>
+          <article><PackageCheck size={25} strokeWidth={1.5} /><h3>Use what is already owned</h3><p>The working survey reuses cleanser, moisturizer, and sunscreen basics. Product examples fill the gaps instead of requiring an entirely new routine.</p></article>
+          <article><ShieldCheck size={25} strokeWidth={1.5} /><h3>Make choices understandable</h3><p>The prototype explains preference and ingredient filters with source-linked product information. It does not predict tolerance or choose treatment from an image.</p></article>
+          <article><Wallet size={25} strokeWidth={1.5} /><h3>Show the total, then verify it</h3><p>The working planner calculates a basket from prices the shopper enters. Live catalog prices, stock checks, and automatic combinations under a total budget are planned.</p></article>
         </div>
-        <p className={styles.quietNote}>These are product attributes, not proven advantages over competitors or evidence of medical benefit. The routine uses survey preferences; the lesion model does not select skincare treatment.</p>
+        <p className={styles.quietNote}>This is a proposed focus, not a claim of unique technology or measured superiority. <a href="https://skinsort.com/support/what-is-skinsort-premium" target="_blank" rel="noreferrer">SkinSort</a> and <a href="https://getskinbliss.com/quiz/pro" target="_blank" rel="noreferrer">Skin Bliss</a> already offer substantial routine and product tools; SkinSnap must earn a reason to be chosen.</p>
       </section>
 
       <section id="business-model" className={styles.section} aria-labelledby="business-title">
         <Eyebrow>HOW IT COULD MAKE MONEY</Eyebrow>
-        <h2 id="business-title">Free learning.<br />A proposed educator subscription.</h2>
-        <p className={styles.sectionIntro}>The paid offer would fund teaching materials and support, rather than commissions on a person’s skin concerns. Both pricing and willingness to pay are hypotheses.</p>
+        <h2 id="business-title">Free for the shopper.<br />A store pays for proven value.</h2>
+        <p className={styles.sectionIntro}>The proposed revenue model is retailer software. Stores would pay only if the assistant performs better for their needs than their current workflow or an existing quiz.</p>
         <div className={styles.planGrid}>
-          <article className={styles.plan}><span className={styles.smallLabel}>PROPOSED LEARNER ACCESS</span><h3>Explore</h3><p className={styles.price}>Free</p><p>Skin education and a basic routine planner, with a separate noncommercial research demonstration.</p><ul><li><Check size={16} /> Source-linked learning</li><li><Check size={16} /> Preference-based basic routine</li><li><Check size={16} /> Transparent research limitations</li></ul><span className={styles.planState}>Future access model · Current demo is a prototype</span></article>
-          <article className={`${styles.plan} ${styles.paidPlan}`}><span className={styles.smallLabel}>PROPOSED DEPARTMENT LICENSE</span><h3>Teach</h3><p className={styles.price}>$499 <span>/ year</span></p><p>A test price for one department’s teaching toolkit, pending interviews, development, and rights clearance.</p><ul><li><Check size={16} /> Planned instructor lesson packs</li><li><Check size={16} /> Planned workshop facilitation guides</li><li><Check size={16} /> Planned onboarding and support</li></ul><span className={styles.planState}>Not available to purchase · No paying customers</span></article>
+          <article className={styles.plan}><span className={styles.smallLabel}>WORKING CONSUMER PROTOTYPE</span><h3>Plan the basics</h3><p className={styles.price}>Free</p><p>A standalone preference-based routine planner, with no image, account, checkout, or promised medical result required.</p><ul><li><Check size={16} /> Survey and reuse of owned basics</li><li><Check size={16} /> Source-linked product examples</li><li><Check size={16} /> Manual basket-budget arithmetic</li></ul><span className={styles.planState}>Try the current prototype · No retail transaction occurs</span></article>
+          <article className={styles.plan + " " + styles.paidPlan}><span className={styles.smallLabel}>PROPOSED STORE SUBSCRIPTION</span><h3>Guide a purchase</h3><p className={styles.price}>$49 <span>/ store / month</span></p><p>A USD test price for an integrated retail assistant. Demand, performance, support cost, and sustainable pricing remain unverified.</p><ul><li><Check size={16} /> Planned live catalog, prices, and stock</li><li><Check size={16} /> Planned budget-constrained baskets</li><li><Check size={16} /> Planned embed, checkout handoff, and aggregate measurement</li></ul><span className={styles.planState}>Not available to purchase · No paying customers or pilots</span></article>
         </div>
-        <div className={styles.licenseGate}><ShieldCheck size={23} /><div><h3>Commercial rights are a launch gate.</h3><p>The current DermaMNIST-C image release is CC BY-NC 4.0, and this project distributes its data-derived model for noncommercial research and education. A paid deployment needs separate rights clearance or a rights-cleared replacement. We have not obtained that clearance.</p><a href="https://zenodo.org/records/12739457" target="_blank" rel="noreferrer">Read the dataset’s exact terms <ArrowUpRight size={15} /></a></div></div>
-        <details className={styles.finance}><summary>Illustrative finances: a small first cohort</summary><p className={styles.quietNote}>A planning exercise only; no revenue, costs, quotes, or demand have been measured. All amounts are USD.</p><dl><div><dt>10 department licenses × $499 / year</dt><dd>$4,990 revenue hypothesis</dd></div><div><dt>Hosting allowance</dt><dd>$300 / year assumed</dd></div><div><dt>Support: 20 hours × $40</dt><dd>$800 / year assumed</dd></div><div><dt>Content review: 10 hours × $100</dt><dd>$1,000 / year assumed</dd></div><div><dt>Maintenance: 40 hours × $40</dt><dd>$1,600 / year assumed</dd></div><div><dt>Remainder before other costs</dt><dd>$1,290 / year</dd></div></dl><p className={styles.quietNote}>This remainder is not profit. It excludes customer acquisition, payment fees, taxes, insurance, licensing, validation, compliance, and additional product development; those costs could make the plan uneconomic. Measure them before setting a real price.</p></details>
+        <p className={styles.quietNote}>Existing paid tools establish a competitive category, not demand for SkinSnap: <a href="https://revenuehunt.com/" target="_blank" rel="noreferrer">RevenueHunt</a> advertises a $39/month Basic plan and <a href="https://prehook.com/pricing/" target="_blank" rel="noreferrer">Prehook</a> a $45/month Basic plan when billed monthly. Checked October 12, 2026; pricing can change. Neither company endorses or partners with this project.</p>
+        <details className={styles.finance}><summary>What would have to be true for $49 to make sense?</summary><p className={styles.quietNote}>Use a store's measured margins and costs. The figures below illustrate arithmetic, not observed performance or a revenue forecast.</p><dl><div><dt>Proposed monthly software fee</dt><dd>$49 / store · Test assumption</dd></div><div><dt>Illustrative gross margin per additional order</dt><dd>$5 · Assumption</dd></div><div><dt>Additional orders to cover the fee alone</dt><dd>ceil($49 ÷ $5) = 10</dd></div><div><dt>Merchant net value to measure</dt><dd>Incremental gross margin + support savings − fee − other costs</dd></div><div><dt>SkinSnap contribution to measure</dt><dd>Fee − infrastructure − fees − support − refunds</dd></div></dl><p className={styles.quietNote}>Ten extra orders is not a target validated for any store and does not establish profit. Account for returns, discounts, attribution, integration and acquisition costs; measure churn, onboarding time, support load, maintenance, privacy work, and catalog review. Small discovery sessions cannot establish a conversion lift.</p></details>
+        <div className={styles.licenseGate}><ShieldCheck size={23} /><div><h3>The paid product must stand on its own.</h3><p>The current dermoscopic classifier and demo images are a separate noncommercial research demonstration using CC BY-NC 4.0 data. They are not part of the proposed paid retail assistant. Do not include those artifacts in a commercial deployment until appropriate rights are cleared or a commercially permitted replacement is evaluated; a separate tab does not resolve the license.</p><a href="https://zenodo.org/records/12739457" target="_blank" rel="noreferrer">Read the dataset's exact terms <ArrowUpRight size={15} /></a></div></div>
       </section>
 
       <section className={styles.section} aria-labelledby="validation-title">
         <Eyebrow>THE FIRST ROUTE TO MARKET</Eyebrow>
-        <h2 id="validation-title">Start with a lesson.<br />Prove a reason to pay.</h2>
-        <p className={styles.sectionIntro}>Reach university instructors through student societies, course demonstrations, and nonclinical education workshops. The following are proposed next experiments, not completed pilots or partnerships.</p>
+        <h2 id="validation-title">Start with stores.<br />Test a reason to pay.</h2>
+        <p className={styles.sectionIntro}>Seek direct discovery conversations with small independent multi-brand retailers, then test within their existing traffic rather than buying a consumer audience. These are proposed experiments, not completed interviews, partnerships, or commitments.</p>
         <div className={styles.milestones}>{milestones.map(item => <article key={item.number}><span className={styles.number}>{item.number}</span><div><span className={styles.target}>{item.target}</span><h3>{item.title}</h3><p>{item.body}</p></div></article>)}</div>
-        <div className={styles.validationBar}><Lightbulb size={24} /><p><strong>Define success before the trial:</strong> a proposed target is at least 16 of 20 learners correctly distinguishing a model label from a diagnosis, with no learner interpreting a low score as an all-clear. Collect feedback with consent, without retaining personal skin images.</p></div>
+        <div className={styles.validationBar}><Lightbulb size={24} /><p><strong>Define the decision before the pilot:</strong> shoppers must understand their total and the nonclinical nature of the guidance. Continue only if merchants commit to testing a real paid offer and a sufficiently powered comparison supports value after costs. Revise or stop if existing tools solve the job better.</p></div>
       </section>
 
-      <section className={styles.boundaries} aria-labelledby="boundaries-title"><div><Eyebrow>GROWTH WITH REAL BOUNDARIES</Eyebrow><h2 id="boundaries-title">Earn trust before expanding.</h2><p>The present model is a teaching baseline for dermoscopic dataset images. It does not diagnose everyday photos, choose medicines, or establish that a lesion is harmless.</p></div><div><h3>Before clinical use</h3><p>Appropriate data rights, independent external and prospective evaluation, representative skin-tone and device data, clinician-led safety work, security/privacy review, and jurisdiction-specific regulatory assessment would be required. No clinical or regulatory approval is claimed.</p><div className={styles.boundaryLinks}><Link href="/research/" className="text-link">Inspect the research <ArrowUpRight size={16} /></Link><Link href="/about/#privacy" className="text-link">Read privacy practices <ArrowUpRight size={16} /></Link></div></div></section>
+      <section className={styles.boundaries} aria-labelledby="boundaries-title"><div><Eyebrow>TRUST IS PART OF THE PRODUCT</Eyebrow><h2 id="boundaries-title">Preferences, not diagnoses.</h2><p>The shopping workflow needs no lesion photo. Recommendations use declared preferences and product information, not a disease prediction. They cannot establish that an ingredient is safe for every person or that a product treats a photographed condition.</p><div className={styles.boundaryLinks}><Link href="/routine/" className="text-link">Try everyday care <ArrowUpRight size={16} /></Link><Link href="/research/" className="text-link">Inspect the separate research <ArrowUpRight size={16} /></Link></div></div><div><Fingerprint size={25} strokeWidth={1.5} /><h3>Keep the data footprint small</h3><p>Current survey preferences remain in browser memory and can be cleared. Retail integration and aggregate measurement need their own consent, security, retention, and disclosure design; those services are not implemented. Do not claim medical, clinical, or regulatory approval.</p><div className={styles.boundaryLinks}><Link href="/about/#privacy" className="text-link">Read current privacy practices <ArrowUpRight size={16} /></Link></div></div></section>
       <SafetyNote />
     </div>
   );

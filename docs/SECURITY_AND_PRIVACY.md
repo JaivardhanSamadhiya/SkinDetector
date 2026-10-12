@@ -16,6 +16,8 @@ The optional six-question survey records self-reported skin feel, product sensit
 
 Product links open manufacturer websites, which have their own data practices. SkinSnap has no affiliate relationships, retail checkout, purchase tracking or conversion analytics. The routine uses transparent preference rules independently of image labels and scores. Current manufacturer formulations and regional availability may differ from the catalog; check packaging before use.
 
+The standalone `/routine/` workflow works without an image or model execution. Its budget checker uses amounts entered by the user, including tax and delivery; it has no retailer price/stock feed and makes no purchase or savings claim. Amounts remain in local component memory, never in URLs, storage or network requests. Currency changes reset the entered amounts rather than converting them, and the page's clear-session control clears preferences, prices and any previously selected image/result. A future merchant integration or aggregate experiment would require its own explicit data-processing review; none is active in this prototype.
+
 ## Optional FastAPI mode
 
 Setting `NEXT_PUBLIC_INFERENCE_URL` changes the image-processing location. The app sends the selected image as multipart data to that configured service over HTTPS. Inform users of the processing host and mode before they upload. The backend validates MIME/content, byte length, decoded dimensions and animation, applies orientation, decodes to RGB, performs in-memory inference, and returns scores/quality plus an explanation when available. It does not create a permanent image store.

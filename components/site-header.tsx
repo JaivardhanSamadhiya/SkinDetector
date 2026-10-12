@@ -8,6 +8,7 @@ import { NavigationGuide } from "@/components/navigation-guide";
 import styles from "./navigation-guide.module.css";
 
 const links = [
+  { href: "/routine/", label: "Build a routine" },
   { href: "/analysis/", label: "Skin analysis" },
   { href: "/conditions/", label: "Skin library" },
   { href: "/skincare/", label: "Everyday care" },
@@ -31,7 +32,7 @@ export function SiteHeader() {
         </nav>
         <div className={styles.headerActions}>
           <NavigationGuide />
-          <Button asChild className="header-cta" size="sm"><Link href="/analysis/">Explore analysis <ArrowUpRight size={16} aria-hidden="true" /></Link></Button>
+          <Button asChild className="header-cta" size="sm"><Link href="/routine/">Plan my routine <ArrowUpRight size={16} aria-hidden="true" /></Link></Button>
           <button className="mobile-toggle" aria-label={open ? "Close navigation" : "Open navigation"} aria-expanded={open} aria-controls="mobile-navigation" onClick={() => setOpen(!open)}>{open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}</button>
         </div>
       </div>
