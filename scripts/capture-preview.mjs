@@ -35,9 +35,17 @@ try {
     return route.continue({ headers });
   });
   let modelDownloaded = false;
+  let hostingSecurityPosts = 0;
   const posts = [];
-  page.on('request', request => { if (request.method() === 'POST') posts.push(new URL(request.url()).pathname); });
-  page.on('response', response => { if (response.url().endsWith('/model/model.onnx') && response.ok()) modelDownloaded = true; });
+  page.on('request', request => {
+    if (request.method() !== 'POST') return;
+    const path = new URL(request.url()).pathname;
+    // The hosting provider injects its bot-detection challenge. Track it
+    // separately; it is not an application image-inference request.
+    if (path.startsWith('/cdn-cgi/challenge-platform/')) hostingSecurityPosts++;
+    else posts.push(path);
+  });
+  page.on('response', response => { if (new URL(response.url()).pathname.endsWith('/model/model.onnx') && response.ok()) modelDownloaded = true; });
   for (const [name, route] of [['landing', '/'], ['analysis', '/analysis/'], ['research', '/research/']]) {
     await page.goto(new URL(route, baseURL).href);
     await page.evaluate(() => document.fonts.ready);
@@ -53,7 +61,7 @@ try {
   await page.getByRole('button', { name: 'Analyze image', exact: true }).click();
   await page.waitForURL('**/results/');
   await page.getByRole('heading', { name: 'Model ranking', exact: true }).waitFor();
-  if (!modelDownloaded || posts.length) throw new Error('Expected genuine browser inference without an image POST.');
+  if (!modelDownloaded || posts.length) throw new Error(`Expected genuine browser inference without an image POST: ${JSON.stringify({ model_downloaded: modelDownloaded, post_paths: posts })}`);
   const parity = JSON.parse(await readFile('models/browser_parity.json', 'utf8'));
   const expected = parity.samples.find(s => s.filename === sample.path.split('/').pop());
   const rows = await page.locator('.score-row > div:first-child').evaluateAll(elements => elements.map(e => ({ label: e.children[0].textContent, score: Number(e.children[1].textContent) })));
@@ -67,5 +75,5 @@ try {
   await page.evaluate(() => document.fonts.ready);
   await page.screenshot({ path: `${destination}/${prefix}mobile.png`, fullPage: true });
   if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)) throw new Error('Mobile page overflows horizontally.');
-  console.log(JSON.stringify({ origin, real_inference: true, browser_pytorch_score_parity: true, image_posts: posts.length, desktop_mobile_screenshots: 5 }));
+  console.log(JSON.stringify({ origin, real_inference: true, browser_pytorch_score_parity: true, image_posts: posts.length, hosting_security_posts: hostingSecurityPosts, desktop_mobile_screenshots: 5 }));
 } finally { await browser.close(); }

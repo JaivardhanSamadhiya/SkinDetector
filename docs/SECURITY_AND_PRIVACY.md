@@ -8,6 +8,8 @@ Use the result removal control to clear the selected image/result and release pr
 
 Static hosting providers receive ordinary site/model-download requests and may log IP addresses and request metadata. Configure their retention and analytics policy before a public deployment. Do not add analytics that capture image content, filenames or results.
 
+The private Sites demo also uses the hosting provider's bot-detection challenge, which makes its own security requests. These are separate from image inference; the hosted application still runs its model in the browser. The demo's private hosting gate requires the owner's existing account even though the application itself has no account or image-history system.
+
 ## Optional FastAPI mode
 
 Setting `NEXT_PUBLIC_INFERENCE_URL` changes the image-processing location. The app sends the selected image as multipart data to that configured service over HTTPS. Inform users of the processing host and mode before they upload. The backend validates MIME/content, byte length, decoded dimensions and animation, applies orientation, decodes to RGB, performs in-memory inference, and returns scores/quality plus an explanation when available. It does not create a permanent image store.

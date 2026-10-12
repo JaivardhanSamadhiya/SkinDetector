@@ -33,6 +33,12 @@ If using an API, set `NEXT_PUBLIC_INFERENCE_URL=https://your-research-service.ex
 
 No account credentials are included. A committed configuration and successful local build are not evidence of an actual cloud deployment; record the real verified deployment URL separately when available.
 
+## Verified private deployment
+
+[SkinSnap on Sites](https://skinsnap-research-lab.jauntyghost8.chatgpt.site) was published privately and tested on its actual HTTPS origin. Chromium loaded the real model and matching WASM runtime, completed image analysis, and matched the displayed scores to PyTorch inference. No image-inference POST was sent. This is owner-private hosting through the Sites plugin, not a provisioned Vercel or Render deployment. Preserve the current audience unless the owner explicitly requests a change. See the [validation record](VALIDATION.md).
+
+For Sites packaging on Windows with GNU tar, set `TAR_OPTIONS=--force-local` in the packaging process so a drive-letter archive path is not interpreted as a remote host. The source helper handles exact-source commit/push and archives only the exported static assets and hosting manifest. Source credentials belong in hidden stdin only; never commit tokens or preview authorization.
+
 ## Docker static frontend
 
 ```powershell

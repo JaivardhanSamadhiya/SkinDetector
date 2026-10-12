@@ -4,6 +4,8 @@ An education-first skin health website and reproducible dermoscopic image-classi
 
 The original January 2024 prototype and Git history are preserved in `legacy/`. The new repository is [SkinDetector](https://github.com/JaivardhanSamadhiya/SkinDetector); the original is [SkinSnap](https://github.com/JaivardhanSamadhiya/SkinSnap). [Read the audit and reuse disclosure](docs/REPOSITORY_AUDIT.md).
 
+**Verified private demo:** [Open SkinSnap](https://skinsnap-research-lab.jauntyghost8.chatgpt.site). The hosting gate permits the owner; no audience expansion was made. Real inference on this deployed origin matched PyTorch scores, with no application image POST. Local verification passed 40 unit, 67 backend and nine browser tests, plus production build/typecheck. Linux GitHub Actions also passed; see the [validation record](docs/VALIDATION.md).
+
 ## Implemented application
 
 - Next.js App Router with TypeScript, Tailwind, accessible Radix-based controls, locally hosted typography, Lucide icons and responsive ivory/teal styling.
