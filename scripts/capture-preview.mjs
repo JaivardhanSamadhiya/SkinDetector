@@ -46,21 +46,31 @@ try {
     else posts.push(path);
   });
   page.on('response', response => { if (new URL(response.url()).pathname.endsWith('/model/model.onnx') && response.ok()) modelDownloaded = true; });
-  for (const [name, route] of [['landing', '/'], ['analysis', '/analysis/'], ['research', '/research/']]) {
+  for (const [name, route] of [['landing', '/'], ['analysis', '/analysis/'], ['research', '/research/'], ['startup', '/startup/']]) {
     await page.goto(new URL(route, baseURL).href);
     await page.evaluate(() => document.fonts.ready);
     if (name === 'research') await page.locator('.metric-card').first().waitFor();
     await page.screenshot({ path: `${destination}/${prefix}${name}.png`, fullPage: true });
   }
+  await page.locator('summary', { hasText: 'Quick guide' }).click();
+  await page.getByRole('region', { name: 'SkinSnap navigation guide' }).waitFor();
+  await page.screenshot({ path: `${destination}/${prefix}guide.png`, fullPage: true });
+  await page.getByRole('button', { name: 'Close quick guide', exact: true }).click();
   const manifest = JSON.parse(await readFile('public/demo/manifest.json', 'utf8'));
   const sample = (manifest.images || manifest)[0];
   await page.goto(new URL('/analysis/', baseURL).href);
+  await page.getByLabel('How does your skin usually feel?').selectOption('dry');
+  await page.getByLabel('Preferred moisturizer feel').selectOption('rich');
+  await page.getByRole('button', { name: 'Save preferences', exact: true }).click();
   await page.getByLabel('Choose a skin image', { exact: true }).setInputFiles(`public${sample.path}`);
   await page.getByRole('radio', { name: 'Dermoscopic image', exact: true }).check();
   await page.getByRole('checkbox', { name: 'I understand this is research, not a diagnosis, and I have permission to use this image.', exact: true }).check();
   await page.getByRole('button', { name: 'Analyze image', exact: true }).click();
   await page.waitForURL('**/results/');
   await page.getByRole('heading', { name: 'Model ranking', exact: true }).waitFor();
+  await page.getByRole('heading', { name: 'Your skincare starting point.', exact: true }).waitFor();
+  if (await page.locator('[data-routine-step]').count() !== 3) throw new Error('The personalized product combination was not displayed automatically.');
+  if (!(await page.locator('[data-routine-step="moisturizer"]').textContent()).includes('Vanicream Moisturizing Cream')) throw new Error('The saved rich-texture preference did not reach the routine.');
   if (!modelDownloaded || posts.length) throw new Error(`Expected genuine browser inference without an image POST: ${JSON.stringify({ model_downloaded: modelDownloaded, post_paths: posts })}`);
   const parity = JSON.parse(await readFile('models/browser_parity.json', 'utf8'));
   const expected = parity.samples.find(s => s.filename === sample.path.split('/').pop());
@@ -71,9 +81,15 @@ try {
   await page.evaluate(() => { document.activeElement?.blur(); window.scrollTo({ top: 0, behavior: 'instant' }); });
   await page.screenshot({ path: `${destination}/${prefix}results.png`, fullPage: true });
   await page.setViewportSize({ width: 390, height: 844 });
+  await page.evaluate(() => { document.activeElement?.blur(); window.scrollTo({ top: 0, behavior: 'instant' }); });
+  await page.screenshot({ path: `${destination}/${prefix}mobile-results.png`, fullPage: true });
+  if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)) throw new Error('Mobile results overflow horizontally.');
   await page.goto(new URL('/', baseURL).href);
   await page.evaluate(() => document.fonts.ready);
   await page.screenshot({ path: `${destination}/${prefix}mobile.png`, fullPage: true });
   if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)) throw new Error('Mobile page overflows horizontally.');
-  console.log(JSON.stringify({ origin, real_inference: true, browser_pytorch_score_parity: true, image_posts: posts.length, hosting_security_posts: hostingSecurityPosts, desktop_mobile_screenshots: 5 }));
+  await page.goto(new URL('/analysis/', baseURL).href);
+  await page.screenshot({ path: `${destination}/${prefix}mobile-survey.png`, fullPage: true });
+  if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)) throw new Error('Mobile survey overflows horizontally.');
+  console.log(JSON.stringify({ origin, real_inference: true, browser_pytorch_score_parity: true, personalized_routine: true, image_posts: posts.length, hosting_security_posts: hostingSecurityPosts, desktop_mobile_screenshots: 9 }));
 } finally { await browser.close(); }

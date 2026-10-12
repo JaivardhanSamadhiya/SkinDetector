@@ -10,6 +10,16 @@ Verified October 11, 2026 (America/Los_Angeles). This records executed checks, n
 
 ## Frontend
 
+### Guided-care and startup update
+
+- `npm run test:unit`: **55 passed** (the original 40 plus 15 routine tests). The new tests include all 360 supported feel/sensitivity/texture/ingredient-exclusion combinations, owned-product reuse at both budgets, strict profile schemas and deterministic matching without model inputs.
+- `npm run typecheck` and `npm run build`: **passed**. The production export now includes `/startup/` alongside the existing routes; 15 static segment aliases were prepared.
+- `npm run test:e2e` against the fresh production export: **14 passed (15.1 seconds)**. The original nine model/upload checks still pass, plus two navigation-guide checks and three survey/routine checks. Real ONNX inference runs; preference editing updates products without downloading/executing another model, deletion and refresh clear preferences, unsupported images have no scores, and care remains explicitly independent of the lesion result. A test initially expected a collapsed form after deletion; the actual fresh analysis form correctly opens with cleared defaults, and the test was corrected before the full successful run.
+- `node scripts/capture-preview.mjs`: **passed**. Nine desktop/mobile screenshots were captured. Real seven-score PyTorch parity, automatically displayed three-step care, saved texture preferences and **zero application POSTs** were verified. Analysis, results, Startup and Quick guide screenshots were visually reviewed; mobile survey/results had no horizontal overflow at 390 pixels.
+- No training, checkpoint, inference API, dataset split or evaluation metrics changed in this update. The backend checks below are the earlier executed validation, not a newly claimed run.
+
+### Original rebuild verification
+
 - `npm run test:unit`: **40 passed** across image admission/decoding (22), deterministic preprocessing/quality (10), and response schema (8).
 - `npx playwright install chromium`: completed successfully.
 - `npm run build`: **passed**; all eight primary pages and six educational condition routes exported. A Windows-only readlink normalization and static segment aliases resolved observed host/export failures.
@@ -18,7 +28,7 @@ Verified October 11, 2026 (America/Los_Angeles). This records executed checks, n
 - `npm run test:e2e` against the final production export: **9 passed (11.7 seconds)**. Checks include genuine inference for all three licensed samples, seven-score PyTorch parity within displayed rounding, uncertainty, CAM/opacity, no image POST, session deletion, unsupported domains, unavailable model, bad files, quality rejection, drag/drop and mobile navigation. The alert-locator test was scoped to the upload form to avoid Next's separate route-announcer alert.
 - `node scripts/capture-preview.mjs`: **passed**. Real inference and PyTorch score parity confirmed, **zero POST requests**, five desktop/mobile screenshots captured and visually reviewed; no horizontal overflow at 390 pixels. Research charts rendered from the measured report.
 - Private Sites publication **succeeded** at [SkinSnap](https://skinsnap-research-lab.jauntyghost8.chatgpt.site). Hosted Chromium verification executed the real ONNX graph, matched all seven scores to recorded PyTorch inference within display rounding, rendered research charts and explanation controls, captured five desktop/mobile screenshots, and observed **zero application image POSTs**. One hosting bot-detection security POST was observed separately.
-- [Linux GitHub Actions run](https://github.com/JaivardhanSamadhiya/SkinDetector/actions/runs/38206285852) **passed** for application commit `e4e42de09634625d201616bca9b78e4b5f03f7ed`: both frontend and backend jobs succeeded. The frontend job installed dependencies, ran unit/build/typecheck/Chromium E2E; the backend job installed pinned CPU PyTorch and ran pytest. Subsequent changes to this record, deployment links, and the QA script do not alter the verified application/model assets.
+- [Linux GitHub Actions run](https://github.com/JaivardhanSamadhiya/SkinDetector/actions/runs/38206285852) **passed** for the original rebuild commit `e4e42de09634625d201616bca9b78e4b5f03f7ed`: both frontend and backend jobs succeeded. The frontend job installed dependencies, ran unit/build/typecheck/Chromium E2E; the backend job installed pinned CPU PyTorch and ran pytest. That run verifies the original rebuild; the current guided-care frontend changes are verified separately above.
 
 ## Archive
 

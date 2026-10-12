@@ -10,6 +10,12 @@ Static hosting providers receive ordinary site/model-download requests and may l
 
 The private Sites demo also uses the hosting provider's bot-detection challenge, which makes its own security requests. These are separate from image inference; the hosted application still runs its model in the browser. The demo's private hosting gate requires the owner's existing account even though the application itself has no account or image-history system.
 
+## Session-only routine preferences
+
+The optional six-question survey records self-reported skin feel, product sensitivity, purchasing priority, texture preference, three ingredient exclusions and already-owned basics. These answers stay in React memory in the current page session: they are not placed in local storage, a URL, analytics, a database or the multipart inference request. Replacing an image preserves preferences for the same session; deleting the image/result, skipping personalization, refreshing or closing the page clears them. The application does not collect an allergy history or promise to screen every allergen.
+
+Product links open manufacturer websites, which have their own data practices. SkinSnap has no affiliate relationships, retail checkout, purchase tracking or conversion analytics. The routine uses transparent preference rules independently of image labels and scores. Current manufacturer formulations and regional availability may differ from the catalog; check packaging before use.
+
 ## Optional FastAPI mode
 
 Setting `NEXT_PUBLIC_INFERENCE_URL` changes the image-processing location. The app sends the selected image as multipart data to that configured service over HTTPS. Inform users of the processing host and mode before they upload. The backend validates MIME/content, byte length, decoded dimensions and animation, applies orientation, decodes to RGB, performs in-memory inference, and returns scores/quality plus an explanation when available. It does not create a permanent image store.
