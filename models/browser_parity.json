@@ -1,0 +1,139 @@
+{
+  "model_version": "skinsnap-derma-cnn-v1",
+  "backend": "PyTorch CPU ModelService",
+  "source": "Executed real trained weights; no prediction fixtures used during training.",
+  "samples": [
+    {
+      "filename": "ISIC_0024698.png",
+      "reference_label": "Melanocytic nevi",
+      "status": "assessed",
+      "scores": [
+        {
+          "id": "nv",
+          "label": "Melanocytic nevi",
+          "score": 0.9169315695762634
+        },
+        {
+          "id": "mel",
+          "label": "Melanoma",
+          "score": 0.0678582563996315
+        },
+        {
+          "id": "bkl",
+          "label": "Benign keratosis-like lesions",
+          "score": 0.013542487286031246
+        },
+        {
+          "id": "bcc",
+          "label": "Basal cell carcinoma",
+          "score": 0.0007634878857061267
+        },
+        {
+          "id": "df",
+          "label": "Dermatofibroma",
+          "score": 0.0006661279476247728
+        },
+        {
+          "id": "vasc",
+          "label": "Vascular lesions",
+          "score": 0.00020359762129373848
+        },
+        {
+          "id": "akiec",
+          "label": "Actinic keratosis / intraepithelial carcinoma",
+          "score": 3.445343463681638e-05
+        }
+      ],
+      "model_version": "skinsnap-derma-cnn-v1",
+      "image_sha256": "08769bae7e97d824036fd5331977413ee7de8dc7d56137f59afb40cdd448ea49"
+    },
+    {
+      "filename": "ISIC_0031177.png",
+      "reference_label": "Melanoma",
+      "status": "assessed",
+      "scores": [
+        {
+          "id": "mel",
+          "label": "Melanoma",
+          "score": 0.7380654215812683
+        },
+        {
+          "id": "nv",
+          "label": "Melanocytic nevi",
+          "score": 0.24000045657157898
+        },
+        {
+          "id": "bkl",
+          "label": "Benign keratosis-like lesions",
+          "score": 0.021903062239289284
+        },
+        {
+          "id": "akiec",
+          "label": "Actinic keratosis / intraepithelial carcinoma",
+          "score": 3.0265449822763912e-05
+        },
+        {
+          "id": "df",
+          "label": "Dermatofibroma",
+          "score": 5.00709518291842e-07
+        },
+        {
+          "id": "bcc",
+          "label": "Basal cell carcinoma",
+          "score": 3.107704173999082e-07
+        },
+        {
+          "id": "vasc",
+          "label": "Vascular lesions",
+          "score": 1.5954824267305767e-11
+        }
+      ],
+      "model_version": "skinsnap-derma-cnn-v1",
+      "image_sha256": "143c0b37b6a1ff639544272228f25fbb83c0d1905cfa240ed9cf6e711373cba3"
+    },
+    {
+      "filename": "ISIC_0032384.png",
+      "reference_label": "Basal cell carcinoma",
+      "status": "uncertain",
+      "scores": [
+        {
+          "id": "bcc",
+          "label": "Basal cell carcinoma",
+          "score": 0.5826230645179749
+        },
+        {
+          "id": "akiec",
+          "label": "Actinic keratosis / intraepithelial carcinoma",
+          "score": 0.22683747112751007
+        },
+        {
+          "id": "df",
+          "label": "Dermatofibroma",
+          "score": 0.15660254657268524
+        },
+        {
+          "id": "nv",
+          "label": "Melanocytic nevi",
+          "score": 0.021088097244501114
+        },
+        {
+          "id": "bkl",
+          "label": "Benign keratosis-like lesions",
+          "score": 0.01175343431532383
+        },
+        {
+          "id": "mel",
+          "label": "Melanoma",
+          "score": 0.0010378313018009067
+        },
+        {
+          "id": "vasc",
+          "label": "Vascular lesions",
+          "score": 5.7604229368735105e-05
+        }
+      ],
+      "model_version": "skinsnap-derma-cnn-v1",
+      "image_sha256": "1b3b8bdc75aae05f005e23d2d2fc98da8a602db699d5c262ec366617c7612881"
+    }
+  ]
+}

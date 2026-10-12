@@ -1,0 +1,23 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_INFERENCE_URL: ${NEXT_PUBLIC_INFERENCE_URL:-}
+    ports:
+      - "8080:80"
+  inference:
+    profiles: [api]
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    environment:
+      ALLOWED_ORIGINS: http://localhost:8080,http://localhost:3000
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3

@@ -1,0 +1,14 @@
+# Optional server inference. The frontend can deploy independently to Vercel.
+# Configure the exact frontend origin before using the service; no wildcard CORS.
+services:
+  - type: web
+    name: skinsnap-research-api
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    envVars:
+      - key: PORT
+        value: 8000
+      - key: ALLOWED_ORIGINS
+        sync: false

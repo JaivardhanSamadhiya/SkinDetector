@@ -1,0 +1,43 @@
+{
+  "images": [
+    {
+      "id": "ISIC_0024698",
+      "path": "/demo/ISIC_0024698.png",
+      "label": "Melanocytic nevi",
+      "image_type": "dermoscopic",
+      "source": "DermaMNIST-C 28 / HAM10000",
+      "source_url": "https://zenodo.org/records/12739457",
+      "license": "CC BY-NC 4.0",
+      "attribution": "Philipp Tschandl, Cliff Rosendahl, Harald Kittler (HAM10000); Jiancheng Yang et al. (MedMNIST); Kumar Abhishek, Aditi Jain, Ghassan Hamarneh (corrected release)",
+      "split": "held-out test",
+      "selection": "first retained test image for this label, independent of model prediction",
+      "note": "Dataset reference label, not a diagnosis of the viewer. Low-resolution educational sample; model can be wrong."
+    },
+    {
+      "id": "ISIC_0031177",
+      "path": "/demo/ISIC_0031177.png",
+      "label": "Melanoma",
+      "image_type": "dermoscopic",
+      "source": "DermaMNIST-C 28 / HAM10000",
+      "source_url": "https://zenodo.org/records/12739457",
+      "license": "CC BY-NC 4.0",
+      "attribution": "Philipp Tschandl, Cliff Rosendahl, Harald Kittler (HAM10000); Jiancheng Yang et al. (MedMNIST); Kumar Abhishek, Aditi Jain, Ghassan Hamarneh (corrected release)",
+      "split": "held-out test",
+      "selection": "first retained test image for this label, independent of model prediction",
+      "note": "Dataset reference label, not a diagnosis of the viewer. Low-resolution educational sample; model can be wrong."
+    },
+    {
+      "id": "ISIC_0032384",
+      "path": "/demo/ISIC_0032384.png",
+      "label": "Basal cell carcinoma",
+      "image_type": "dermoscopic",
+      "source": "DermaMNIST-C 28 / HAM10000",
+      "source_url": "https://zenodo.org/records/12739457",
+      "license": "CC BY-NC 4.0",
+      "attribution": "Philipp Tschandl, Cliff Rosendahl, Harald Kittler (HAM10000); Jiancheng Yang et al. (MedMNIST); Kumar Abhishek, Aditi Jain, Ghassan Hamarneh (corrected release)",
+      "split": "held-out test",
+      "selection": "first retained test image for this label, independent of model prediction",
+      "note": "Dataset reference label, not a diagnosis of the viewer. Low-resolution educational sample; model can be wrong."
+    }
+  ]
+}

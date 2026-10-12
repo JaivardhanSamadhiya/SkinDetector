@@ -1,0 +1,8 @@
+"use client";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
+import { ArrowUpRight, Menu, ScanLine, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+const links = [{ href: "/analysis/", label: "Skin analysis" }, { href: "/conditions/", label: "Skin library" }, { href: "/skincare/", label: "Everyday care" }, { href: "/research/", label: "Our research" }];
+export function SiteHeader() { const [open, setOpen] = useState(false); const pathname = usePathname(); return <header className="site-header"><div className="container header-inner"><Link href="/" className="brand" aria-label="SkinSnap home"><span className="brand-symbol"><ScanLine size={21} strokeWidth={1.7}/></span>SkinSnap<span className="brand-dot">.</span></Link><nav className="desktop-nav" aria-label="Main navigation">{links.map(link => <Link key={link.href} href={link.href} className={pathname.startsWith(link.href.slice(0,-1)) ? "active" : ""}>{link.label}</Link>)}</nav><Button asChild className="header-cta" size="sm"><Link href="/analysis/">Explore analysis <ArrowUpRight size={16}/></Link></Button><button className="mobile-toggle" aria-label={open ? "Close navigation" : "Open navigation"} aria-expanded={open} onClick={() => setOpen(!open)}>{open ? <X/> : <Menu/>}</button></div>{open && <nav className="mobile-nav" aria-label="Mobile navigation">{links.map(link => <Link key={link.href} href={link.href} onClick={() => setOpen(false)}>{link.label}<ArrowUpRight size={16}/></Link>)}<Link href="/about/" onClick={() => setOpen(false)}>About SkinSnap</Link></nav>}</header>; }

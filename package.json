@@ -1,0 +1,51 @@
+{
+  "name": "skinsnap",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "predev": "node scripts/prepare-runtime.mjs",
+    "prebuild": "node scripts/prepare-runtime.mjs",
+    "dev": "node --require ./scripts/windows-fs-compat.cjs ./node_modules/next/dist/bin/next dev --webpack",
+    "build": "node --require ./scripts/windows-fs-compat.cjs ./node_modules/next/dist/bin/next build --webpack",
+    "postbuild": "node scripts/prepare-export.mjs",
+    "start": "serve out",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:unit": "vitest run",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "@fontsource/dm-sans": "^5.2.8",
+    "@fontsource/lora": "^5.2.7",
+    "@radix-ui/react-slot": "^1.2.3",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.545.0",
+    "next": "16.4.0",
+    "onnxruntime-web": "^1.23.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "recharts": "^3.3.0",
+    "serve": "^14.2.4",
+    "tailwind-merge": "^3.3.1",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.0",
+    "@tailwindcss/postcss": "^4.1.14",
+    "@types/node": "^22.18.10",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "eslint": "^9.38.0",
+    "eslint-config-next": "16.4.0",
+    "tailwindcss": "^4.1.14",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  },
+  "optionalDependencies": {
+    "lightningcss-linux-x64-gnu": "1.32.0",
+    "lightningcss-linux-x64-musl": "1.32.0",
+    "lightningcss-win32-x64-msvc": "1.32.0"
+  }
+}

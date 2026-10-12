@@ -1,0 +1,1 @@
+"""SkinSnap research inference service."""

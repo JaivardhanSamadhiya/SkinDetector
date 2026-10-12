@@ -1,0 +1,27 @@
+# Data processing and security boundaries
+
+## Default browser inference
+
+The default build loads a local ONNX model and its matching WebAssembly runtime from the same website origin. The selected image is decoded and processed in the browser. No image-analysis request is sent to a third-party model service. Browser memory contains the selected file, preview and analysis until they are cleared or the page closes. The active app does not collect names, contact information, payments or health histories, and does not provide an image-history database.
+
+Use the result removal control to clear the selected image/result and release preview object URLs. Reloading or closing the page also ends the in-memory session. Browser/app behavior cannot remove a user's original camera/photo-library file, browser crash dumps or operating-system caches. Do not describe local processing as a guarantee that every device leaves no traces.
+
+Static hosting providers receive ordinary site/model-download requests and may log IP addresses and request metadata. Configure their retention and analytics policy before a public deployment. Do not add analytics that capture image content, filenames or results.
+
+## Optional FastAPI mode
+
+Setting `NEXT_PUBLIC_INFERENCE_URL` changes the image-processing location. The app sends the selected image as multipart data to that configured service over HTTPS. Inform users of the processing host and mode before they upload. The backend validates MIME/content, byte length, decoded dimensions and animation, applies orientation, decodes to RGB, performs in-memory inference, and returns scores/quality plus an explanation when available. It does not create a permanent image store.
+
+Application logs must not include image bytes, filenames, multipart request bodies, EXIF or model results. Reverse proxies, monitoring platforms and the host may independently buffer/log requests. Disable request-body capture and error-report attachments, configure short retention, and verify the deployed settings. Multipart parsing may use framework-managed memory buffers or operating-system temporary spool files; the application closes these on success, rejection, cancellation and errors. This is not a guarantee of forensic erasure from a host's storage. No retained-image deletion endpoint is necessary while no image store exists. If storage is added later, provide authenticated deletion, retention limits and user consent before collecting data.
+
+## Upload admission controls
+
+Only single-frame JPEG, PNG and WebP images are supported. The selected file is size-limited and must decode as an image before analysis. The server revalidates every upload rather than trusting client checks or filenames. Uploaded files are never executed, imported, served as HTML or written as executable content. Supported-domain selection is a user assertion; it is not a validated automatic dermoscopy or skin detector. Images outside the supported use case receive an unable-to-assess state.
+
+Quality checks are heuristic warnings/rejections for resolution, focus and exposure. They do not certify medical suitability. Model scores are not disease probabilities. Uncertainty thresholds are research heuristics, and a low score does not exclude illness. The educational safety message remains visible even when the model selects a label.
+
+## Deployment controls
+
+Keep secrets in the deployment environment; `.env.example` contains placeholders only. `NEXT_PUBLIC_*` values are public and embedded into the browser bundle. Use HTTPS, origin-restricted CORS for the optional API, bounded payloads, rate/concurrency limits, timeouts and operational monitoring. Do not expose Python debug tracebacks publicly. Never load untrusted serialized model artifacts; use the documented artifact source and checksums.
+
+The included configurations are for nonclinical demos. No authentication, patient record system, consent-management service, clinical audit trail, penetration test or regulatory certification is claimed. Review these needs for any intended expansion and assess actual deployment behavior before making privacy promises.
