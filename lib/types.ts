@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { CLINICAL_CLASSES, CLINICAL_MODEL_VERSION } from "./clinical-task";
 export const ModelSchema = z.object({ version: z.string(), architecture: z.string(), input_size: z.number().optional(), supported_image_type: z.string(), classes: z.array(z.object({ id: z.string(), label: z.string() })), available: z.boolean() });
 export const AnalysisSchema = z.object({
   status: z.enum(["assessed", "uncertain", "unsupported", "unavailable", "quality_rejected"]), message: z.string(),
@@ -15,11 +16,14 @@ export const AnalysisSchema = z.object({
     return;
   }
   const classes = new Map(value.model.classes.map(c => [c.id, c.label]));
-  if (!value.model.available || !value.quality?.passed || !value.uncertainty || value.scores.length !== 7 || classes.size !== 7 || new Set(value.scores.map(s => s.id)).size !== 7 || value.scores.some(s => classes.get(s.id) !== s.label) || Math.abs(value.scores.reduce((sum, s) => sum + s.score, 0) - 1) > 1e-4) {
+  const clinicalTask = value.model.version === CLINICAL_MODEL_VERSION && value.model.supported_image_type === "clinical_photo" && value.model.input_size === 128 && value.model.classes.length === 3 && CLINICAL_CLASSES.every(item => classes.get(item.id) === item.label);
+  const expectedCount = clinicalTask ? 3 : 7;
+  if (!value.model.available || !value.quality?.passed || !value.uncertainty || value.scores.length !== expectedCount || classes.size !== expectedCount || new Set(value.scores.map(s => s.id)).size !== expectedCount || value.scores.some(s => classes.get(s.id) !== s.label) || Math.abs(value.scores.reduce((sum, s) => sum + s.score, 0) - 1) > 1e-4 || (!clinicalTask && value.model.supported_image_type !== "dermoscopic")) {
     context.addIssue({ code: "custom", message: "The model output does not match its validated class mapping and score contract.", path: ["scores"] });
   }
   if (value.uncertainty && value.uncertainty.rejected !== (value.status === "uncertain")) context.addIssue({ code: "custom", message: "The result status contradicts the uncertainty decision.", path: ["uncertainty"] });
+  if (clinicalTask && value.status === "assessed" && value.scores.length > 0 && value.scores.reduce((top, score) => score.score > top.score ? score : top).id === "other") context.addIssue({ code: "custom", message: "An unclassified appearance cannot trigger condition-based recommendations.", path: ["status"] });
 });
 export type AnalyzeResponse = z.infer<typeof AnalysisSchema>;
 export type ModelInfo = z.infer<typeof ModelSchema>;
-export type ImageType = "dermoscopic" | "smartphone" | "unknown";
+export type ImageType = "dermoscopic" | "clinical_photo" | "smartphone" | "unknown";

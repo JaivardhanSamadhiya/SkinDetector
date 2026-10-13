@@ -9,8 +9,8 @@ export default function ResearchPage() {
     <div className="container research-page">
       <PageHeading
         eyebrow="OPEN METHODS. HONEST LIMITS."
-        title="Look into the model."
-        description="The task, the evidence, and the boundaries behind every research result. These are measured benchmark results, not clinical validation."
+        title="Look into the models."
+        description="Two separate image tasks, their measured evidence, and the limits behind product matching. The corrected photo experiment is exploratory and its detector remains unavailable."
       />
       <ResearchDashboard />
       <SafetyNote />

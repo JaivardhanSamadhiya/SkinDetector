@@ -1,0 +1,485 @@
+{
+  "version": "skinsnap-scin-mobilenet-v1",
+  "seed": 20261012,
+  "input_size": 128,
+  "elapsed_seconds": 77.62,
+  "architecture": "Frozen torchvision MobileNetV3-Small ImageNet1K-V1 features (576 channels) + trained 3-class linear head",
+  "pretrained_url": "https://download.pytorch.org/models/mobilenet_v3_small-047dcff4.pth",
+  "pretrained_weights": "MobileNet_V3_Small_Weights.IMAGENET1K_V1",
+  "software": {
+    "torch": "2.14.1+cpu",
+    "numpy": "2.5.4",
+    "torchvision": "0.29.1+cpu",
+    "onnxruntime": "1.31.0"
+  },
+  "dataset_release": [
+    "1.0.0"
+  ],
+  "dataset_metadata_sha256": {
+    "scin_cases.csv": "7923ee9ba9775af413ca115c4587dc1bd32259d7936aa97fa80d88dd616ca3c3",
+    "scin_labels.csv": "616ad03c24c304f5f7ef01b4116e4d3274f1c71c9b19a0e3d5620698b081a9fe"
+  },
+  "eligible_before_cap": {
+    "acne": 46,
+    "dermatitis": 886,
+    "other": 952
+  },
+  "split_counts": {
+    "train": {
+      "acne": 28,
+      "dermatitis": 257,
+      "other": 191
+    },
+    "validation": {
+      "acne": 9,
+      "dermatitis": 59,
+      "other": 44
+    },
+    "test": {
+      "acne": 9,
+      "dermatitis": 79,
+      "other": 60
+    }
+  },
+  "exclusions": {
+    "ambiguous_or_low_weight_differential": 857,
+    "missing_label_or_image": 1768,
+    "sensitive_body_location": 524
+  },
+  "download_failures": [],
+  "duplicate_controls": {
+    "connected_groups": 736,
+    "near_duplicate_pairs_dhash_distance_le_2": 11,
+    "conflicting_label_groups_removed": 4,
+    "removed_cases": 10,
+    "patient_identifiers_available": false,
+    "case_group_intersections": 0,
+    "one_image_per_case": true,
+    "scope": "Selected cohort; conservative hashes cannot prove absence of leakage.",
+    "global_exact_duplicate_inventory": {
+      "all_cases": 5033,
+      "all_image_objects": 10379,
+      "case_groups": 5013
+    }
+  },
+  "training": {
+    "frozen_backbone": true,
+    "head": "multinomial logistic regression, balanced class weights, train-only standardization folded into linear layer",
+    "C_grid": [
+      0.01,
+      0.1,
+      1.0,
+      10.0
+    ],
+    "selection": "maximum validation macro-F1, balanced accuracy tie-breaker",
+    "selected_C": 0.01,
+    "max_iterations": 2000,
+    "validation_candidates": [
+      {
+        "C": 0.01,
+        "validation_macro_f1": 0.4584310560382345,
+        "validation_balanced_accuracy": 0.4814101466643839
+      },
+      {
+        "C": 0.1,
+        "validation_macro_f1": 0.4083396898042207,
+        "validation_balanced_accuracy": 0.4074644752610855
+      },
+      {
+        "C": 1.0,
+        "validation_macro_f1": 0.4085816144639674,
+        "validation_balanced_accuracy": 0.4036123951378188
+      },
+      {
+        "C": 10.0,
+        "validation_macro_f1": 0.41152828652828655,
+        "validation_balanced_accuracy": 0.39988871768532785
+      }
+    ]
+  },
+  "calibration": {
+    "method": "validation-only temperature grid minimizing NLL",
+    "temperature": 1.4500000000000008,
+    "grid": [
+      0.5,
+      3.0,
+      0.05
+    ],
+    "validation_uncalibrated": {
+      "accuracy": 0.4732142857142857,
+      "macro_f1": 0.4584310560382345,
+      "balanced_accuracy": 0.4814101466643839,
+      "per_class": {
+        "acne": {
+          "precision": 0.4166666666666667,
+          "recall": 0.5555555555555556,
+          "f1-score": 0.47619047619047616,
+          "support": 9.0
+        },
+        "dermatitis": {
+          "precision": 0.5932203389830508,
+          "recall": 0.5932203389830508,
+          "f1-score": 0.5932203389830508,
+          "support": 59.0
+        },
+        "other": {
+          "precision": 0.3170731707317073,
+          "recall": 0.29545454545454547,
+          "f1-score": 0.3058823529411765,
+          "support": 44.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          5,
+          0,
+          4
+        ],
+        [
+          0,
+          35,
+          24
+        ],
+        [
+          7,
+          24,
+          13
+        ]
+      ],
+      "nll": 0.9051066965903584,
+      "ece_10_bins": 0.1625698218581705,
+      "brier_multiclass": 0.5781342991937547,
+      "selective": {
+        "accepted": 28,
+        "total": 112,
+        "coverage": 0.25,
+        "accuracy_on_accepted": 0.6428571428571429
+      },
+      "scores_are_medical_probabilities": false
+    },
+    "validation_scaled": {
+      "accuracy": 0.4732142857142857,
+      "macro_f1": 0.4584310560382345,
+      "balanced_accuracy": 0.4814101466643839,
+      "per_class": {
+        "acne": {
+          "precision": 0.4166666666666667,
+          "recall": 0.5555555555555556,
+          "f1-score": 0.47619047619047616,
+          "support": 9.0
+        },
+        "dermatitis": {
+          "precision": 0.5932203389830508,
+          "recall": 0.5932203389830508,
+          "f1-score": 0.5932203389830508,
+          "support": 59.0
+        },
+        "other": {
+          "precision": 0.3170731707317073,
+          "recall": 0.29545454545454547,
+          "f1-score": 0.3058823529411765,
+          "support": 44.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          5,
+          0,
+          4
+        ],
+        [
+          0,
+          35,
+          24
+        ],
+        [
+          7,
+          24,
+          13
+        ]
+      ],
+      "nll": 0.8841446698527431,
+      "ece_10_bins": 0.1415759654892962,
+      "brier_multiclass": 0.5581506587824548,
+      "selective": {
+        "accepted": 14,
+        "total": 112,
+        "coverage": 0.125,
+        "accuracy_on_accepted": 0.7142857142857143
+      },
+      "scores_are_medical_probabilities": false
+    }
+  },
+  "test": {
+    "accuracy": 0.5202702702702703,
+    "macro_f1": 0.3862330372385058,
+    "balanced_accuracy": 0.3884435067979372,
+    "per_class": {
+      "acne": {
+        "precision": 0.1,
+        "recall": 0.1111111111111111,
+        "f1-score": 0.10526315789473684,
+        "support": 9.0
+      },
+      "dermatitis": {
+        "precision": 0.5824175824175825,
+        "recall": 0.6708860759493671,
+        "f1-score": 0.6235294117647059,
+        "support": 79.0
+      },
+      "other": {
+        "precision": 0.48936170212765956,
+        "recall": 0.38333333333333336,
+        "f1-score": 0.42990654205607476,
+        "support": 60.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        1,
+        6,
+        2
+      ],
+      [
+        4,
+        53,
+        22
+      ],
+      [
+        5,
+        32,
+        23
+      ]
+    ],
+    "nll": 0.8835606986025529,
+    "ece_10_bins": 0.08069970059281932,
+    "brier_multiclass": 0.5608721296921212,
+    "selective": {
+      "accepted": 36,
+      "total": 148,
+      "coverage": 0.24324324324324326,
+      "accuracy_on_accepted": 0.6111111111111112
+    },
+    "scores_are_medical_probabilities": false,
+    "uncertainty_intervals": {
+      "per_class_recall_95_wilson": {
+        "acne": {
+          "correct": 1,
+          "total": 9,
+          "interval": [
+            0.019890887638544907,
+            0.434999705576656
+          ]
+        },
+        "dermatitis": {
+          "correct": 53,
+          "total": 79,
+          "interval": [
+            0.5614657669235915,
+            0.7644579961820298
+          ]
+        },
+        "other": {
+          "correct": 23,
+          "total": 60,
+          "interval": [
+            0.27088272374082023,
+            0.5098240417590008
+          ]
+        }
+      },
+      "macro_f1_95_group_bootstrap": [
+        0.30962859581003266,
+        0.4799819904192322
+      ],
+      "balanced_accuracy_95_group_bootstrap": [
+        0.3123456356637536,
+        0.48811210140200606
+      ],
+      "bootstrap_resamples": 2000,
+      "bootstrap_seed": 20261012,
+      "test_duplicate_groups": 147,
+      "limitations": "Case/duplicate group bootstrap, not patient-level or clinical uncertainty. Wilson recall intervals treat cases as binomial observations and may understate dependence."
+    }
+  },
+  "independent_holdout": false,
+  "post_audit_test_overlap": 129,
+  "audit_correction": {
+    "issue": "SCIN body-part booleans are YES/blank; initial parser accepted only true. Initial exclusions and body-part lists were incorrect.",
+    "repair": "YES/NO parsing regression checks; sensitive locations now actually excluded; initial experiment preserved and release remains unavailable.",
+    "pre_audit_evaluation": "models/clinical/pre_audit_evaluation.json",
+    "initial_test_previously_examined": true
+  },
+  "subgroups": {
+    "Monk 1-4": {
+      "n": 128,
+      "class_counts": {
+        "acne": 8,
+        "dermatitis": 68,
+        "other": 52
+      },
+      "accuracy": 0.5234375,
+      "limitation": "Small estimated skin-tone subgroups; no fairness or clinical validity established."
+    },
+    "Monk 5-10": {
+      "n": 19,
+      "class_counts": {
+        "acne": 1,
+        "dermatitis": 11,
+        "other": 7
+      },
+      "accuracy": 0.5263157894736842,
+      "limitation": "Small estimated skin-tone subgroups; no fairness or clinical validity established."
+    }
+  },
+  "readiness": {
+    "passed": false,
+    "benchmark_minimums_passed": false,
+    "independent_holdout": false,
+    "post_audit_test_overlap": 129,
+    "blocked_by_previously_examined_test": true,
+    "minimums": {
+      "macro_f1": 0.6,
+      "balanced_accuracy": 0.6,
+      "acne_recall": 0.5,
+      "dermatitis_recall": 0.5
+    },
+    "measured": {
+      "macro_f1": 0.3862330372385058,
+      "balanced_accuracy": 0.3884435067979372,
+      "acne_recall": 0.1111111111111111,
+      "dermatitis_recall": 0.6708860759493671
+    },
+    "clinical_validation": false
+  },
+  "demos": [
+    {
+      "id": "acne",
+      "label": "Acne-like appearance",
+      "task_unavailable": true,
+      "label_disclaimer": "Source annotation mapped to the predeclared research task; not a current diagnosis or an active prediction.",
+      "path": "/demo-clinical/acne.png",
+      "case_id": "-3736850922923665026",
+      "source_label": "acne",
+      "source_differential": {
+        "Acne": 0.5,
+        "Rosacea": 0.5
+      },
+      "source_url": "https://storage.googleapis.com/dx-scin-public-data/dataset/images/3640563448075598133.png",
+      "modified": "EXIF orientation applied, metadata removed, resized to 512x512 nearest; aspect ratio changes.",
+      "license": "SCIN Data Use License",
+      "license_url": "https://github.com/google-research-datasets/scin/blob/main/LICENSE",
+      "split": "test",
+      "selection": "First case sorted by ID whose released case metadata lacks head_or_neck when available; metadata may be incomplete; not selected by output.",
+      "scores": {
+        "acne": 0.3997621351211812,
+        "dermatitis": 0.21429937046408068,
+        "other": 0.3859384944147381
+      },
+      "predicted_class": "acne",
+      "status": "uncertain",
+      "pytorch_onnx_logits_max_abs_error": 8.106231689453125e-06,
+      "rgb128_sha256": "b3ece7e353151acf85f4e68650927c1e0487e3dcb3bc644277056a5f67e4832e",
+      "body_parts": [
+        "other"
+      ],
+      "visual_audit": "Close-up cheek; released case body-part metadata lists only other. A non-head location is not established by the metadata preference."
+    },
+    {
+      "id": "dermatitis",
+      "label": "Dermatitis-like appearance",
+      "task_unavailable": true,
+      "label_disclaimer": "Source annotation mapped to the predeclared research task; not a current diagnosis or an active prediction.",
+      "path": "/demo-clinical/dermatitis.png",
+      "case_id": "-1694584375310842794",
+      "source_label": "dermatitis",
+      "source_differential": {
+        "Allergic Contact Dermatitis": 1.0
+      },
+      "source_url": "https://storage.googleapis.com/dx-scin-public-data/dataset/images/-3599077752870060235.png",
+      "modified": "EXIF orientation applied, metadata removed, resized to 512x512 nearest; aspect ratio changes.",
+      "license": "SCIN Data Use License",
+      "license_url": "https://github.com/google-research-datasets/scin/blob/main/LICENSE",
+      "split": "test",
+      "selection": "First case sorted by ID whose released case metadata lacks head_or_neck when available; metadata may be incomplete; not selected by output.",
+      "scores": {
+        "acne": 0.18678825846648792,
+        "dermatitis": 0.3296405690712874,
+        "other": 0.4835711724622247
+      },
+      "predicted_class": "other",
+      "status": "uncertain",
+      "pytorch_onnx_logits_max_abs_error": 2.4437904357910156e-06,
+      "rgb128_sha256": "763820f74b541fa4bab269155c66795a8a471a7bbf7e7352e38a24331531842d",
+      "body_parts": [
+        "arm",
+        "back_of_hand",
+        "foot_top_or_side"
+      ],
+      "visual_audit": "Close-up distal limb. Released case metadata lists arm, back_of_hand and foot_top_or_side; it does not identify the precise first-image location."
+    },
+    {
+      "id": "other",
+      "label": "Other / unsupported appearance",
+      "task_unavailable": true,
+      "label_disclaimer": "Source annotation mapped to the predeclared research task; not a current diagnosis or an active prediction.",
+      "path": "/demo-clinical/other.png",
+      "case_id": "-1432754611217093642",
+      "source_label": "other",
+      "source_differential": {
+        "Acute and chronic dermatitis": 1.0
+      },
+      "source_url": "https://storage.googleapis.com/dx-scin-public-data/dataset/images/2299496467473665582.png",
+      "modified": "EXIF orientation applied, metadata removed, resized to 512x512 nearest; aspect ratio changes.",
+      "license": "SCIN Data Use License",
+      "license_url": "https://github.com/google-research-datasets/scin/blob/main/LICENSE",
+      "split": "test",
+      "selection": "First case sorted by ID whose released case metadata lacks head_or_neck when available; metadata may be incomplete; not selected by output.",
+      "scores": {
+        "acne": 0.04735094139038594,
+        "dermatitis": 0.47367756112021603,
+        "other": 0.47897149748939805
+      },
+      "predicted_class": "other",
+      "status": "uncertain",
+      "pytorch_onnx_logits_max_abs_error": 6.318092346191406e-06,
+      "rgb128_sha256": "c65d8a2198e8263cbc3730da2f037091e79f7de2cc04bff5e581bcf49a92fb37",
+      "body_parts": [
+        "arm",
+        "leg"
+      ],
+      "visual_audit": "Forearm close-up. Released case metadata lists arm and leg; the demo is not evidence that all case images show the same location."
+    }
+  ],
+  "prohibited_claims": [
+    "Clinical diagnosis",
+    "Disease probability",
+    "Clinically validated",
+    "Absolute best product",
+    "All-clear",
+    "Validated OOD detector"
+  ],
+  "artifact_validation": {
+    "version": "skinsnap-scin-mobilenet-v1",
+    "tests_run": 11,
+    "successful": true,
+    "passed_checks": [
+      "test_actual_scin_yes_no_boolean_schema",
+      "test_alpha_white_compositing",
+      "test_case_and_duplicate_groups_are_disjoint",
+      "test_declared_artifact_sha256s_match",
+      "test_exact_center_nearest_mapping",
+      "test_loaded_model_real_output_and_cam_decomposition",
+      "test_normalization_and_layout",
+      "test_onnx_three_real_research_images_match_pytorch",
+      "test_other_always_rejected_and_correct_image_domain",
+      "test_predeclared_gate_cannot_be_relaxed",
+      "test_sensitive_locations_excluded_and_demo_split_attributed"
+    ],
+    "failures": [],
+    "errors": [],
+    "checkpoint_sha256": "9efd0dcfd5e555254ea33bc38dd23db62eb4c321f513ceda370ef8e35a1683f0",
+    "onnx_sha256": "53d7964a1e319945259c01e8eeca9e57c655a99adc71a18d4f372f5e4c8de4fb",
+    "scope": "Actual artifact and reproducibility checks; not clinical validation, an independent evaluation, or proof of product suitability."
+  }
+}

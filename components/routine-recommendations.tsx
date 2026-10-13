@@ -4,6 +4,7 @@ import { ArrowUpRight, Droplets, Moon, SlidersHorizontal, Sun } from "lucide-rea
 import { useAnalysis } from "@/components/analysis-provider";
 import { PreferencesSurvey } from "@/components/preferences-survey";
 import { buildSkincareRoutine } from "@/lib/skincare-routine";
+import { buildConditionAwareRoutine } from "@/lib/condition-aware-routine";
 import { selectRoutineProducts, summarizeSelectedPrices } from "@/lib/routine-selection";
 import { formatOfferPrice } from "@/lib/product-offers";
 import { buildResultGuidance } from "@/lib/result-guidance";
@@ -14,17 +15,23 @@ export function RoutineRecommendations({ analysisContext = true }: { analysisCon
   const { preferences, hasPreferences, result, productChoices, chooseProduct } = useAnalysis();
   const [editing, setEditing] = useState(false);
   const choiceId = useId();
-  const startingRoutine = buildSkincareRoutine(preferences);
+  const jointSelection = analysisContext ? buildConditionAwareRoutine(preferences, result) : null;
+  const startingRoutine = jointSelection?.routine ?? buildSkincareRoutine(preferences);
   const routine = selectRoutineProducts(startingRoutine, productChoices);
   const prices = summarizeSelectedPrices(routine.steps);
-  const guidance = analysisContext ? buildResultGuidance(result) : null;
+  const guidance = analysisContext && result?.model.supported_image_type === "dermoscopic" ? buildResultGuidance(result) : null;
+  const matched = jointSelection?.decision.status === "condition_matched";
+  const clinicalPhoto = result?.model.supported_image_type === "clinical_photo";
   return <section className={styles.routine} aria-labelledby="routine-title">
-    <div className={styles.heading}><div><span className="eyebrow">EVERYDAY CARE · {hasPreferences ? "BASED ON YOUR SURVEY" : "GENERAL BASICS"}</span><h2 id="routine-title">Your skincare starting point.</h2></div><Droplets size={25}/></div>
+    <div className={styles.heading}><div><span className="eyebrow">EVERYDAY CARE · {matched ? "IMAGE + YOUR SURVEY" : hasPreferences ? "BASED ON YOUR SURVEY" : "GENERAL BASICS"}</span><h2 id="routine-title">{matched ? "Your selected skincare combination." : "Your skincare starting point."}</h2></div><Droplets size={25}/></div>
+    {jointSelection && <div className={styles.resultContext} data-testid="condition-match-decision" data-status={jointSelection.decision.status} data-condition-id={jointSelection.decision.conditionId ?? "none"}>
+      <span className="eyebrow">HOW YOUR COMBINATION WAS SELECTED</span><h3>{jointSelection.decision.title}</h3><p>{jointSelection.decision.explanation}</p><ul>{jointSelection.decision.reasons.map(reason => <li key={reason}>{reason}</li>)}</ul>{jointSelection.decision.source && <a href={jointSelection.decision.source.url} target="_blank" rel="noreferrer">{jointSelection.decision.source.title} <ArrowUpRight size={14}/></a>}
+    </div>}
     {guidance && <div className={styles.resultContext} data-testid="result-care-guidance" data-label-id={guidance.labelId ?? "none"}>
       <span className="eyebrow">YOUR ANALYSIS · EDUCATIONAL NEXT STEP</span><h3>{guidance.title}</h3><p>{guidance.description}</p><p><strong>{guidance.nextStep}</strong></p><a href={guidance.source.url} target="_blank" rel="noreferrer">{guidance.source.title} <ArrowUpRight size={14}/></a>
     </div>}
     <p>{routine.summary}</p>
-    <div className={styles.boundary}><strong>{analysisContext ? "For your everyday routine, independent of the lesion result." : "General care, chosen from your preferences."}</strong><p>{analysisContext ? "Your analysis informs the educational next step above. Product choices use your survey: this model cannot choose a treatment for the photographed spot. " : "Product examples are general cosmetic guidance, and personal tolerance can vary. "}Changing, bleeding, painful, or non-healing spots need professional evaluation; trying a routine must not delay it.</p></div>
+    <div className={styles.boundary}><strong>{matched ? "A catalog match using your image pattern and preferences." : analysisContext ? clinicalPhoto ? "General care from your survey; this photo did not select products." : "For your everyday routine, independent of the lesion result." : "General care, chosen from your preferences."}</strong><p>{matched ? "The accepted appearance category changes formulation criteria and the starting moisturizer choice. This small catalog cannot establish the medically best products or predict individual tolerance. " : analysisContext ? "No supported appearance category was accepted for cosmetic matching. Product choices use your survey; no treatment for the photographed spot is selected. " : "Product examples are general cosmetic guidance, and personal tolerance can vary. "}Changing, bleeding, painful, or non-healing spots need professional evaluation; trying a routine must not delay it.</p></div>
     <div className={styles.dayPlan}><span><Sun size={18}/><strong>Morning</strong> Gentle cleanse if needed → moisturize → sunscreen</span><span><Moon size={18}/><strong>Evening</strong> Gentle cleanse → moisturize</span></div>
     <div className={styles.priceSummary} data-testid="routine-subtotal" aria-live="polite" aria-atomic="true">
       <div><span className="eyebrow">YOUR SELECTED COMBINATION · US PRICE SNAPSHOTS</span><h3>{prices.complete ? formatOfferPrice(prices.subtotalCents) : "Complete price unavailable"} {prices.complete && <small>USD item subtotal</small>}</h3><p>{prices.itemCount ? `One package for each of ${prices.itemCount} selected missing steps.` : "No new items selected."} Owned basics add no new item cost.</p></div>

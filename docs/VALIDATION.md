@@ -2,6 +2,18 @@
 
 Latest frontend checks verified October 12, 2026 (America/Los_Angeles). Earlier model/backend and rebuild checks below were executed October 11. This records executed checks, not proposed tests or clinical validation.
 
+## Skin-photo baseline and joint matching — October 12
+
+- `npm run test:unit`: **165 passed**. Includes 34 joint-care rule checks, four photo preprocessing/manifest checks, and eight report/provenance checks. Synthetic transport fixtures test the selection rules and are never live predictions.
+- `python -m pytest backend/tests`: **67 passed**; one existing TestClient deprecation warning remains. The optional backend still supports only the separate dermoscopic task.
+- `python scripts/clinical_model_validate.py`: **11 passed** on the real corrected PyTorch checkpoint and ONNX artifact. Verifies all three actual demo inferences, score parity, CAM algebra, preprocessing, artifact hashes, split groups, corrected `YES` body flags and the availability/history lock. `models/clinical/artifact_validation.json` records execution.
+- The corrected SCIN cohort has **736 cases**; exploratory test **148**, macro-F1 **0.386233**, balanced accuracy **0.388444**, acne recall **1/9**. **129/148 corrected test cases were previously examined** after a body-location parser repair, so this is not an untouched independent test. Numeric minimums and the independence gate fail; `available: false` is retained. The [evaluation report](CLINICAL_EVALUATION_REPORT.md) discloses the repair, original experiment and incomplete label taxonomy.
+- `npm run typecheck` and `npm run build`: **passed**; 18 static pages and 16 segment aliases. The new photo inference interface is on-device and refuses unavailable artifacts. The implemented joint care rules cannot activate for real photo uploads in this release.
+- `npm run test:e2e`: **21 passed (40.4 seconds)** against the fresh production export. Includes pre-upload readiness, unavailable photo results, availability-flag tamper refusal, 128px original-resolution rejection, and all previous real dermoscopic upload/score/CAM, pricing, navigation, mobile and deletion checks.
+- `node scripts/capture-preview.mjs`: **passed locally** with 15 desktop/mobile captures, real seven-class browser/PyTorch parity, exact priced options/subtotal, explicit inactive photo matching and zero application image POSTs. Mobile survey and priced option cards were visually reviewed. Hosted verification is recorded after the exact source is published.
+
+These are engineering checks, not clinical validity, useful photo classification, product-response validation, commercial clearance or evidence of an absolute best product. Successful offline inference is distinguished from the unavailable consumer photo feature.
+
 ## Model and backend
 
 - `python -m pytest backend/tests`: **67 passed**. Covers actual checkpoint loading/inference, format/MIME/size/animation/dimension admission, EXIF orientation, preprocessing, schema, declared unsupported domains, quality rejection, streamed body limits, artifact errors, inference errors, concurrency and temporary-buffer cleanup. One TestClient deprecation warning remains.

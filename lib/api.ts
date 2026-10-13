@@ -1,6 +1,10 @@
 import { AnalysisSchema, type AnalyzeResponse, type ImageType } from "@/lib/types";
 export const INFERENCE_URL = (process.env.NEXT_PUBLIC_INFERENCE_URL || "").replace(/\/$/, "");
 export async function analyzeImage(file: File, imageType: ImageType, signal?: AbortSignal, onProgress?: (stage: string) => void): Promise<AnalyzeResponse> {
+  if (imageType === "clinical_photo") {
+    const { analyzeClinicalImage } = await import("@/lib/browser-clinical-inference");
+    return AnalysisSchema.parse(await analyzeClinicalImage(file, signal, onProgress));
+  }
   if (!INFERENCE_URL) {
     const { analyzeBrowserImage } = await import("@/lib/browser-inference");
     return AnalysisSchema.parse(await analyzeBrowserImage(file, imageType, signal, onProgress));

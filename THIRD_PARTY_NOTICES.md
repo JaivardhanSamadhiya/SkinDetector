@@ -18,6 +18,8 @@ The licenses below were checked against installed package metadata where availab
 | ONNX Runtime Web | Browser tensor inference | [MIT](https://github.com/microsoft/onnxruntime/blob/main/LICENSE) |
 | DM Sans / Lora, bundled through Fontsource | Locally hosted typefaces | SIL Open Font License 1.1; included package license files |
 | PyTorch | Training and optional server inference | [BSD-style license](https://github.com/pytorch/pytorch/blob/main/LICENSE), including its third-party notices |
+| TorchVision | Frozen MobileNetV3-Small feature extractor for the separate photo task | [BSD 3-Clause software license](https://github.com/pytorch/vision/blob/main/LICENSE); pretrained-weight/data rights are separate |
+| scikit-learn | Training-only linear classifier fitting and measured evaluation | [BSD 3-Clause](https://github.com/scikit-learn/scikit-learn/blob/main/COPYING) |
 | NumPy | Numerical preprocessing/evaluation | [BSD 3-Clause](https://github.com/numpy/numpy/blob/main/LICENSE.txt) |
 | Pillow | Bounded image decode, EXIF orientation and resize | [MIT-CMU / historical PIL license](https://github.com/python-pillow/Pillow/blob/main/LICENSE) |
 | FastAPI | Optional research HTTP service | [MIT](https://github.com/fastapi/fastapi/blob/master/LICENSE) |
@@ -26,7 +28,7 @@ The licenses below were checked against installed package metadata where availab
 | Vitest | Unit tests | MIT; included package notice |
 | Playwright | Browser tests | Apache 2.0; included package notice |
 
-Button components follow the common shadcn/ui-style Radix/variant composition pattern; they are not an independently invented component architecture. AI coding assistance was used. No pretrained model weights are claimed: the documented compact CNN is trained from scratch on the licensed research data.
+Button components follow the common shadcn/ui-style Radix/variant composition pattern; they are not an independently invented component architecture. AI coding assistance was used. The original compact dermoscopic CNN is trained from scratch; the new ordinary-photo model reuses official TorchVision MobileNetV3-Small ImageNet1K-V1 pretrained features and trains a separate three-class linear head. This backbone and its weights are preexisting third-party work, not a new architecture invented for the submission.
 
 ## Dataset, demonstrations and weights
 
@@ -35,6 +37,14 @@ DermaMNIST-C 28 is the corrected HAM10000-derived research dataset distributed b
 The NPZ image datasets are **CC BY-NC 4.0**; the metadata CSV files are **CC BY 4.0**. Demo images are adapted from that image release and retain attribution, provenance and the noncommercial restriction. Low-resolution resizing is explicitly disclosed. The resulting weights are distributed conservatively for noncommercial research/education with the source-data restrictions documented. Their commercial rights have not been cleared. A startup pitch is a hypothesis, not permission to commercially exploit these images or model weights.
 
 See [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) and [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) for the actual terms. The project makes no warranty of clinical accuracy. Do not substitute synthetic skin imagery, mislabeled scraped images or retail assets for a licensed evaluation set.
+
+### Separate SCIN ordinary-photo model
+
+[SCIN](https://github.com/google-research-datasets/scin), Google LLC and consented volunteer contributors, provides the source photographs and retrospective dermatologist differential labels for the new acne-like/dermatitis-like/other research task. The [custom SCIN Data Use License](https://github.com/google-research-datasets/scin/blob/main/LICENSE), retained verbatim in `models/clinical/licenses/SCIN_LICENSE.txt`, permits specified reuse/adaptation subject to conditions including attribution and a prohibition on re-identification. It is not CC BY-NC and does not establish clinical validity, endorsement or unrestricted privacy/personality rights.
+
+`public/demo-clinical/manifest.json` credits each selected test-partition source image and records orientation, metadata removal, nearest resizing and aspect-ratio modification. The corrected experiment overlaps previously examined test outcomes and is exploratory, not a fresh independent evaluation. Source labels are differential annotations, not confirmed diagnoses or active consumer predictions. These image changes and the newly fitted head are project work; source data and pretrained features are credited prior work. Dataset access and reproduction are documented in [the photo model card](docs/CLINICAL_MODEL_CARD.md).
+
+The feature extractor uses [official TorchVision MobileNetV3-Small ImageNet1K-V1 weights](https://docs.pytorch.org/vision/stable/models/generated/torchvision.models.mobilenet_v3_small.html). The TorchVision software license is retained in `models/clinical/licenses/TORCHVISION_LICENSE.txt`; [upstream cautions](https://docs.pytorch.org/vision/stable/models.html) that pretrained models may inherit dataset terms. A BSD code license is not automatic commercial clearance for ImageNet-derived weights. Model/data/code/product-information rights require review before any paid deployment, and no clinical or commercial clearance is claimed for this research release.
 
 ## Educational references and archived assets
 

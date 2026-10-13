@@ -5,7 +5,7 @@ import { join } from "node:path";
 const consent = "I understand this is research, not a diagnosis, and I have permission to use this image.";
 const manifest = JSON.parse(readFileSync("models/browser_parity.json", "utf8")) as {samples:{filename:string}[]};
 
-async function upload(page: import("@playwright/test").Page, domain: "Dermoscopic image" | "Smartphone photo" = "Dermoscopic image") {
+async function upload(page: import("@playwright/test").Page, domain: "Dermoscopic image" | "Other image" = "Dermoscopic image") {
   await page.getByLabel("Choose a skin image", { exact:true }).setInputFiles(join("public/demo", manifest.samples[0].filename));
   await expect(page.getByAltText("Your selected skin image")).toBeVisible();
   await page.getByRole("radio", { name:domain, exact:true }).check();
@@ -64,7 +64,7 @@ test("survey carries into real results, displays a combination, and edits withou
 test("an unsupported image still offers independent general care without pretending to diagnose", async ({ page }) => {
   await page.goto("/analysis/");
   await page.getByRole("button",{name:"Skip · use general basics",exact:true}).click();
-  await upload(page,"Smartphone photo");
+  await upload(page,"Other image");
   await expect(page.getByRole("heading",{name:"This image isn't supported.",exact:true})).toBeVisible();
   await expect(page.locator(".score-row")).toHaveCount(0);
   await expect(page.getByRole("heading",{name:"Your skincare starting point.",exact:true})).toBeVisible();

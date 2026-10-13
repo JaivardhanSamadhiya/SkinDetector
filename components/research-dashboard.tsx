@@ -5,6 +5,7 @@ import { ArrowUpRight, CircleCheck, Download, Info, LoaderCircle, Microscope } f
 import { Bar, BarChart, CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { z } from "zod";
 import { Eyebrow } from "@/components/shared";
+import { CLINICAL_CLASSES, CLINICAL_MODEL_VERSION } from "@/lib/clinical-task";
 
 const rate = z.number().min(0).max(1);
 const count = z.number().int().nonnegative();
@@ -30,7 +31,89 @@ type Report = z.infer<typeof ReportSchema>;
 const percent = (value: number) => `${(value * 100).toFixed(1)}%`;
 const chartStyle = { fontSize: 11, fontFamily: "var(--sans)", borderRadius: 10, borderColor: "#dce6d2" };
 
+const clinicalCounts = z.object({ acne: count, dermatitis: count, other: count });
+const clinicalClassMetrics = z.object({ precision: rate, recall: rate, "f1-score": rate, support: count });
+const clinicalMetrics = z.object({
+  accuracy: rate, macro_f1: rate, balanced_accuracy: rate,
+  per_class: z.object({ acne: clinicalClassMetrics, dermatitis: clinicalClassMetrics, other: clinicalClassMetrics }),
+  confusion_matrix: z.array(z.array(count).length(3)).length(3),
+  nll: z.number().nonnegative(), ece_10_bins: rate, brier_multiclass: z.number().nonnegative(),
+  selective: z.object({ accepted: count, total: count, coverage: rate, accuracy_on_accepted: rate.nullable() }),
+  scores_are_medical_probabilities: z.literal(false),
+  uncertainty_intervals: z.object({
+    per_class_recall_95_wilson: z.object({ acne: z.object({ correct: count, total: count, interval: z.array(rate).length(2) }), dermatitis: z.object({ correct: count, total: count, interval: z.array(rate).length(2) }), other: z.object({ correct: count, total: count, interval: z.array(rate).length(2) }) }),
+    macro_f1_95_group_bootstrap: z.array(rate).length(2), balanced_accuracy_95_group_bootstrap: z.array(rate).length(2),
+    bootstrap_resamples: count, limitations: z.string(),
+  }).optional(),
+});
+const clinicalGateValues = z.object({ macro_f1: rate, balanced_accuracy: rate, acne_recall: rate, dermatitis_recall: rate });
+export const ClinicalReportSchema = z.object({
+  version: z.literal(CLINICAL_MODEL_VERSION), seed: count, input_size: z.literal(128), architecture: z.string(),
+  pretrained_url: z.string().url(), pretrained_weights: z.string(), software: z.record(z.string(), z.string()),
+  split_counts: z.object({ train: clinicalCounts, validation: clinicalCounts, test: clinicalCounts }),
+  duplicate_controls: z.object({ connected_groups: count, near_duplicate_pairs_dhash_distance_le_2: count, conflicting_label_groups_removed: count, removed_cases: count, patient_identifiers_available: z.literal(false), case_group_intersections: z.literal(0), one_image_per_case: z.literal(true), scope: z.string() }),
+  training: z.object({ frozen_backbone: z.literal(true), head: z.string(), C_grid: z.array(z.number().positive()), selected_C: z.number().positive(), selection: z.string(), validation_candidates: z.array(z.object({ C: z.number().positive(), validation_macro_f1: rate, validation_balanced_accuracy: rate })) }),
+  calibration: z.object({ method: z.string(), temperature: z.number().positive(), validation_uncalibrated: clinicalMetrics, validation_scaled: clinicalMetrics }),
+  test: clinicalMetrics,
+  independent_holdout: z.boolean(), post_audit_test_overlap: count,
+  audit_correction: z.object({ issue: z.string(), repair: z.string(), pre_audit_evaluation: z.string(), initial_test_previously_examined: z.boolean() }),
+  subgroups: z.record(z.string(), z.object({ n: count, class_counts: clinicalCounts, accuracy: rate.nullable(), limitation: z.string() })),
+  readiness: z.object({ passed: z.boolean(), benchmark_minimums_passed: z.boolean(), independent_holdout: z.boolean(), post_audit_test_overlap: count, blocked_by_previously_examined_test: z.boolean(), minimums: clinicalGateValues, measured: clinicalGateValues, clinical_validation: z.literal(false) }),
+}).superRefine((report, context) => {
+  const expected = { macro_f1: .60, balanced_accuracy: .60, acne_recall: .50, dermatitis_recall: .50 };
+  const measured = { macro_f1: report.test.macro_f1, balanced_accuracy: report.test.balanced_accuracy, acne_recall: report.test.per_class.acne.recall, dermatitis_recall: report.test.per_class.dermatitis.recall };
+  const consistentGate = Object.entries(expected).every(([key, value]) => report.readiness.minimums[key as keyof typeof expected] === value && Math.abs(report.readiness.measured[key as keyof typeof expected] - measured[key as keyof typeof expected]) < 1e-10);
+  const benchmarkPassed = Object.entries(expected).every(([key, value]) => measured[key as keyof typeof expected] >= value);
+  const blockedByExaminedTest = !report.independent_holdout || report.post_audit_test_overlap > 0;
+  const releasePassed = benchmarkPassed && !blockedByExaminedTest;
+  const testCount = Object.values(report.split_counts.test).reduce((sum, value) => sum + value, 0);
+  const consistentClasses = CLINICAL_CLASSES.every((item, index) => report.test.per_class[item.id].support === report.split_counts.test[item.id] && report.test.confusion_matrix[index].reduce((sum, value) => sum + value, 0) === report.split_counts.test[item.id]);
+  const consistentAudit = !(report.independent_holdout && report.post_audit_test_overlap > 0) && !(report.post_audit_test_overlap > 0 && !report.audit_correction.initial_test_previously_examined);
+  if (!consistentGate || !consistentAudit || benchmarkPassed !== report.readiness.benchmark_minimums_passed || releasePassed !== report.readiness.passed || report.readiness.independent_holdout !== report.independent_holdout || report.readiness.post_audit_test_overlap !== report.post_audit_test_overlap || report.readiness.blocked_by_previously_examined_test !== blockedByExaminedTest || report.post_audit_test_overlap > testCount || !consistentClasses || report.test.selective.total !== testCount) {
+    context.addIssue({ code: "custom", message: "Clinical evaluation counts or readiness gate are inconsistent." });
+  }
+});
+type ClinicalReport = z.infer<typeof ClinicalReportSchema>;
+
+function ClinicalResearchDashboard() {
+  const [report, setReport] = useState<ClinicalReport | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch("/model-clinical/evaluation.json", { signal: controller.signal }).then(async response => {
+      if (!response.ok) throw new Error("The skin-photo evaluation is unavailable. No performance measurement or model readiness is claimed.");
+      const parsed = ClinicalReportSchema.safeParse(await response.json());
+      if (!parsed.success) throw new Error("The skin-photo report could not be verified. No performance measurement or model readiness is claimed.");
+      if (!controller.signal.aborted) setReport(parsed.data);
+    }).catch(cause => { if (!controller.signal.aborted) setError(cause instanceof Error ? cause.message : "The skin-photo evaluation is unavailable."); });
+    return () => controller.abort();
+  }, []);
+  return <section className="report-section" data-testid="clinical-research-report">
+    <Eyebrow>SKIN PHOTOS + YOUR PREFERENCES</Eyebrow><h2>A separate appearance model.</h2>
+    <p>The experimental skin-photo task has acne-like, dermatitis-like and other / unsupported categories. Joint appearance-and-survey catalog rules are implemented, but this photo model remains unavailable and real uploads cannot activate them. Neither the model nor the rules establish a diagnosis, predict product response or identify an absolute best product.</p>
+    {error ? <div className="report-state" role="alert"><Info size={19}/>{error}</div> : !report ? <div className="report-state" role="status"><LoaderCircle className="spinning" size={19}/>Loading the skin-photo evaluation…</div> : <>
+      {!report.readiness.passed && <div className="report-state" role="status"><Info size={19}/><div><strong>Photo classification is unavailable in this release.</strong><p>{report.readiness.benchmark_minimums_passed ? "The numeric minimums were met, but release readiness was not established." : "The trained model failed its fixed numeric minimums."} Joint matching stays inactive for real photo results; the app shows preferences-only general care. A stronger model with new independent evaluation is needed.</p></div></div>}
+      <div className="research-summary"><div className="research-model-card"><span className="research-status"><CircleCheck size={15}/>MEASURED EXPLORATORY BASELINE</span><h3>{report.architecture}</h3><div className="classes-list">{CLINICAL_CLASSES.map(item => <span key={item.id}>{item.id.toUpperCase()}</span>)}</div><p>{report.version} · seed {report.seed} · RGB {report.input_size} × {report.input_size}</p></div><div className="research-domain-card"><Microscope size={30} strokeWidth={1.4}/><h3>{report.readiness.passed ? "Release gate passed. Research only." : "Release gate failed. Inference unavailable."}</h3><p>Fixed numeric minimums: macro-F1 ≥ 0.60, balanced accuracy ≥ 0.60, acne recall ≥ 0.50 and dermatitis recall ≥ 0.50. A fresh independent evaluation is also required. Passing these engineering requirements does not establish clinical readiness.</p><p>Uncertain outputs and the other category cannot activate condition-based product matching. No automatic domain check or healthy-skin all-clear is validated.</p></div></div>
+      {!report.independent_holdout && <div className="research-limitation" data-testid="clinical-audit-disclosure"><h3>Corrected experiment, previously examined test data</h3><p>{report.audit_correction.issue} {report.audit_correction.repair}</p><p><strong>{report.post_audit_test_overlap} of {report.test.selective.total} corrected test cases overlap previously examined test outcomes.</strong> These measurements are exploratory, not a fresh independent validation. Availability remains false even if a numeric minimum is later met. The original evaluation is preserved for audit history.</p></div>}
+      <div className="metric-grid">{[{ name: "Photo-task macro-F1", value: percent(report.test.macro_f1), description: "Corrected test partition, before rejection" }, { name: "Photo-task balanced accuracy", value: percent(report.test.balanced_accuracy), description: "Mean recall across three categories" }, { name: "Corrected test photo cases", value: report.test.selective.total.toLocaleString(), description: report.independent_holdout ? "One image per case; patient independence unknown" : "Previously examined overlap; exploratory only" }, { name: "Photo-task ECE, 10 bins", value: report.test.ece_10_bins.toFixed(4), description: "Dataset calibration, not medical probability" }].map(metric => <div className="metric-card" key={metric.name}><span>{metric.name}</span><strong>{metric.value}</strong><p>{metric.description}</p></div>)}</div>
+      <div className="report-table-wrap"><table className="report-table"><caption>Skin-photo corrected test per-class measurements</caption><thead><tr><th scope="col">Appearance category</th><th scope="col">Train / validation / test</th><th scope="col">Recall</th><th scope="col">95% recall interval</th><th scope="col">Precision</th><th scope="col">F1</th></tr></thead><tbody>{CLINICAL_CLASSES.map(item => { const metrics = report.test.per_class[item.id]; const interval = report.test.uncertainty_intervals?.per_class_recall_95_wilson[item.id].interval; return <tr key={item.id}><th scope="row">{item.label}</th><td>{report.split_counts.train[item.id]} / {report.split_counts.validation[item.id]} / {report.split_counts.test[item.id]}</td><td>{percent(metrics.recall)}</td><td>{interval ? `${percent(interval[0])}–${percent(interval[1])}` : "Not measured"}</td><td>{percent(metrics.precision)}</td><td>{percent(metrics["f1-score"])}</td></tr>; })}</tbody></table></div>
+      {report.test.uncertainty_intervals && <p>Case/duplicate-group bootstrap 95% intervals: macro-F1 {report.test.uncertainty_intervals.macro_f1_95_group_bootstrap.map(percent).join("–")}; balanced accuracy {report.test.uncertainty_intervals.balanced_accuracy_95_group_bootstrap.map(percent).join("–")}. {report.test.uncertainty_intervals.bootstrap_resamples.toLocaleString()} resamples. {report.test.uncertainty_intervals.limitations}</p>}
+      <div className="report-chart confusion-chart"><h3>Skin-photo confusion matrix</h3><p>Rows are source differential categories, columns are predictions. These are actual corrected test counts, with previously examined overlap; they are not confirmed diagnostic outcomes or independent validation.</p><div className="confusion-wrap"><table className="confusion-table"><caption>Photo reference category by predicted category</caption><thead><tr><th scope="col">Actual ↓ / predicted →</th>{CLINICAL_CLASSES.map(item => <th scope="col" key={item.id}>{item.id}</th>)}</tr></thead><tbody>{report.test.confusion_matrix.map((row, index) => <tr key={CLINICAL_CLASSES[index].id}><th scope="row">{CLINICAL_CLASSES[index].id}</th>{row.map((value, column) => <td key={column}>{value}</td>)}</tr>)}</tbody></table></div></div>
+      <table className="report-table"><tbody><tr><th scope="row">Architecture & selection</th><td>Frozen MobileNetV3-Small ImageNet1K-V1 features, global average pooling and a trained linear 576 → 3 head. {report.training.head}. Regularization candidates: {report.training.C_grid.join(", ")}; selected C = {report.training.selected_C} by {report.training.selection}.</td></tr><tr><th scope="row">Preprocessing</th><td>EXIF orientation, alpha composited on white, full-image pixel-center nearest resize to 128 × 128, RGB [0, 1], ImageNet normalization and NCHW float32. Aspect ratio can change; no inferred face or lesion crop.</td></tr><tr><th scope="row">Leakage controls</th><td>One image per case; connected case and duplicate groups split together. Exact hashes and conservative dHash checks found {report.duplicate_controls.near_duplicate_pairs_dhash_distance_le_2} near-duplicate pairs; {report.duplicate_controls.conflicting_label_groups_removed} conflicting-label groups and {report.duplicate_controls.removed_cases} cases removed. {report.duplicate_controls.scope} Participant IDs are absent: case separation is not proof of patient separation.</td></tr><tr><th scope="row">Calibration & rejection</th><td>{report.calibration.method}; temperature {report.calibration.temperature.toFixed(2)}. Reject top score &lt; 0.65, top-two margin &lt; 0.15, or other. In offline evaluation, the score rule accepted {report.test.selective.accepted} / {report.test.selective.total} test cases ({percent(report.test.selective.coverage)}). {report.test.selective.accuracy_on_accepted !== null && <>Accepted-subset accuracy: {percent(report.test.selective.accuracy_on_accepted)}; rejected cases are excluded from this figure. </>}Overall accuracy: {percent(report.test.accuracy)}. These offline acceptances do not bypass the unavailable release state. No score is a medical probability.</td></tr><tr><th scope="row">Calibration diagnostics</th><td>Validation NLL before / after scaling: {report.calibration.validation_uncalibrated.nll.toFixed(4)} / {report.calibration.validation_scaled.nll.toFixed(4)}. Corrected test NLL: {report.test.nll.toFixed(4)}; multiclass Brier: {report.test.brier_multiclass.toFixed(4)}; ECE: {report.test.ece_10_bins.toFixed(4)}. Small selected-cohort calibration does not establish transfer to a new population.</td></tr></tbody></table>
+      <div className="report-table-wrap"><table className="report-table"><caption>Descriptive skin-tone subgroup estimates; not fairness validation</caption><thead><tr><th scope="col">Estimated Monk skin tone</th><th scope="col">Test cases</th><th scope="col">Acne / dermatitis / other</th><th scope="col">Accuracy</th></tr></thead><tbody>{Object.entries(report.subgroups).map(([label, subgroup]) => <tr key={label}><th scope="row">{label}</th><td>{subgroup.n}</td><td>{subgroup.class_counts.acne} / {subgroup.class_counts.dermatitis} / {subgroup.class_counts.other}</td><td>{subgroup.accuracy === null ? "Not measured" : percent(subgroup.accuracy)}</td></tr>)}</tbody></table></div>
+      <div className="research-limitation"><h3>Small samples, ambiguous labels and shortcuts</h3><p>The acne class has few source cases and a very small corrected test sample, so its recall is uncertain. Previously examined test overlap also prevents claiming independent validation. SCIN’s US adult volunteer search population is selected; retrospective dermatologist differentials are not clinically confirmed diagnoses. Dermatitis groups several different conditions. Estimated skin-tone subgroup counts are small and unbalanced; no fairness conclusion is supported. Body location, background and photo framing may act as shortcuts. No external-cohort, prospective, product-response or clinical validation has been completed.</p></div>
+      <div className="research-limitation"><h3>Explanation and product matching</h3><p>A class activation map uses the actual final 576 × 4 × 4 features and the selected linear head weights. It shows coarse contributions to a model score, not proof of a medically correct interpretation. The implemented rules would use an accepted appearance category after a future model release; current photo outputs stay unavailable, while ingredient exclusions and owned-product reuse remain hard constraints. The rules do not prescribe medicine, establish compatibility with every allergy or prove a product combination is clinically optimal.</p></div>
+    </>}
+    <div className="research-limitation"><h3>Source and rights</h3><p><a href="https://github.com/google-research-datasets/scin" target="_blank" rel="noreferrer">SCIN, Google LLC and consented volunteer contributors</a>, under the <a href="https://github.com/google-research-datasets/scin/blob/main/LICENSE" target="_blank" rel="noreferrer">custom SCIN Data Use License</a>: retain attribution and conditions; never attempt re-identification. This is not CC BY-NC. TorchVision software is BSD 3-Clause; its ImageNet-derived pretrained weights require a separate rights review. No commercial or clinical clearance is claimed. The older dermoscopic model below has different data and licensing.</p></div>
+    <div className="research-links"><a href="/model-clinical/evaluation.json" download><Download size={14}/>Download skin-photo report</a><a href="/model-clinical/manifest.json" target="_blank" rel="noreferrer">Skin-photo model manifest <ArrowUpRight size={14}/></a><a href="https://github.com/JaivardhanSamadhiya/SkinDetector/blob/main/docs/CLINICAL_MODEL_CARD.md" target="_blank" rel="noreferrer">Photo-task model card <ArrowUpRight size={14}/></a></div>
+  </section>;
+}
+
 export function ResearchDashboard() {
+  return <><ClinicalResearchDashboard /><section className="report-section"><Eyebrow>SEPARATE LEGACY RESEARCH TASK</Eyebrow><h2>Dermoscopic lesion benchmark.</h2><p>The following seven-category model has different image inputs, data, weights and limitations. Its outputs never select a condition-specific cosmetic treatment.</p></section><DermoscopyResearchDashboard /></>;
+}
+
+function DermoscopyResearchDashboard() {
   const [report, setReport] = useState<Report | null>(null);
   const [error, setError] = useState<string | null>(null);
   useEffect(() => {

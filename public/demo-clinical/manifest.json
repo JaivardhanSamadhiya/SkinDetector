@@ -1,0 +1,102 @@
+{
+  "attribution": "SCIN Dataset, Google LLC and consented volunteer contributors; see SCIN Data Use License.",
+  "images": [
+    {
+      "id": "acne",
+      "label": "Acne-like appearance",
+      "task_unavailable": true,
+      "label_disclaimer": "Source annotation mapped to the predeclared research task; not a current diagnosis or an active prediction.",
+      "path": "/demo-clinical/acne.png",
+      "case_id": "-3736850922923665026",
+      "source_label": "acne",
+      "source_differential": {
+        "Acne": 0.5,
+        "Rosacea": 0.5
+      },
+      "source_url": "https://storage.googleapis.com/dx-scin-public-data/dataset/images/3640563448075598133.png",
+      "modified": "EXIF orientation applied, metadata removed, resized to 512x512 nearest; aspect ratio changes.",
+      "license": "SCIN Data Use License",
+      "license_url": "https://github.com/google-research-datasets/scin/blob/main/LICENSE",
+      "split": "test",
+      "selection": "First case sorted by ID whose released case metadata lacks head_or_neck when available; metadata may be incomplete; not selected by output.",
+      "scores": {
+        "acne": 0.3997621351211812,
+        "dermatitis": 0.21429937046408068,
+        "other": 0.3859384944147381
+      },
+      "predicted_class": "acne",
+      "status": "uncertain",
+      "pytorch_onnx_logits_max_abs_error": 8.106231689453125e-06,
+      "rgb128_sha256": "b3ece7e353151acf85f4e68650927c1e0487e3dcb3bc644277056a5f67e4832e",
+      "body_parts": [
+        "other"
+      ],
+      "visual_audit": "Close-up cheek; released case body-part metadata lists only other. A non-head location is not established by the metadata preference."
+    },
+    {
+      "id": "dermatitis",
+      "label": "Dermatitis-like appearance",
+      "task_unavailable": true,
+      "label_disclaimer": "Source annotation mapped to the predeclared research task; not a current diagnosis or an active prediction.",
+      "path": "/demo-clinical/dermatitis.png",
+      "case_id": "-1694584375310842794",
+      "source_label": "dermatitis",
+      "source_differential": {
+        "Allergic Contact Dermatitis": 1.0
+      },
+      "source_url": "https://storage.googleapis.com/dx-scin-public-data/dataset/images/-3599077752870060235.png",
+      "modified": "EXIF orientation applied, metadata removed, resized to 512x512 nearest; aspect ratio changes.",
+      "license": "SCIN Data Use License",
+      "license_url": "https://github.com/google-research-datasets/scin/blob/main/LICENSE",
+      "split": "test",
+      "selection": "First case sorted by ID whose released case metadata lacks head_or_neck when available; metadata may be incomplete; not selected by output.",
+      "scores": {
+        "acne": 0.18678825846648792,
+        "dermatitis": 0.3296405690712874,
+        "other": 0.4835711724622247
+      },
+      "predicted_class": "other",
+      "status": "uncertain",
+      "pytorch_onnx_logits_max_abs_error": 2.4437904357910156e-06,
+      "rgb128_sha256": "763820f74b541fa4bab269155c66795a8a471a7bbf7e7352e38a24331531842d",
+      "body_parts": [
+        "arm",
+        "back_of_hand",
+        "foot_top_or_side"
+      ],
+      "visual_audit": "Close-up distal limb. Released case metadata lists arm, back_of_hand and foot_top_or_side; it does not identify the precise first-image location."
+    },
+    {
+      "id": "other",
+      "label": "Other / unsupported appearance",
+      "task_unavailable": true,
+      "label_disclaimer": "Source annotation mapped to the predeclared research task; not a current diagnosis or an active prediction.",
+      "path": "/demo-clinical/other.png",
+      "case_id": "-1432754611217093642",
+      "source_label": "other",
+      "source_differential": {
+        "Acute and chronic dermatitis": 1.0
+      },
+      "source_url": "https://storage.googleapis.com/dx-scin-public-data/dataset/images/2299496467473665582.png",
+      "modified": "EXIF orientation applied, metadata removed, resized to 512x512 nearest; aspect ratio changes.",
+      "license": "SCIN Data Use License",
+      "license_url": "https://github.com/google-research-datasets/scin/blob/main/LICENSE",
+      "split": "test",
+      "selection": "First case sorted by ID whose released case metadata lacks head_or_neck when available; metadata may be incomplete; not selected by output.",
+      "scores": {
+        "acne": 0.04735094139038594,
+        "dermatitis": 0.47367756112021603,
+        "other": 0.47897149748939805
+      },
+      "predicted_class": "other",
+      "status": "uncertain",
+      "pytorch_onnx_logits_max_abs_error": 6.318092346191406e-06,
+      "rgb128_sha256": "c65d8a2198e8263cbc3730da2f037091e79f7de2cc04bff5e581bcf49a92fb37",
+      "body_parts": [
+        "arm",
+        "leg"
+      ],
+      "visual_audit": "Forearm close-up. Released case metadata lists arm and leg; the demo is not evidence that all case images show the same location."
+    }
+  ]
+}

@@ -93,7 +93,6 @@ describe("non-diagnostic result-aware education", () => {
   it.each([
     ["unknown class", (value: AnalyzeResponse) => { value.model.classes[0] = { id: "acne", label: "Acne" }; value.scores[0] = { ...value.model.classes[0], score: value.scores[0].score }; }],
     ["renamed known class", (value: AnalyzeResponse) => { value.model.classes[0].label = "Acne"; value.scores[0].label = "Acne"; }],
-    ["smartphone model", (value: AnalyzeResponse) => { value.model.supported_image_type = "smartphone"; }],
     ["different resolution", (value: AnalyzeResponse) => { value.model.input_size = 224; }],
     ["unspecified resolution", (value: AnalyzeResponse) => { delete value.model.input_size; }],
   ] as const)("does not transfer guidance to a schema-valid %s", (_name, alter) => {
@@ -102,6 +101,14 @@ describe("non-diagnostic result-aware education", () => {
     expect(AnalysisSchema.safeParse(result).success).toBe(true);
     expect(buildResultGuidance(result)).not.toHaveProperty("labelId");
     expect(buildResultGuidance(result)?.description).toContain("does not match");
+  });
+
+  it("rejects a dermoscopic class mapping relabeled as a smartphone model", () => {
+    const result = assessed("mel");
+    result.model.supported_image_type = "smartphone";
+    expect(AnalysisSchema.safeParse(result).success).toBe(false);
+    expect(buildResultGuidance(result)).not.toHaveProperty("labelId");
+    expect(buildResultGuidance(result)?.description).toContain("could not be validated");
   });
 
   it.each([{}, "mel", 42, false])("handles malformed input %s without throwing or assigning a label", value => {

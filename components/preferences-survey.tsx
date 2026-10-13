@@ -17,7 +17,7 @@ export function PreferencesSurvey({ compact = false, disabled = false, editing =
   }
   return <section className={styles.survey} aria-labelledby={`${formId}-title`}>
     <div className={styles.heading}><div><span className="eyebrow">{compact || editing ? "YOUR PREFERENCES" : "STEP 01 · A 30-SECOND START"}</span><h2 id={`${formId}-title`}>{compact || editing ? "Adjust your routine" : "A routine that fits your day."}</h2></div><SlidersHorizontal size={24}/></div>
-    <p>Tell us about comfort, ingredients, and purchases. These answers shape general care suggestions; the image model does not choose treatments.</p>
+    <p>Tell us about comfort, ingredients, and purchases. These answers combine with an accepted supported skin-photo appearance category to select cosmetic catalog matches. Without an accepted category, they shape general care only; neither flow chooses medical treatment.</p>
     {!expanded ? <div className={styles.summary}><span><Check size={17}/>{hasPreferences ? "Preferences saved for this session" : "Using general care basics"}</span><Button variant="outline" size="sm" onClick={() => setExpanded(true)} disabled={disabled}>Edit preferences</Button></div> : <>
       <fieldset className={styles.surveyFields} disabled={disabled}><legend className="visually-hidden">Skincare preferences</legend>
         <label>How does your skin usually feel?<select value={preferences.skinFeel} onChange={e => update("skinFeel", e.target.value as SkincarePreferences["skinFeel"])}><option value="unsure">Not sure / prefer not to say</option><option value="dry">Dry or tight</option><option value="oily">Oily</option><option value="combination">A mix of dry and oily</option><option value="balanced">Generally comfortable</option></select></label>

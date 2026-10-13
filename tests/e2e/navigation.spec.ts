@@ -9,8 +9,8 @@ test("quick guide explains the survey and research flow and closes with keyboard
   await expect(guide).toBeVisible();
   await expect(guide.getByRole("heading", { name: "Share your preferences", exact: true })).toBeVisible();
   await expect(guide.getByRole("heading", { name: "Choose a supported image", exact: true })).toBeVisible();
-  await expect(guide.getByText("Smartphone portraits are unsupported.", { exact: false })).toBeVisible();
-  await expect(guide.getByText("They do not treat the predicted lesion category.", { exact: false })).toBeVisible();
+  await expect(guide.getByText("upload a close-up skin photo", { exact: false })).toBeVisible();
+  await expect(guide.getByText("survey preferences filter the options", { exact: false })).toBeVisible();
   await guide.getByRole("button", { name: "Close quick guide", exact: true }).focus();
   await page.keyboard.press("Escape");
   await expect(guide).toBeHidden();

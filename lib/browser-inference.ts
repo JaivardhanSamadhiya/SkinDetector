@@ -109,7 +109,7 @@ export function temperatureScores(logits: ArrayLike<number>, temperature: number
   return exp.map(x => x / total);
 }
 
-function activationOverlay(activations: ArrayLike<number>, weights: number[], imageWidth: number, imageHeight: number, size = 7): string {
+export function activationOverlay(activations: ArrayLike<number>, weights: number[], imageWidth: number, imageHeight: number, size = 7): string {
   const heat = new Float32Array(size * size);
   for (let c = 0; c < weights.length; c++) for (let i = 0; i < heat.length; i++) heat[i] += weights[c] * activations[c * heat.length + i];
   let max = 0;

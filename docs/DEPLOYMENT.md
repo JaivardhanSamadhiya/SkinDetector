@@ -1,6 +1,6 @@
 # Setup and deployment
 
-The default application is a static Next.js export with ONNX inference in the browser. A Python server is optional. Both inference paths use real trained artifacts; if a model file is missing, the UI must report unavailable rather than generate a prediction.
+The default application is a static Next.js export with ONNX inference in the browser. A Python server is optional for the dermoscopic task only. The separate SCIN clinical-photo inference interface always runs on-device, but the distributed photo artifact is disabled after failed evaluation and a data audit; real photo uploads cannot activate joint condition-based recommendations. Both inference paths use real trained artifacts; if a model file is missing, the UI must report unavailable rather than generate a prediction.
 
 ## Local frontend
 
@@ -27,7 +27,7 @@ The post-build step also adds the flattened segment-prefetch filenames requested
 
 ## Vercel
 
-Import the new SkinDetector GitHub repository into Vercel. Select Next.js; install with `npm ci` and build with `npm run build`. The app uses `output: "export"`, so Vercel serves the exported static application. Leave `NEXT_PUBLIC_INFERENCE_URL` unset for the default path. Check the hosted `/model/manifest.json`, `/model/model.onnx` and `/ort/` assets and run the upload test on the actual hosted site.
+Import the new SkinDetector GitHub repository into Vercel. Select Next.js; install with `npm ci` and build with `npm run build`. The app uses `output: "export"`, so Vercel serves the exported static application. Leave `NEXT_PUBLIC_INFERENCE_URL` unset for the default path. Check the hosted `/model/manifest.json`, `/model/model.onnx`, `/model-clinical/manifest.json`, `/model-clinical/evaluation.json` and `/ort/` assets and run the upload test on the actual hosted site.
 
 If using an API, set `NEXT_PUBLIC_INFERENCE_URL=https://your-research-service.example` and rebuild. Public env changes cannot be applied only at runtime because the frontend is static. Configure backend CORS to the exact deployment origin. Do not point a public HTTPS website at a private localhost HTTP server.
 
@@ -35,7 +35,7 @@ No account credentials are included. A committed configuration and successful lo
 
 ## Verified private deployment
 
-[SkinSnap on Sites](https://skinsnap-research-lab.jauntyghost8.chatgpt.site) was published privately and tested on its actual HTTPS origin. Chromium loaded the real model and matching WASM runtime, completed image analysis, and matched the displayed scores to PyTorch inference. No image-inference POST was sent. This is owner-private hosting through the Sites plugin, not a provisioned Vercel or Render deployment. Preserve the current audience unless the owner explicitly requests a change. See the [validation record](VALIDATION.md).
+[SkinSnap on Sites](https://skinsnap-research-lab.jauntyghost8.chatgpt.site) was published privately and tested on its actual HTTPS origin. Chromium loaded the separate dermoscopic model and matching WASM runtime, completed real lesion inference, and matched displayed scores to PyTorch. The skin-photo baseline remains unavailable; its real offline inference and failed evidence are documented separately. No image-inference POST was sent. This is owner-private hosting through the Sites plugin, not a provisioned Vercel or Render deployment. Preserve the current audience unless the owner explicitly requests a change. See the [validation record](VALIDATION.md).
 
 For Sites packaging on Windows with GNU tar, set `TAR_OPTIONS=--force-local` in the packaging process so a drive-letter archive path is not interpreted as a remote host. The source helper handles exact-source commit/push and archives only the exported static assets and hosting manifest. Source credentials belong in hidden stdin only; never commit tokens or preview authorization.
 

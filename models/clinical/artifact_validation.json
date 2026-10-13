@@ -1,0 +1,23 @@
+{
+  "version": "skinsnap-scin-mobilenet-v1",
+  "tests_run": 11,
+  "successful": true,
+  "passed_checks": [
+    "test_actual_scin_yes_no_boolean_schema",
+    "test_alpha_white_compositing",
+    "test_case_and_duplicate_groups_are_disjoint",
+    "test_declared_artifact_sha256s_match",
+    "test_exact_center_nearest_mapping",
+    "test_loaded_model_real_output_and_cam_decomposition",
+    "test_normalization_and_layout",
+    "test_onnx_three_real_research_images_match_pytorch",
+    "test_other_always_rejected_and_correct_image_domain",
+    "test_predeclared_gate_cannot_be_relaxed",
+    "test_sensitive_locations_excluded_and_demo_split_attributed"
+  ],
+  "failures": [],
+  "errors": [],
+  "checkpoint_sha256": "9efd0dcfd5e555254ea33bc38dd23db62eb4c321f513ceda370ef8e35a1683f0",
+  "onnx_sha256": "53d7964a1e319945259c01e8eeca9e57c655a99adc71a18d4f372f5e4c8de4fb",
+  "scope": "Actual artifact and reproducibility checks; not clinical validation, an independent evaluation, or proof of product suitability."
+}

@@ -40,22 +40,22 @@ export function NavigationGuide() {
             <X size={19} aria-hidden="true" />
           </button>
         </div>
-        <p className={styles.note}>Want a routine without an image? <Link href="/routine/" onClick={() => close()}>Build a routine</Link> from your preferences, reuse your existing basics, and check a budget using prices you enter. The research image workflow below is optional.</p>
+        <p className={styles.note}>Want a routine without an image? <Link href="/routine/" onClick={() => close()}>Build a routine</Link> from your preferences, reuse your existing basics, and check a budget using prices you enter. For a match informed by a supported appearance category, follow the image workflow below.</p>
         <ol className={styles.steps}>
           <li>
             <span className={styles.number} aria-hidden="true">01</span>
             <h3>Share your preferences</h3>
-            <p>Open <Link href="/analysis/" onClick={() => close()}>Skin analysis</Link> and answer the short survey. Your constraints shape the general care routine.</p>
+            <p>Open <Link href="/analysis/" onClick={() => close()}>Skin analysis</Link> and answer the short survey. Your constraints filter cosmetic catalog matches. The skin-photo detector is currently disabled after failing its benchmark; no photo-based care selection is available.</p>
           </li>
           <li>
             <span className={styles.number} aria-hidden="true">02</span>
             <h3>Choose a supported image</h3>
-            <p>Try a labelled demo or upload a dermoscopic image you have permission to use, confirm its type, and select Analyze image. Smartphone portraits are unsupported.</p>
+            <p>Try a labelled demo or upload a close-up skin photo you have permission to use, confirm the image task, and select Analyze image. Dermoscopic lesion analysis is a separate research option.</p>
           </li>
           <li>
             <span className={styles.number} aria-hidden="true">03</span>
             <h3>Read the result and routine</h3>
-            <p>Review model scores, quality and uncertainty. Your general care suggestions appear automatically, based on your survey. They do not treat the predicted lesion category.</p>
+            <p>Review model scores, quality and uncertainty. Your selected product combination appears automatically; survey preferences filter the options. The joint matching engine is implemented, but the photo model failed its gate and cannot activate it. Uncertain or lesion outputs receive general care only, never lesion treatment.</p>
           </li>
         </ol>
         <div className={styles.destinations}>

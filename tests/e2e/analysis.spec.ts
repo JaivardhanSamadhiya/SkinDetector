@@ -56,7 +56,7 @@ test("real ONNX upload-to-results flow exposes scores, CAM and deletion without 
   await expect(page.getByRole("heading", { name: "Your results belong to this session.", exact: true })).toBeVisible();
 });
 
-for (const imageType of ["Smartphone photo", "Not sure"]) test(`${imageType} receives no model scores`, async ({ page }) => {
+for (const imageType of ["Other image", "Not sure"]) test(`${imageType} receives no model scores`, async ({ page }) => {
   await selectSample(page);
   await page.getByRole("radio", { name: imageType, exact: true }).check();
   await page.getByRole("button", { name: "Analyze image", exact: true }).click();

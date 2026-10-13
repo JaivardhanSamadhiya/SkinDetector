@@ -98,5 +98,25 @@ try {
   await page.goto(new URL('/analysis/', baseURL).href);
   await page.screenshot({ path: `${destination}/${prefix}mobile-survey.png`, fullPage: true });
   if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)) throw new Error('Mobile survey overflows horizontally.');
-  console.log(JSON.stringify({ origin, real_inference: true, browser_pytorch_score_parity: true, personalized_routine: true, priced_product_options: true, result_aware_guidance: true, image_posts: posts.length, hosting_security_posts: hostingSecurityPosts, desktop_mobile_screenshots: 12 }));
+  await page.getByTestId('photo-readiness').filter({ hasText: 'condition-based matching unavailable' }).waitFor();
+  const clinicalManifest = JSON.parse(await readFile('public/model-clinical/manifest.json', 'utf8'));
+  if (clinicalManifest.available || clinicalManifest.readiness.independent_holdout) throw new Error('This release must preserve the failed and previously examined skin-photo evaluation gate.');
+  await page.getByLabel('Choose a skin image', { exact: true }).setInputFiles('public/demo-clinical/dermatitis.png');
+  await page.getByRole('radio', { name: 'Close-up skin photo', exact: true }).check();
+  await page.getByRole('checkbox', { name: 'I understand this is research, not a diagnosis, and I have permission to use this image.', exact: true }).check();
+  await page.getByRole('button', { name: 'Analyze image', exact: true }).click();
+  await page.waitForURL('**/results/');
+  await page.getByRole('heading', { name: 'No classification was made.', exact: true }).waitFor();
+  if (await page.locator('.score-row').count() || await page.getByTestId('condition-match-decision').getAttribute('data-status') !== 'general_only') throw new Error('An unavailable photo model improperly supplied a condition-based decision.');
+  await page.screenshot({ path: `${destination}/${prefix}mobile-photo-unavailable.png`, fullPage: true });
+  if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)) throw new Error('Mobile skin-photo result overflows horizontally.');
+  await page.setViewportSize({ width: 1440, height: 1050 });
+  await page.evaluate(() => { document.activeElement?.blur(); window.scrollTo({ top: 0, behavior: 'instant' }); });
+  await page.screenshot({ path: `${destination}/${prefix}photo-unavailable.png`, fullPage: true });
+  await page.goto(new URL('/research/', baseURL).href);
+  const photoReport = page.getByTestId('clinical-research-report');
+  await photoReport.getByText('Photo classification is unavailable in this release.', { exact: true }).waitFor();
+  await photoReport.screenshot({ path: `${destination}/${prefix}photo-research.png` });
+  if (posts.length) throw new Error('Unexpected application image POST during clinical failure-state verification.');
+  console.log(JSON.stringify({ origin, dermoscopic_real_inference: true, browser_pytorch_score_parity: true, personalized_routine: true, priced_product_options: true, result_aware_guidance: true, clinical_photo_unavailable_gate: true, clinical_condition_matching_active: false, image_posts: posts.length, hosting_security_posts: hostingSecurityPosts, desktop_mobile_screenshots: 15 }));
 } finally { await browser.close(); }
