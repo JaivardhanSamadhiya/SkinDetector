@@ -1,6 +1,6 @@
 # Setup and deployment
 
-The default application is a static Next.js export with ONNX inference in the browser. A Python server is optional for the dermoscopic task only. The separate SCIN clinical-photo inference interface always runs on-device, but the distributed photo artifact is disabled after failed evaluation and a data audit; real photo uploads cannot activate joint condition-based recommendations. Both inference paths use real trained artifacts; if a model file is missing, the UI must report unavailable rather than generate a prediction.
+The default application is a static Next.js export with browser ONNX inference. Python is optional for dermoscopy only; ordinary-photo inference always stays on-device. Historical MobileNet remains disabled. Photo-v2's float32 repair evaluation and actual Chromium WASM verification are complete, with full UI/hosted deployment checks still required; all v2 research outputs remain uncertain and cannot drive condition-based products. Missing/failed artifacts must produce unavailable, never a manufactured prediction. [The v2 report](PHOTO_EVALUATION_REPORT.md) separates computation readiness from useful condition identification.
 
 ## Local frontend
 
@@ -27,7 +27,7 @@ The post-build step also adds the flattened segment-prefetch filenames requested
 
 ## Vercel
 
-Import the new SkinDetector GitHub repository into Vercel. Select Next.js; install with `npm ci` and build with `npm run build`. The app uses `output: "export"`, so Vercel serves the exported static application. Leave `NEXT_PUBLIC_INFERENCE_URL` unset for the default path. Check the hosted `/model/manifest.json`, `/model/model.onnx`, `/model-clinical/manifest.json`, `/model-clinical/evaluation.json` and `/ort/` assets and run the upload test on the actual hosted site.
+Import the SkinDetector GitHub repository into Vercel. Select Next.js; install with `npm ci` and build with `npm run build`. The app uses `output: "export"`, so Vercel serves the static application. Leave `NEXT_PUBLIC_INFERENCE_URL` unset for browser inference. Verify hosted `/model/manifest.json`, `/model/model.onnx`, historical `/model-clinical/` manifests/reports, photo-v2 `/model-photo/manifest.json`, every graph part referenced by that manifest, and `/ort/` assets. Run real upload/inference on the actual hosted origin before claiming deployment works. Photo-v2 parts total about 346 MB; splitting them below 20 MiB does not reduce browser memory or total download, and host bandwidth/file limits require checking.
 
 If using an API, set `NEXT_PUBLIC_INFERENCE_URL=https://your-research-service.example` and rebuild. Public env changes cannot be applied only at runtime because the frontend is static. Configure backend CORS to the exact deployment origin. Do not point a public HTTPS website at a private localhost HTTP server.
 
@@ -35,7 +35,7 @@ No account credentials are included. A committed configuration and successful lo
 
 ## Verified private deployment
 
-[SkinSnap on Sites](https://skinsnap-research-lab.jauntyghost8.chatgpt.site) was published privately and tested on its actual HTTPS origin. Chromium loaded the separate dermoscopic model and matching WASM runtime, completed real lesion inference, and matched displayed scores to PyTorch. The skin-photo baseline remains unavailable; its real offline inference and failed evidence are documented separately. No image-inference POST was sent. This is owner-private hosting through the Sites plugin, not a provisioned Vercel or Render deployment. Preserve the current audience unless the owner explicitly requests a change. See the [validation record](VALIDATION.md).
+[SkinSnap on Sites](https://skinsnap-research-lab.jauntyghost8.chatgpt.site) was published privately and tested on its actual HTTPS origin. Chromium loaded the separate dermoscopic model/WASM, completed genuine lesion inference and matched displayed scores to PyTorch; no image-inference POST was sent. This evidence belongs to that earlier deployment and does not establish the latest photo-v2 browser repair. Historical MobileNet stays unavailable. V2 has completed artifact evaluation and actual Chromium WASM verification; full upload-to-results integration and the production build passed; hosted publication is verified separately, and its research outputs remain uncertain and cannot drive condition-specific care. This is owner-private Sites hosting, not a provisioned Vercel/Render service. Preserve the audience; see dated [validation evidence](VALIDATION.md) for the subsequently verified deployment/version.
 
 For Sites packaging on Windows with GNU tar, set `TAR_OPTIONS=--force-local` in the packaging process so a drive-letter archive path is not interpreted as a remote host. The source helper handles exact-source commit/push and archives only the exported static assets and hosting manifest. Source credentials belong in hidden stdin only; never commit tokens or preview authorization.
 

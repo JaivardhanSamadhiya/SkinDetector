@@ -86,7 +86,7 @@ describe("survey-driven educational skin care", () => {
     expect(routine.steps[1].product).toBeNull();
     expect(routine.steps[2].product?.id).toBe("blue-lizard-sensitive-spf50");
     expect(routine.steps.filter(step => step.product)).toHaveLength(1);
-    expect(routine.notes.join(" ")).toContain("does not calculate the cheapest basket");
+    expect(routine.notes.join(" ")).toContain("without dropping a step");
   });
 
   it("shows alternative examples at either purchasing priority while keeping one selected item per step", () => {

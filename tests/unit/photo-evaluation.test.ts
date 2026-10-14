@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
 import { PhotoEvaluationSchema, PhotoMetricsSchema } from "@/lib/photo-evaluation-schema";
 import { PHOTO_MODEL_VERSION } from "@/lib/clinical-task";
 
@@ -66,6 +67,24 @@ function updateTestSources(value: Fixture, scin: number[][], fitz: number[][]) {
 }
 
 describe("photo evaluation measurements", () => {
+  it("verifies the measured frozen model report without treating aggregate accuracy as product-matching evidence", () => {
+    const recorded = JSON.parse(readFileSync(new URL("../../models/photo-v2/evaluation.json", import.meta.url), "utf8"));
+    const report = PhotoEvaluationSchema.parse(recorded);
+    expect(report.test.n).toBe(2356);
+    expect(report.source_test.SCIN.per_class.acne.support).toBe(0);
+    expect(report.selective.accuracy).toBeLessThan(.5);
+    expect(report.readiness.clinical_validation).toBe(false);
+  });
+
+  it("preserves the real rejected int8 conversion as a distinct failed measurement", () => {
+    const recorded = JSON.parse(readFileSync(new URL("../../models/photo-v2/onnx-evaluation.json", import.meta.url), "utf8"));
+    const report = PhotoEvaluationSchema.parse(recorded);
+    expect(report.test.n).toBe(2356);
+    expect(report.readiness.passed).toBe(false);
+    expect(report.deployment_validation?.quantized_benchmark_passed).toBe(false);
+    expect(report.test.per_class.acne.recall).toBe(0);
+  });
+
   it("validates a self-consistent synthetic report without requiring an exported artifact", () => {
     const report = PhotoEvaluationSchema.parse(fixture());
     expect(report.test.n).toBe(240);
@@ -185,6 +204,53 @@ describe("photo evaluation measurements", () => {
     expect(PhotoEvaluationSchema.safeParse({ ...report, deployment_validation }).success).toBe(true);
     deployment_validation.quantized_test = structuredClone(report.source_test.SCIN);
     expect(PhotoEvaluationSchema.safeParse({ ...report, deployment_validation }).success).toBe(false);
+  });
+
+  it.each(["float32", "float16_constants_float32_compute"] as const)("supports %s without changing a historical int8 failure to a pass", format => {
+    const deployment_validation = {
+      format, onnx_verified: true, artifact_benchmark_passed: true,
+      quantized_benchmark_passed: false, preprocessing_verified: true, browser_verified: true,
+    };
+    const parsed = PhotoEvaluationSchema.parse({ ...fixture(), available: true, deployment_validation });
+    expect(parsed.deployment_validation?.artifact_benchmark_passed).toBe(true);
+    expect(parsed.deployment_validation?.quantized_benchmark_passed).toBe(false);
+    expect(parsed.deployment_validation?.format).toBe(format);
+  });
+
+  it("reports a pending float browser check but rejects availability until it passes", () => {
+    const deployment_validation = { format: "float32", onnx_verified: true, artifact_benchmark_passed: true, preprocessing_verified: true, browser_verified: false };
+    expect(PhotoEvaluationSchema.safeParse({ ...fixture(), available: false, deployment_validation }).success).toBe(true);
+    expect(PhotoEvaluationSchema.safeParse({ ...fixture(), available: true, deployment_validation }).success).toBe(false);
+    deployment_validation.browser_verified = true;
+    expect(PhotoEvaluationSchema.safeParse({ ...fixture(), available: true, deployment_validation }).success).toBe(true);
+  });
+
+  it.each([
+    { format: "float32", onnx_verified: true, preprocessing_verified: true, browser_verified: true },
+    { format: "float32", onnx_verified: true, preprocessing_verified: true, artifact_benchmark_passed: true },
+    { format: "int8", onnx_verified: true, preprocessing_verified: true, artifact_benchmark_passed: true, browser_verified: true },
+    { onnx_verified: true, preprocessing_verified: true, artifact_benchmark_passed: true, browser_verified: true },
+    { onnx_verified: true, preprocessing_verified: true },
+  ])("rejects an ambiguous or incompletely described artifact", deployment_validation => {
+    expect(PhotoEvaluationSchema.safeParse({ ...fixture(), deployment_validation }).success).toBe(false);
+  });
+
+  it("does not turn low accepted accuracy into an aggregate gate failure or hide the measurement", () => {
+    const report = fixture(); report.selective.accuracy = .45;
+    const parsed = PhotoEvaluationSchema.parse(report);
+    expect(parsed.readiness.passed).toBe(true);
+    expect(parsed.selective.accuracy).toBe(.45);
+    expect(parsed.selective.count * parsed.selective.accuracy!).toBe(27);
+  });
+
+  it("rejects a claimed float benchmark pass when the measured gates failed", () => {
+    const report = fixture(); report.test_group_support.acne = 29;
+    report.readiness.sufficient_supported_class_samples = false;
+    report.readiness.passed = false;
+    const deployment_validation = { format: "float32", onnx_verified: true, artifact_benchmark_passed: true, preprocessing_verified: true, browser_verified: true };
+    expect(PhotoEvaluationSchema.safeParse({ ...report, deployment_validation }).success).toBe(false);
+    deployment_validation.artifact_benchmark_passed = false;
+    expect(PhotoEvaluationSchema.safeParse({ ...report, deployment_validation }).success).toBe(true);
   });
 
   it("accepts recorded intervals but rejects reversed or out-of-range bounds", () => {

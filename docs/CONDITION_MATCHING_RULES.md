@@ -6,10 +6,11 @@ This policy selects basic cosmetic-care examples from the six-item checked catal
 
 `buildConditionAwareRoutine(preferences, result)` validates survey input and the complete analysis response. Its return value contains a `routine` and a `decision` with `condition_matched`, `general_only`, or `review_first` status.
 
-Only the exact documented clinical task can enter the appearance-based rules:
+The helper recognizes both exact documented photo contracts. **V2 is independently barred from condition-driven care:** its fixed-threshold accepted test accuracy was 47.73%, so it supplies general preference-based options even if a payload claims an accepted result. This is a post-test safety restriction, not a validated new operating point. The historical v1 manifest remains unavailable. Future appearance rules retain the following contract checks and are exercised with labeled software fixtures:
 
-- Version: `skinsnap-scin-mobilenet-v1`.
-- Supported image type: `clinical_photo`; model input size: 128 pixels.
+- Historical version/input: `skinsnap-scin-mobilenet-v1` / 128 pixels.
+- V2 version/input: `skinsnap-photo-dinov2-v2` / 224 pixels; recognized for strict validation but blocked from condition matching.
+- Supported image type: `clinical_photo`.
 - Exact labels: `acne` / `Acne-like appearance`, `dermatitis` / `Dermatitis-like appearance`, `other` / `Other / unsupported appearance`.
 - Status must be `assessed`, model available, quality checks passed without an error, and uncertainty decision present and accepted.
 - The highest-ranked category must be acne or dermatitis. An other/unsupported appearance, uncertainty rejection, quality rejection, missing artifact, malformed response, changed task/version, or absent result cannot activate condition-specific ranking.
@@ -25,9 +26,10 @@ Dermoscopic outputs always take the `review_first` path. A mole, melanoma, basal
 2. Retain owned basic steps without a replacement purchase. The survey cannot inspect or approve an owned product; users must check the full current label and existing professional advice.
 3. Apply the supported appearance category's formulation criteria to missing cleanser/moisturizer steps.
 4. Honor explicit light/rich moisturizer texture in both the selected item and substitute candidates. Otherwise use the condition-specific default below, refined by self-reported dry feel for acne.
-5. Select one checked item per missing basic step and, where available, one eligible substitute. Stable catalog order breaks equivalent ties. Optional substitutes are alternatives, not extra purchases.
+5. Build an ordinal preference order with one checked item per missing basic and eligible substitutes. Alternatives replace an item rather than add a purchase.
+6. Enumerate complete eligible baskets against the numeric USD cap. Choose the smallest summed preference-rank offset among affordable baskets, then price, then stable order. If none fits, show the cheapest complete eligible basket and shortfall without dropping required basics or weakening exclusions. Owned steps add zero purchase cost; unknown/missing prices prevent a complete affordability claim.
 
-The minimal/flexible purchasing preference affects reuse and explanatory guidance, not disease severity, efficacy, extra treatments, or an assertion that expensive products work better. Both use the same basic-care candidate set; the decision explicitly explains this limitation. This policy does not optimize the cheapest basket; dated offers and the separate subtotal/budget interface describe actual cost limitations. Reported or unknown sensitivity reinforces the use of simple eligible cleanser/moisturizer examples and adds a specific aloe/tolerance warning for the only catalog sunscreen. Reporting no sensitivity never establishes tolerance.
+The minimal/flexible preference affects reuse/explanation, not severity, efficacy, additional treatment or an assertion that expensive products work better. Both use the same basic candidate set. The numeric cap is separate, defaults to $50, and applies to dated USD packages before tax/delivery. Basket optimization is restricted to the small eligible catalog and ordinal preferences; it does not establish the cheapest market price or medically best combination. Manual alternatives can exceed the cap and are flagged. Reported/unknown sensitivity reinforces simple candidates and adds the sunscreen aloe/tolerance warning; reporting no sensitivity never establishes tolerance.
 
 | Appearance category | Cleanser | Moisturizer | Sunscreen boundary |
 | --- | --- | --- | --- |

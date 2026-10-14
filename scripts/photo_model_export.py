@@ -42,6 +42,10 @@ def protocol():
 
 def selected():
     candidates = [json.loads((MODEL / (name + "-validation.json")).read_text(encoding="utf-8")) for name in BACKBONES]
+    cohort_hash = sha256(DATA / "combined-cohort.json")
+    for candidate in candidates:
+        if candidate["cohort_sha256"] != cohort_hash or candidate["head_sha256"] != sha256(MODEL / (candidate["backbone"] + "-head.npz")):
+            raise RuntimeError("Validation-selected head or cohort changed before export.")
     return max(candidates, key=lambda r: (r["validation"]["macro_f1"], r["validation"]["balanced_accuracy"]))
 
 
@@ -102,6 +106,8 @@ def export():
 def evaluate():
     lock = json.loads((MODEL / "export-lock.json").read_text(encoding="utf-8"))
     source = json.loads((MODEL / "evaluation.json").read_text(encoding="utf-8"))
+    if lock["export_protocol_sha256"] != sha256(MODEL / "export-protocol.json") or source["lock"]["export_lock_sha256"] != sha256(MODEL / "export-lock.json"):
+        raise RuntimeError("Export protocol or calibration lock changed after final test opening.")
     if lock["cohort_sha256"] != sha256(DATA / "combined-cohort.json") or lock["head_sha256"] != source["lock"]["head_sha256"] or lock["onnx_sha256"] != sha256(PUBLIC / "model.onnx"):
         raise RuntimeError("Export lock or source evaluation no longer matches.")
     rows = [r for r in cohort()["records"] if r["split"] == "test"]
@@ -113,7 +119,7 @@ def evaluate():
     passed = all(measured[key] >= value for key, value in MINIMUMS.items())
     scin_pass = sources["SCIN"]["per_class"]["dermatitis"]["recall"] >= .5
     readiness = {**source["readiness"], "measured": measured, "benchmark_minimums_passed": passed, "scin_dermatitis_recall_minimum_passed": scin_pass}
-    readiness["passed"] = passed and scin_pass and readiness["sufficient_supported_class_samples"]
+    readiness["passed"] = passed and scin_pass and readiness["sufficient_supported_class_samples"] and readiness["independent_holdout"] and not readiness["blocked_by_previously_examined_test"]
     accepted = (p.max(axis=1) >= SCORE_MIN) & ((np.sort(p, axis=1)[:, -1] - np.sort(p, axis=1)[:, -2]) >= MARGIN_MIN) & (p.argmax(axis=1) != 2)
     deployment_validation = {"onnx_verified": True, "preprocessing_verified": True, "quantized_benchmark_passed": readiness["passed"], "onnx_sha256": lock["onnx_sha256"], "onnx_bytes": lock["onnx_bytes"], "pytorch_float32_max_logit_error": lock["float32_pytorch_max_logit_error"], "browser_verified": False}
     evaluation = {**source, "test": report, "source_test": sources, "readiness": readiness, "deployment_validation": deployment_validation,

@@ -1,6 +1,8 @@
 import { AnalysisSchema } from "@/lib/types";
 import { CLINICAL_CLASSES, CLINICAL_MODEL_VERSION, PHOTO_MODEL_VERSION, PHOTO_MODEL_INPUT_SIZE } from "@/lib/clinical-task";
 import { getProductOffer } from "@/lib/product-offers";
+import { chooseBudgetBasket } from "@/lib/routine-selection";
+import { PHOTO_PRODUCT_MATCHING_ENABLED, PHOTO_PRODUCT_RESTRICTION } from "@/lib/photo-release-policy";
 import { SkincarePreferencesSchema, type SkincarePreferences } from "@/lib/skincare-preferences";
 import {
   buildSkincareRoutine,
@@ -143,8 +145,11 @@ function conditionStep(step: SkincareRoutineStep, profile: SkincarePreferences, 
   return {
     ...step,
     reason,
+    rankedProductIds: undefined,
+    preferenceReason: undefined,
+    budgetReason: undefined,
     product: publicProduct(selected),
-    alternatives: candidates.slice(1, 2).map(publicProduct),
+    alternatives: candidates.slice(1).map(publicProduct),
   };
 }
 
@@ -192,6 +197,10 @@ export function buildConditionAwareRoutine(preferences: SkincarePreferences, res
     routine,
     decision: generalDecision("This model version, image task or class mapping does not match the documented clinical-photo care policy. These examples use preferences only."),
   };
+  if (analysis.model.version === PHOTO_MODEL_VERSION && !PHOTO_PRODUCT_MATCHING_ENABLED) return {
+    routine,
+    decision: generalDecision(PHOTO_PRODUCT_RESTRICTION),
+  };
   if (analysis.status !== "assessed" || !analysis.quality?.passed || analysis.quality.issues.some(issue => issue.severity === "error") || !analysis.uncertainty || analysis.uncertainty.rejected) return {
     routine,
     decision: generalDecision("The image analysis was unavailable, unsupported, rejected for quality, or uncertain. No appearance-specific product ranking is made."),
@@ -233,15 +242,15 @@ export function buildConditionAwareRoutine(preferences: SkincarePreferences, res
         ? "You reported no sensitivity, but that does not predict tolerance. The condition policy still uses simple eligible moisturizers and keeps every selected ingredient exclusion."
         : "Because sensitivity is reported or unknown, any new cleanser or moisturizer example is restricted to formulas without botanical extracts. The catalog sunscreen contains aloe and still requires a full-label and tolerance check; owned products cannot be inspected and no allergy safety is inferred.",
       profile.budget === "minimal"
-        ? "Your minimal purchasing priority keeps only the three basic steps and reuses owned products. The dated subtotal is for missing items; this is not a cheapest-basket calculation."
-        : "Your flexible purchasing priority allows comparison of eligible substitutes, not extra treatment steps. A higher budget does not establish better outcomes; compare the dated item costs before buying.",
+        ? "Your minimal purchasing priority keeps only the three basic steps and reuses owned products. The dollar cap applies to dated prices for the missing items, with preference ranks used to compare complete eligible combinations."
+        : "Your flexible purchasing priority allows comparison of eligible substitutes within the dollar cap, not extra treatment steps. A higher budget does not establish better outcomes.",
       "Seek professional advice for a persistent or worsening concern; urgent rash warning signs take precedence over product selection.",
     ],
     source: { ...source },
   };
   return {
     decision,
-    routine: {
+    routine: chooseBudgetBasket({
       ...routine,
       summary: "A selected three-step catalog combination using the supported appearance category and your preferences, keeping tolerated owned basics.",
       steps: routine.steps.map(step => conditionStep(step, profile, conditionId)),
@@ -252,6 +261,6 @@ export function buildConditionAwareRoutine(preferences: SkincarePreferences, res
         "Get medical attention for a widespread, rapidly spreading, painful, blistering, open or infected-looking rash, fever, or involvement of eyes, lips, mouth or genital skin. Trouble breathing or swallowing, or swelling of lips or eyes, may need emergency care. This photo model does not assess those signs.",
       ],
       references: [...routine.references, { ...source }, { ...SOURCES.rash }],
-    },
+    }, profile.totalBudgetUsd),
   };
 }

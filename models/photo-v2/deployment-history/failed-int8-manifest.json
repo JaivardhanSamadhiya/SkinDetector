@@ -1,0 +1,104 @@
+{
+  "version": "skinsnap-photo-dinov2-v2",
+  "architecture": "Frozen DINOv2 dinov2_vitb14 (CLS + mean patch features) with trained linear three-class research head; dynamic int8 ONNX",
+  "available": false,
+  "backbone": "dinov2_vitb14",
+  "head": "linear",
+  "input_size": 224,
+  "supported_image_type": "clinical_photo",
+  "classes": [
+    {
+      "id": "acne",
+      "label": "Acne-like appearance"
+    },
+    {
+      "id": "dermatitis",
+      "label": "Dermatitis-like appearance"
+    },
+    {
+      "id": "other",
+      "label": "Other / unsupported appearance"
+    }
+  ],
+  "preprocessing": {
+    "mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "std": [
+      0.229,
+      0.224,
+      0.225
+    ],
+    "resize": "nearest",
+    "coordinate_rule": "floor((coordinate+0.5)*source_size/224)",
+    "exif_orientation": true,
+    "alpha": "white",
+    "layout": "NCHW"
+  },
+  "temperature": 4.0,
+  "uncertainty": {
+    "max_score_threshold": 0.65,
+    "margin_threshold": 0.15,
+    "always_reject_classes": [
+      "other"
+    ]
+  },
+  "readiness": {
+    "passed": false,
+    "benchmark_minimums_passed": false,
+    "minimums": {
+      "macro_f1": 0.6,
+      "balanced_accuracy": 0.6,
+      "acne_recall": 0.5,
+      "dermatitis_recall": 0.5
+    },
+    "measured": {
+      "macro_f1": 0.30670575110346693,
+      "balanced_accuracy": 0.3306436193827917,
+      "acne_recall": 0.0,
+      "dermatitis_recall": 0.2676767676767677
+    },
+    "independent_holdout": true,
+    "blocked_by_previously_examined_test": false,
+    "clinical_validation": false,
+    "sufficient_supported_class_samples": true,
+    "scin_dermatitis_recall_minimum_passed": false
+  },
+  "test_group_support": {
+    "acne": 80,
+    "dermatitis": 198,
+    "other": 2077
+  },
+  "deployment_validation": {
+    "onnx_verified": true,
+    "preprocessing_verified": true,
+    "quantized_benchmark_passed": false,
+    "onnx_sha256": "deccecc048c9283e289bba288fb304f391918b6932a2ad51c8b60385de3cfa22",
+    "onnx_bytes": 91739834,
+    "pytorch_float32_max_logit_error": 3.4332275390625e-05,
+    "browser_verified": false
+  },
+  "onnx": {
+    "url": "/model-photo/model.onnx",
+    "sha256": "deccecc048c9283e289bba288fb304f391918b6932a2ad51c8b60385de3cfa22",
+    "input_name": "image",
+    "logits_output": "logits"
+  },
+  "dataset": "SCIN + corrected Fitzpatrick17k-C",
+  "licenses": [
+    "SCIN Data Use License",
+    "Fitzpatrick17k images: CC BY-NC-SA3.0 per authors, original atlas rights not commercially cleared",
+    "Corrected metadata: CC BY4.0",
+    "DINOv2: Apache2.0"
+  ],
+  "limitations": [
+    "Untouched for this experiment does not imply unseen during DINOv2 pretraining.",
+    "No patient identifiers; no proven patient independence.",
+    "Corrected atlas images and US volunteer differentials do not validate arbitrary smartphone faces.",
+    "Other is a finite heterogeneous class, not a validated OOD detector.",
+    "No disease severity, diagnosis, serious-disease exclusion, or best-product efficacy established.",
+    "Research/noncommercial data terms; commercial deployment not cleared."
+  ]
+}

@@ -2,6 +2,7 @@ import { createHash, webcrypto } from "node:crypto";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { CLINICAL_CLASSES } from "@/lib/clinical-task";
 import { PHOTO_MODEL_VERSION, PhotoManifestSchema } from "@/lib/browser-photo-inference";
+import { PHOTO_PRODUCT_RESTRICTION } from "@/lib/photo-release-policy";
 
 const runtime = vi.hoisted(() => ({ create: vi.fn(), run: vi.fn(), tensor: vi.fn() }));
 vi.mock("onnxruntime-web/wasm", () => ({
@@ -35,6 +36,18 @@ function manifestFixture() {
     test_group_support: { acne: 31, dermatitis: 38, other: 200 },
     deployment_validation: { onnx_verified: true, quantized_benchmark_passed: true, preprocessing_verified: true },
     onnx: { url: "/model-photo/model.onnx", sha256: weightHash, input_name: "image", logits_output: "logits" },
+  };
+}
+
+function splitManifestFixture() {
+  const parts = [weightBytes.slice(0, 3), weightBytes.slice(3)];
+  return {
+    ...manifestFixture(),
+    deployment_validation: { onnx_verified: true, artifact_benchmark_passed: true, preprocessing_verified: true,
+      browser_verified: true, format: "float32" },
+    onnx: { sha256: weightHash, bytes: weightBytes.length, input_name: "image", logits_output: "logits",
+      parts: parts.map((bytes, index) => ({ url: `/model-photo/model.part-${index + 1}.bin`, bytes: bytes.length,
+        sha256: createHash("sha256").update(bytes).digest("hex") })) },
   };
 }
 
@@ -90,6 +103,36 @@ describe("photo-v2 research manifest", () => {
     mutate(value);
     expect(PhotoManifestSchema.safeParse(value).success).toBe(false);
   });
+
+  it("accepts the verified split float artifact without claiming that int8 passed", () => {
+    expect(PhotoManifestSchema.safeParse(splitManifestFixture()).success).toBe(true);
+    expect(PhotoManifestSchema.safeParse({ ...splitManifestFixture(), deployment_validation: {
+      ...splitManifestFixture().deployment_validation, quantized_benchmark_passed: false,
+    } }).success).toBe(true);
+  });
+
+  it("cannot pass an unverified float artifact through the legacy quantized branch", () => {
+    const value = splitManifestFixture();
+    expect(PhotoManifestSchema.safeParse({ ...value, deployment_validation: {
+      ...value.deployment_validation, quantized_benchmark_passed: true, browser_verified: false,
+    } }).success).toBe(false);
+    expect(PhotoManifestSchema.safeParse({ ...value, deployment_validation: {
+      ...value.deployment_validation, quantized_benchmark_passed: true, artifact_benchmark_passed: false,
+    } }).success).toBe(false);
+  });
+
+  it.each(["part order", "duplicate part", "foreign part", "total size", "oversized part", "too many parts", "missing browser parity", "failed artifact benchmark"])("rejects split artifact with %s", kind => {
+    const value = splitManifestFixture();
+    if (kind === "part order") value.onnx.parts.reverse();
+    if (kind === "duplicate part") value.onnx.parts[1].url = value.onnx.parts[0].url;
+    if (kind === "foreign part") value.onnx.parts[0].url = "https://example.invalid/model.part-1.bin";
+    if (kind === "total size") value.onnx.bytes++;
+    if (kind === "oversized part") { value.onnx.parts[0].bytes = 20 * 1024 * 1024 + 1; value.onnx.bytes = value.onnx.parts.reduce((sum, part) => sum + part.bytes, 0); }
+    if (kind === "too many parts") { value.onnx.parts = Array.from({ length: 33 }, (_, index) => ({ ...value.onnx.parts[0], url: `/model-photo/model.part-${index + 1}.bin`, bytes: 1 })); value.onnx.bytes = 33; }
+    if (kind === "missing browser parity") value.deployment_validation.browser_verified = false;
+    if (kind === "failed artifact benchmark") value.deployment_validation.artifact_benchmark_passed = false;
+    expect(PhotoManifestSchema.safeParse(value).success).toBe(false);
+  });
 });
 
 function pngFile(width = 128, height = 128) {
@@ -129,6 +172,7 @@ function installBrowser(width = 128, height = 128, flat?: number) {
 
 function serve(value = manifestFixture(), bytes = weightBytes) {
   const fetch = vi.fn(async (input: string | URL, _init?: RequestInit) => {
+    void _init; // Retain the request-init tuple for the no-image-POST assertion.
     if (String(input) === "/model-photo/manifest.json") return new Response(JSON.stringify(value), { status: 200, headers: { "content-type": "application/json" } });
     if (String(input) === "/model-photo/model.onnx") return new Response(bytes, { status: 200 });
     throw new Error("Unexpected network request: " + String(input));
@@ -208,11 +252,11 @@ describe("photo-v2 browser inference failure boundaries", () => {
     expect(tensor[0]).toBeCloseTo((1 - .485) / .229, 5);
     expect(tensor[2]).toBeCloseTo((127 / 255 - .485) / .229, 5);
     expect(tensor[224 * 224]).toBeCloseTo((1 - .456) / .224, 5);
-    expect(result.status).toBe("assessed");
+    expect(result.status).toBe("uncertain");
     expect(result.scores.map(score => score.id)).toEqual(["acne", "dermatitis", "other"]);
     expect(result.scores.reduce((sum, score) => sum + score.score, 0)).toBeCloseTo(1);
     expect(result.explanation).toBeNull();
-    expect(result.message).toContain("not a diagnosis");
+    expect(result.uncertainty?.reasons).toContain(PHOTO_PRODUCT_RESTRICTION);
     expect(progress).toHaveBeenCalledWith("Preparing the research result and its limitations…");
     expect(fetch.mock.calls.every(([, init]) => !init || !(init as RequestInit).body)).toBe(true);
   });
@@ -230,12 +274,56 @@ describe("photo-v2 browser inference failure boundaries", () => {
     expect((runtime.tensor.mock.calls[1][1] as Float32Array)[0]).not.toBe(firstPixel);
   });
 
+  it("verifies each ordered model part and the combined bytes before real runtime creation", async () => {
+    installBrowser();
+    const value = splitManifestFixture(), parts = [weightBytes.slice(0, 3), weightBytes.slice(3)];
+    const fetch = vi.fn(async (input: string | URL) => {
+      const url = String(input);
+      if (url.endsWith("manifest.json")) return new Response(JSON.stringify(value), { status: 200 });
+      const index = value.onnx.parts.findIndex(part => part.url === url);
+      if (index < 0) throw new Error("Unexpected split transport request");
+      return new Response(parts[index], { status: 200, headers: { "content-length": String(parts[index].length) } });
+    });
+    vi.stubGlobal("fetch", fetch);
+    const progress = vi.fn();
+    const { analyzePhotoImage } = await import("@/lib/browser-photo-inference");
+    const result = await analyzePhotoImage(pngFile(), undefined, progress);
+    expect(fetch.mock.calls.map(([url]) => String(url))).toEqual(["/model-photo/manifest.json", "/model-photo/model.part-1.bin", "/model-photo/model.part-2.bin"]);
+    expect(new Uint8Array(runtime.create.mock.calls[0][0])).toEqual(weightBytes);
+    expect(progress).toHaveBeenCalledWith("Loading verified model files (1 of 2)…");
+    expect(progress).toHaveBeenCalledWith("Loading verified model files (2 of 2)…");
+    expect(result).toMatchObject({ status: "uncertain", model: { available: true }, uncertainty: { rejected: true } });
+    expect(result.uncertainty?.reasons).toContain(PHOTO_PRODUCT_RESTRICTION);
+  });
+
+  it.each(["part hash", "part size", "declared size", "combined hash"])("blocks runtime creation after a split %s mismatch", async kind => {
+    installBrowser();
+    const value = splitManifestFixture(), parts = [weightBytes.slice(0, 3), weightBytes.slice(3)];
+    if (kind === "combined hash") value.onnx.sha256 = "0".repeat(64);
+    const fetch = vi.fn(async (input: string | URL) => {
+      const url = String(input);
+      if (url.endsWith("manifest.json")) return new Response(JSON.stringify(value), { status: 200 });
+      const index = value.onnx.parts.findIndex(part => part.url === url);
+      if (index < 0) throw new Error("Unexpected split transport request");
+      const bytes = index === 0 && kind === "part hash" ? new Uint8Array([0, 0, 0])
+        : index === 0 && kind === "part size" ? parts[index].slice(0, 2) : parts[index];
+      const headers = kind === "declared size" && index === 0 ? { "content-length": "4" } : undefined;
+      return new Response(bytes, { status: 200, headers });
+    });
+    vi.stubGlobal("fetch", fetch);
+    const { analyzePhotoImage } = await import("@/lib/browser-photo-inference");
+    expect(await analyzePhotoImage(pngFile())).toMatchObject({ status: "unavailable", scores: [], model: { available: false } });
+    expect(runtime.create).not.toHaveBeenCalled();
+    expect(runtime.run).not.toHaveBeenCalled();
+    expect(fetch.mock.calls.length).toBe(kind === "combined hash" ? 3 : 2);
+  });
+
   it("retries failed metadata instead of caching the failure", async () => {
     installBrowser(); const fetch = serve();
     fetch.mockResolvedValueOnce(new Response("unavailable", { status: 503 }));
     const { analyzePhotoImage } = await import("@/lib/browser-photo-inference");
     expect((await analyzePhotoImage(pngFile())).status).toBe("unavailable");
-    expect((await analyzePhotoImage(pngFile())).status).toBe("assessed");
+    expect((await analyzePhotoImage(pngFile())).status).toBe("uncertain");
     expect(fetch.mock.calls.filter(([url]) => String(url).endsWith("manifest.json"))).toHaveLength(2);
   });
 
@@ -249,7 +337,7 @@ describe("photo-v2 browser inference failure boundaries", () => {
     fetch.mockImplementation(async input => String(input).endsWith("manifest.json")
       ? new Response(JSON.stringify(manifestFixture()), { status: 200 })
       : new Response(weightBytes, { status: 200 }));
-    expect((await analyzePhotoImage(pngFile())).status).toBe("assessed");
+    expect((await analyzePhotoImage(pngFile())).status).toBe("uncertain");
     expect(runtime.create).toHaveBeenCalledTimes(1);
   });
 
@@ -278,7 +366,7 @@ describe("photo-v2 browser inference failure boundaries", () => {
     const { analyzePhotoImage } = await import("@/lib/browser-photo-inference");
     const result = await analyzePhotoImage(pngFile());
     expect(result.status).toBe("uncertain");
-    expect(result.uncertainty?.reasons).toHaveLength(2);
+    expect(result.uncertainty?.reasons).toHaveLength(3);
     expect(result.uncertainty?.margin).toBe(0);
   });
 
@@ -307,7 +395,7 @@ describe("photo-v2 browser inference failure boundaries", () => {
     expect((await analyzePhotoImage(pngFile())).status).toBe("unavailable");
     runtime.run.mockRejectedValueOnce(new Error("execution failed"));
     expect((await analyzePhotoImage(pngFile())).status).toBe("unavailable");
-    expect((await analyzePhotoImage(pngFile())).status).toBe("assessed");
+    expect((await analyzePhotoImage(pngFile())).status).toBe("uncertain");
     expect(runtime.create).toHaveBeenCalledTimes(3);
   });
 

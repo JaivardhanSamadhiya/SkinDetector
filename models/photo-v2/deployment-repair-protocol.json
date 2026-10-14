@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "purpose": "Technical deployment serialization repair after failed dynamic-int8 export; no new model selection or training",
+  "registered_after_original_test": true,
+  "candidates_in_order": [
+    "float16_constants_float32_compute",
+    "original_float32"
+  ],
+  "float16_rule": "Round finite float32 initializer tensors with at least1024 elements to float16 storage; insert Cast to float32 before original graph operations; preserve trained head tensors exactly; skip unrepresentable tensors",
+  "parity": {
+    "split": "validation",
+    "rows": "First12 in unchanged cohort order",
+    "maximum_absolute_logit_error": 0.005,
+    "reference": "Fresh PyTorch locked backbone/head",
+    "require_matching_top_labels": true
+  },
+  "fallback": "If the single float16 candidate fails parity, deploy byte-identical original float32 ONNX; no iterative conversion tuning",
+  "calibration": "Retain original validation-selected temperature unchanged; never use int8 recalibration",
+  "validation": "Measure all original validation first views with chosen artifact; report source metrics; no tuning from measurements",
+  "test": "Lock repair format, file hashes, calibration, and validation before remeasuring already opened test; explicitly not a new independent experiment",
+  "readiness": "Use original unchanged benchmark, sample-count, source, and holdout rules; browser verification is separate",
+  "part_bytes_maximum": 20971520,
+  "part_count_maximum": 32,
+  "clinical_validation": false
+}

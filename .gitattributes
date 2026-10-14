@@ -1,3 +1,9 @@
 # Preserve the archived prototype byte-for-byte on every platform.
 legacy/*.html -text
 legacy/*.png -text
+
+# These records contain SHA-256 bindings to exact serialized file bytes.
+# Keep the evaluated artifacts and their provenance intact across checkouts.
+models/photo-v2/** -text
+public/model-photo/** -text
+lib/browser-inference.ts -text

@@ -76,6 +76,7 @@ test("an unsupported image still offers independent general care without pretend
 
 test("a real uncertain model output never supplies label-specific care or treatment products", async ({ page }) => {
   await page.goto("/analysis/");
+  await page.getByRole("button", { name: "Save preferences", exact: true }).click();
   await page.getByLabel("Choose a skin image", { exact:true }).setInputFiles(join("public/demo", manifest.samples[2].filename));
   await page.getByRole("radio", { name:"Dermoscopic image", exact:true }).check();
   await page.getByRole("checkbox", { name:consent, exact:true }).check();

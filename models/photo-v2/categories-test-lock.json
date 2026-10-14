@@ -1,0 +1,16 @@
+{
+  "selection_lock_sha256": "56bcc070e128d5661609668807e734949c73ea78f612426189fc2b8d84cc3d54",
+  "backbone": "dinov2_vitb14",
+  "backbone_provenance": {
+    "name": "dinov2_vitb14",
+    "sha256": "0b8b82f85de91b424aded121c7e1dcc2b7bc6d0adeea651bf73a13307fad8c73",
+    "bytes": 346378731,
+    "source_commit": "7764ea0f912e53c92e82eb78a2a1631e92725fc8",
+    "url": "https://dl.fbaipublicfiles.com/dinov2/dinov2_vitb14/dinov2_vitb14_pretrain.pth"
+  },
+  "head_sha256": "baaec482d2b30ed52f64e99753b1edbfabcfa7985bafe5bb1cbeba5d1dff5242",
+  "cohort_sha256": "a697c5e5656ee618b713a1e9e56089d3e6c471771193acff1f28319d20ca46a2",
+  "protocol_sha256": "10fead40829a070e4b865a5aebdd5cb10a3ae23c14c6cfad348f35378f3fa18c",
+  "preprocessing_sha256": "d1937c6f6c67fcda9782ae2957af5d6fda3ac571ed6df5d122f40ce1b216f0da",
+  "feature_index_sha256": "932c9c774707fd39f3c5f469eb1287f6c720c8b1f0b3762e2ed9acdaa6cc0aa8"
+}

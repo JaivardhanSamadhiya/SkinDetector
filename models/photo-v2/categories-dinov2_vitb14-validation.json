@@ -1,0 +1,5112 @@
+{
+  "version": "skinsnap-photo-categories-dinov2-v1",
+  "backbone": "dinov2_vitb14",
+  "head": "linear",
+  "C": 1.0,
+  "temperature": 2.75,
+  "validation": {
+    "n": 1192,
+    "accuracy": 0.6166107382550335,
+    "macro_f1": 0.4318821845531059,
+    "balanced_accuracy": 0.4586954155368343,
+    "balanced_accuracy_definition": "Mean recall across categories represented in this subset",
+    "confusion_matrix": [
+      [
+        34,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        3
+      ],
+      [
+        0,
+        55,
+        1,
+        0,
+        5,
+        2,
+        3,
+        0,
+        2,
+        0,
+        1,
+        0,
+        0,
+        31
+      ],
+      [
+        0,
+        5,
+        29,
+        0,
+        1,
+        0,
+        0,
+        0,
+        3,
+        3,
+        0,
+        0,
+        0,
+        17
+      ],
+      [
+        0,
+        4,
+        0,
+        4,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        0,
+        3,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        8
+      ],
+      [
+        0,
+        7,
+        0,
+        0,
+        0,
+        8,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        9
+      ],
+      [
+        1,
+        1,
+        1,
+        0,
+        0,
+        2,
+        12,
+        1,
+        2,
+        1,
+        0,
+        0,
+        0,
+        17
+      ],
+      [
+        0,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32,
+        5,
+        4,
+        0,
+        1,
+        0,
+        5
+      ],
+      [
+        1,
+        1,
+        3,
+        0,
+        0,
+        0,
+        0,
+        5,
+        20,
+        2,
+        0,
+        0,
+        0,
+        5
+      ],
+      [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        5,
+        3,
+        24,
+        0,
+        2,
+        1,
+        7
+      ],
+      [
+        0,
+        2,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        2,
+        1,
+        3,
+        0,
+        0,
+        4
+      ],
+      [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        4,
+        0,
+        5,
+        0,
+        5
+      ],
+      [
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1
+      ],
+      [
+        12,
+        79,
+        28,
+        5,
+        12,
+        14,
+        40,
+        9,
+        17,
+        14,
+        8,
+        2,
+        0,
+        505
+      ]
+    ],
+    "class_order": [
+      "acne",
+      "dermatitis",
+      "psoriasis",
+      "rosacea",
+      "folliculitis",
+      "urticaria",
+      "lichen_planus",
+      "basal_cell_carcinoma",
+      "squamous_cell_carcinoma",
+      "melanoma",
+      "actinic_keratosis",
+      "melanocytic_nevus",
+      "seborrheic_keratosis",
+      "other"
+    ],
+    "per_class": {
+      "acne": {
+        "precision": 0.6938775510204082,
+        "recall": 0.8717948717948718,
+        "f1-score": 0.7727272727272727,
+        "support": 39.0,
+        "predicted_count": 49,
+        "true_positive": 34,
+        "independent_group_support": 39,
+        "recall_wilson95": [
+          0.7329425662025455,
+          0.9439718246302862
+        ],
+        "precision_wilson95": [
+          0.5547210644108935,
+          0.8048450873199342
+        ]
+      },
+      "dermatitis": {
+        "precision": 0.34591194968553457,
+        "recall": 0.55,
+        "f1-score": 0.4247104247104247,
+        "support": 100.0,
+        "predicted_count": 159,
+        "true_positive": 55,
+        "independent_group_support": 99,
+        "recall_wilson95": [
+          0.45244602997442135,
+          0.6438546202048803
+        ],
+        "precision_wilson95": [
+          0.2763987587797403,
+          0.422695069322388
+        ]
+      },
+      "psoriasis": {
+        "precision": 0.4393939393939394,
+        "recall": 0.5,
+        "f1-score": 0.46774193548387094,
+        "support": 58.0,
+        "predicted_count": 66,
+        "true_positive": 29,
+        "independent_group_support": 58,
+        "recall_wilson95": [
+          0.3753827301422442,
+          0.6246172698577558
+        ],
+        "precision_wilson95": [
+          0.3262812091954944,
+          0.5591736462000862
+        ]
+      },
+      "rosacea": {
+        "precision": 0.4,
+        "recall": 0.5,
+        "f1-score": 0.4444444444444444,
+        "support": 8.0,
+        "predicted_count": 10,
+        "true_positive": 4,
+        "independent_group_support": 8,
+        "recall_wilson95": [
+          0.21521606221387757,
+          0.7847839377861224
+        ],
+        "precision_wilson95": [
+          0.16818032970623614,
+          0.6873262302663417
+        ]
+      },
+      "folliculitis": {
+        "precision": 0.13636363636363635,
+        "recall": 0.2,
+        "f1-score": 0.16216216216216217,
+        "support": 15.0,
+        "predicted_count": 22,
+        "true_positive": 3,
+        "independent_group_support": 15,
+        "recall_wilson95": [
+          0.07047549346981563,
+          0.45185448715169363
+        ],
+        "precision_wilson95": [
+          0.04749003714055253,
+          0.33334987166571717
+        ]
+      },
+      "urticaria": {
+        "precision": 0.3076923076923077,
+        "recall": 0.32,
+        "f1-score": 0.3137254901960784,
+        "support": 25.0,
+        "predicted_count": 26,
+        "true_positive": 8,
+        "independent_group_support": 25,
+        "recall_wilson95": [
+          0.17205190306907978,
+          0.5158973072689775
+        ],
+        "precision_wilson95": [
+          0.16501315595463767,
+          0.4998825832219837
+        ]
+      },
+      "lichen_planus": {
+        "precision": 0.21052631578947367,
+        "recall": 0.3157894736842105,
+        "f1-score": 0.25263157894736843,
+        "support": 38.0,
+        "predicted_count": 57,
+        "true_positive": 12,
+        "independent_group_support": 38,
+        "recall_wilson95": [
+          0.1908460367559618,
+          0.4745575989060954
+        ],
+        "precision_wilson95": [
+          0.12474548303034583,
+          0.33286121083190506
+        ]
+      },
+      "basal_cell_carcinoma": {
+        "precision": 0.5925925925925926,
+        "recall": 0.64,
+        "f1-score": 0.6153846153846154,
+        "support": 50.0,
+        "predicted_count": 54,
+        "true_positive": 32,
+        "independent_group_support": 50,
+        "recall_wilson95": [
+          0.501410168761127,
+          0.7586125034815325
+        ],
+        "precision_wilson95": [
+          0.4596684934349057,
+          0.7132178791408542
+        ]
+      },
+      "squamous_cell_carcinoma": {
+        "precision": 0.36363636363636365,
+        "recall": 0.5405405405405406,
+        "f1-score": 0.43478260869565216,
+        "support": 37.0,
+        "predicted_count": 55,
+        "true_positive": 20,
+        "independent_group_support": 37,
+        "recall_wilson95": [
+          0.3838404689217949,
+          0.6896143019562697
+        ],
+        "precision_wilson95": [
+          0.2493053153030725,
+          0.4957723850015874
+        ]
+      },
+      "melanoma": {
+        "precision": 0.4528301886792453,
+        "recall": 0.5581395348837209,
+        "f1-score": 0.5,
+        "support": 43.0,
+        "predicted_count": 53,
+        "true_positive": 24,
+        "independent_group_support": 43,
+        "recall_wilson95": [
+          0.41107614452824104,
+          0.6956669016082949
+        ],
+        "precision_wilson95": [
+          0.3265757915292224,
+          0.5854602451289419
+        ]
+      },
+      "actinic_keratosis": {
+        "precision": 0.25,
+        "recall": 0.21428571428571427,
+        "f1-score": 0.23076923076923078,
+        "support": 14.0,
+        "predicted_count": 12,
+        "true_positive": 3,
+        "independent_group_support": 14,
+        "recall_wilson95": [
+          0.07571386712693184,
+          0.47589230586600295
+        ],
+        "precision_wilson95": [
+          0.08894166839405471,
+          0.5323053349335657
+        ]
+      },
+      "melanocytic_nevus": {
+        "precision": 0.5,
+        "recall": 0.3333333333333333,
+        "f1-score": 0.4,
+        "support": 15.0,
+        "predicted_count": 10,
+        "true_positive": 5,
+        "independent_group_support": 15,
+        "recall_wilson95": [
+          0.1517632443971473,
+          0.5828645226148023
+        ],
+        "precision_wilson95": [
+          0.236593090512564,
+          0.7634069094874361
+        ]
+      },
+      "seborrheic_keratosis": {
+        "precision": 0.5,
+        "recall": 0.2,
+        "f1-score": 0.2857142857142857,
+        "support": 5.0,
+        "predicted_count": 2,
+        "true_positive": 1,
+        "independent_group_support": 5,
+        "recall_wilson95": [
+          0.03622410863243014,
+          0.6244653702374747
+        ],
+        "precision_wilson95": [
+          0.09453120573423074,
+          0.9054687942657693
+        ]
+      },
+      "other": {
+        "precision": 0.8184764991896273,
+        "recall": 0.6778523489932886,
+        "f1-score": 0.7415565345080763,
+        "support": 745.0,
+        "predicted_count": 617,
+        "true_positive": 505,
+        "independent_group_support": 744,
+        "recall_wilson95": [
+          0.643458136659849,
+          0.7104218427116628
+        ],
+        "precision_wilson95": [
+          0.786122089915428,
+          0.8468897594325757
+        ]
+      }
+    },
+    "ece_10": 0.07152636337369496,
+    "calibration_bins": [
+      {
+        "lower": 0.0,
+        "upper": 0.1,
+        "n": 0,
+        "accuracy": null,
+        "mean_score": null
+      },
+      {
+        "lower": 0.1,
+        "upper": 0.2,
+        "n": 0,
+        "accuracy": null,
+        "mean_score": null
+      },
+      {
+        "lower": 0.2,
+        "upper": 0.3,
+        "n": 42,
+        "accuracy": 0.3333333333333333,
+        "mean_score": 0.2742253448021034
+      },
+      {
+        "lower": 0.3,
+        "upper": 0.4,
+        "n": 153,
+        "accuracy": 0.43137254901960786,
+        "mean_score": 0.3572062091882161
+      },
+      {
+        "lower": 0.4,
+        "upper": 0.5,
+        "n": 260,
+        "accuracy": 0.5923076923076923,
+        "mean_score": 0.45436065087868704
+      },
+      {
+        "lower": 0.5,
+        "upper": 0.6,
+        "n": 221,
+        "accuracy": 0.579185520361991,
+        "mean_score": 0.5489666702079508
+      },
+      {
+        "lower": 0.6,
+        "upper": 0.7,
+        "n": 169,
+        "accuracy": 0.6627218934911243,
+        "mean_score": 0.6465077772157403
+      },
+      {
+        "lower": 0.7,
+        "upper": 0.8,
+        "n": 134,
+        "accuracy": 0.7388059701492538,
+        "mean_score": 0.7483618908503411
+      },
+      {
+        "lower": 0.8,
+        "upper": 0.9,
+        "n": 145,
+        "accuracy": 0.7931034482758621,
+        "mean_score": 0.8461946525001022
+      },
+      {
+        "lower": 0.9,
+        "upper": 1.0,
+        "n": 68,
+        "accuracy": 0.6911764705882353,
+        "mean_score": 0.9436167549462515
+      }
+    ],
+    "brier_multiclass": 0.5572455204609289,
+    "nll": 1.186587773869437
+  },
+  "source_validation": {
+    "Fitzpatrick17k-C": {
+      "n": 1069,
+      "accuracy": 0.6351730589335828,
+      "macro_f1": 0.43481799950820604,
+      "balanced_accuracy": 0.4646050202944774,
+      "balanced_accuracy_definition": "Mean recall across categories represented in this subset",
+      "confusion_matrix": [
+        [
+          34,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          3
+        ],
+        [
+          0,
+          21,
+          1,
+          0,
+          3,
+          0,
+          3,
+          0,
+          2,
+          0,
+          1,
+          0,
+          0,
+          23
+        ],
+        [
+          0,
+          4,
+          28,
+          0,
+          0,
+          0,
+          0,
+          0,
+          3,
+          3,
+          0,
+          0,
+          0,
+          16
+        ],
+        [
+          0,
+          3,
+          0,
+          4,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          3,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          7
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          5,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          6
+        ],
+        [
+          1,
+          1,
+          1,
+          0,
+          0,
+          2,
+          12,
+          1,
+          2,
+          1,
+          0,
+          0,
+          0,
+          17
+        ],
+        [
+          0,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          32,
+          5,
+          4,
+          0,
+          1,
+          0,
+          5
+        ],
+        [
+          1,
+          1,
+          3,
+          0,
+          0,
+          0,
+          0,
+          5,
+          20,
+          2,
+          0,
+          0,
+          0,
+          5
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          5,
+          3,
+          24,
+          0,
+          2,
+          1,
+          7
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          2,
+          1,
+          3,
+          0,
+          0,
+          4
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          4,
+          0,
+          5,
+          0,
+          5
+        ],
+        [
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1
+        ],
+        [
+          11,
+          52,
+          28,
+          5,
+          10,
+          9,
+          39,
+          9,
+          17,
+          14,
+          6,
+          2,
+          0,
+          487
+        ]
+      ],
+      "class_order": [
+        "acne",
+        "dermatitis",
+        "psoriasis",
+        "rosacea",
+        "folliculitis",
+        "urticaria",
+        "lichen_planus",
+        "basal_cell_carcinoma",
+        "squamous_cell_carcinoma",
+        "melanoma",
+        "actinic_keratosis",
+        "melanocytic_nevus",
+        "seborrheic_keratosis",
+        "other"
+      ],
+      "per_class": {
+        "acne": {
+          "precision": 0.7083333333333334,
+          "recall": 0.8717948717948718,
+          "f1-score": 0.7816091954022989,
+          "support": 39.0,
+          "predicted_count": 48,
+          "true_positive": 34,
+          "independent_group_support": 39,
+          "recall_wilson95": [
+            0.7329425662025455,
+            0.9439718246302862
+          ],
+          "precision_wilson95": [
+            0.5682074019042831,
+            0.8175842107348348
+          ]
+        },
+        "dermatitis": {
+          "precision": 0.2413793103448276,
+          "recall": 0.3888888888888889,
+          "f1-score": 0.2978723404255319,
+          "support": 54.0,
+          "predicted_count": 87,
+          "true_positive": 21,
+          "independent_group_support": 54,
+          "recall_wilson95": [
+            0.270419338291165,
+            0.5221170146179233
+          ],
+          "precision_wilson95": [
+            0.16364163157594577,
+            0.340989837533082
+          ]
+        },
+        "psoriasis": {
+          "precision": 0.4307692307692308,
+          "recall": 0.5185185185185185,
+          "f1-score": 0.47058823529411764,
+          "support": 54.0,
+          "predicted_count": 65,
+          "true_positive": 28,
+          "independent_group_support": 54,
+          "recall_wilson95": [
+            0.3885170019812708,
+            0.6460602725338812
+          ],
+          "precision_wilson95": [
+            0.3175945741563928,
+            0.5516702532575414
+          ]
+        },
+        "rosacea": {
+          "precision": 0.4,
+          "recall": 0.5714285714285714,
+          "f1-score": 0.47058823529411764,
+          "support": 7.0,
+          "predicted_count": 10,
+          "true_positive": 4,
+          "independent_group_support": 7,
+          "recall_wilson95": [
+            0.2504583645276572,
+            0.8417801447485302
+          ],
+          "precision_wilson95": [
+            0.16818032970623614,
+            0.6873262302663417
+          ]
+        },
+        "folliculitis": {
+          "precision": 0.17647058823529413,
+          "recall": 0.23076923076923078,
+          "f1-score": 0.2,
+          "support": 13.0,
+          "predicted_count": 17,
+          "true_positive": 3,
+          "independent_group_support": 13,
+          "recall_wilson95": [
+            0.08179528718498569,
+            0.5025637594672749
+          ],
+          "precision_wilson95": [
+            0.06191126637620997,
+            0.41029458568834126
+          ]
+        },
+        "urticaria": {
+          "precision": 0.3125,
+          "recall": 0.38461538461538464,
+          "f1-score": 0.3448275862068966,
+          "support": 13.0,
+          "predicted_count": 16,
+          "true_positive": 5,
+          "independent_group_support": 13,
+          "recall_wilson95": [
+            0.17709707797762575,
+            0.6447710848733431
+          ],
+          "precision_wilson95": [
+            0.14164643854782039,
+            0.5559564416525933
+          ]
+        },
+        "lichen_planus": {
+          "precision": 0.21428571428571427,
+          "recall": 0.3157894736842105,
+          "f1-score": 0.2553191489361702,
+          "support": 38.0,
+          "predicted_count": 56,
+          "true_positive": 12,
+          "independent_group_support": 38,
+          "recall_wilson95": [
+            0.1908460367559618,
+            0.4745575989060954
+          ],
+          "precision_wilson95": [
+            0.1270590424909565,
+            0.33819463563405117
+          ]
+        },
+        "basal_cell_carcinoma": {
+          "precision": 0.5925925925925926,
+          "recall": 0.6530612244897959,
+          "f1-score": 0.6213592233009708,
+          "support": 49.0,
+          "predicted_count": 54,
+          "true_positive": 32,
+          "independent_group_support": 49,
+          "recall_wilson95": [
+            0.5131119428697273,
+            0.7707560716546102
+          ],
+          "precision_wilson95": [
+            0.4596684934349057,
+            0.7132178791408542
+          ]
+        },
+        "squamous_cell_carcinoma": {
+          "precision": 0.36363636363636365,
+          "recall": 0.5405405405405406,
+          "f1-score": 0.43478260869565216,
+          "support": 37.0,
+          "predicted_count": 55,
+          "true_positive": 20,
+          "independent_group_support": 37,
+          "recall_wilson95": [
+            0.3838404689217949,
+            0.6896143019562697
+          ],
+          "precision_wilson95": [
+            0.2493053153030725,
+            0.4957723850015874
+          ]
+        },
+        "melanoma": {
+          "precision": 0.4528301886792453,
+          "recall": 0.5581395348837209,
+          "f1-score": 0.5,
+          "support": 43.0,
+          "predicted_count": 53,
+          "true_positive": 24,
+          "independent_group_support": 43,
+          "recall_wilson95": [
+            0.41107614452824104,
+            0.6956669016082949
+          ],
+          "precision_wilson95": [
+            0.3265757915292224,
+            0.5854602451289419
+          ]
+        },
+        "actinic_keratosis": {
+          "precision": 0.3,
+          "recall": 0.23076923076923078,
+          "f1-score": 0.2608695652173913,
+          "support": 13.0,
+          "predicted_count": 10,
+          "true_positive": 3,
+          "independent_group_support": 13,
+          "recall_wilson95": [
+            0.08179528718498569,
+            0.5025637594672749
+          ],
+          "precision_wilson95": [
+            0.10779126740630099,
+            0.6032218525388546
+          ]
+        },
+        "melanocytic_nevus": {
+          "precision": 0.5,
+          "recall": 0.3333333333333333,
+          "f1-score": 0.4,
+          "support": 15.0,
+          "predicted_count": 10,
+          "true_positive": 5,
+          "independent_group_support": 15,
+          "recall_wilson95": [
+            0.1517632443971473,
+            0.5828645226148023
+          ],
+          "precision_wilson95": [
+            0.236593090512564,
+            0.7634069094874361
+          ]
+        },
+        "seborrheic_keratosis": {
+          "precision": 0.5,
+          "recall": 0.2,
+          "f1-score": 0.2857142857142857,
+          "support": 5.0,
+          "predicted_count": 2,
+          "true_positive": 1,
+          "independent_group_support": 5,
+          "recall_wilson95": [
+            0.03622410863243014,
+            0.6244653702374747
+          ],
+          "precision_wilson95": [
+            0.09453120573423074,
+            0.9054687942657693
+          ]
+        },
+        "other": {
+          "precision": 0.8310580204778157,
+          "recall": 0.706821480406386,
+          "f1-score": 0.763921568627451,
+          "support": 689.0,
+          "predicted_count": 586,
+          "true_positive": 487,
+          "independent_group_support": 688,
+          "recall_wilson95": [
+            0.6717590826256497,
+            0.7395904351776108
+          ],
+          "precision_wilson95": [
+            0.79858634656986,
+            0.8592175330959607
+          ]
+        }
+      },
+      "ece_10": 0.08444613831509133,
+      "calibration_bins": [
+        {
+          "lower": 0.0,
+          "upper": 0.1,
+          "n": 0,
+          "accuracy": null,
+          "mean_score": null
+        },
+        {
+          "lower": 0.1,
+          "upper": 0.2,
+          "n": 0,
+          "accuracy": null,
+          "mean_score": null
+        },
+        {
+          "lower": 0.2,
+          "upper": 0.3,
+          "n": 41,
+          "accuracy": 0.34146341463414637,
+          "mean_score": 0.27402956097919473
+        },
+        {
+          "lower": 0.3,
+          "upper": 0.4,
+          "n": 147,
+          "accuracy": 0.42857142857142855,
+          "mean_score": 0.3574840414327166
+        },
+        {
+          "lower": 0.4,
+          "upper": 0.5,
+          "n": 237,
+          "accuracy": 0.6075949367088608,
+          "mean_score": 0.4542672263786653
+        },
+        {
+          "lower": 0.5,
+          "upper": 0.6,
+          "n": 190,
+          "accuracy": 0.6157894736842106,
+          "mean_score": 0.5491698698166145
+        },
+        {
+          "lower": 0.6,
+          "upper": 0.7,
+          "n": 148,
+          "accuracy": 0.7027027027027027,
+          "mean_score": 0.6456010843002283
+        },
+        {
+          "lower": 0.7,
+          "upper": 0.8,
+          "n": 119,
+          "accuracy": 0.7647058823529411,
+          "mean_score": 0.7484269823591251
+        },
+        {
+          "lower": 0.8,
+          "upper": 0.9,
+          "n": 130,
+          "accuracy": 0.8,
+          "mean_score": 0.8458078703004677
+        },
+        {
+          "lower": 0.9,
+          "upper": 1.0,
+          "n": 57,
+          "accuracy": 0.7368421052631579,
+          "mean_score": 0.9424323527122506
+        }
+      ],
+      "brier_multiclass": 0.5369825192049478,
+      "nll": 1.1473471209458894
+    },
+    "SCIN": {
+      "n": 123,
+      "accuracy": 0.45528455284552843,
+      "macro_f1": 0.11877082590115903,
+      "balanced_accuracy": 0.1950698757763975,
+      "balanced_accuracy_definition": "Mean recall across categories represented in this subset",
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          34,
+          0,
+          0,
+          2,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          8
+        ],
+        [
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          6,
+          0,
+          0,
+          0,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          3
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          27,
+          0,
+          0,
+          2,
+          5,
+          1,
+          0,
+          0,
+          0,
+          2,
+          0,
+          0,
+          18
+        ]
+      ],
+      "class_order": [
+        "acne",
+        "dermatitis",
+        "psoriasis",
+        "rosacea",
+        "folliculitis",
+        "urticaria",
+        "lichen_planus",
+        "basal_cell_carcinoma",
+        "squamous_cell_carcinoma",
+        "melanoma",
+        "actinic_keratosis",
+        "melanocytic_nevus",
+        "seborrheic_keratosis",
+        "other"
+      ],
+      "per_class": {
+        "acne": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 0.0,
+          "predicted_count": 1,
+          "true_positive": 0,
+          "independent_group_support": 0,
+          "recall_wilson95": null,
+          "precision_wilson95": [
+            0.0,
+            0.7934506856227626
+          ]
+        },
+        "dermatitis": {
+          "precision": 0.4722222222222222,
+          "recall": 0.7391304347826086,
+          "f1-score": 0.576271186440678,
+          "support": 46.0,
+          "predicted_count": 72,
+          "true_positive": 34,
+          "independent_group_support": 45,
+          "recall_wilson95": [
+            0.597408464719844,
+            0.843991135543574
+          ],
+          "precision_wilson95": [
+            0.36126510337834705,
+            0.5859932950992339
+          ]
+        },
+        "psoriasis": {
+          "precision": 1.0,
+          "recall": 0.25,
+          "f1-score": 0.4,
+          "support": 4.0,
+          "predicted_count": 1,
+          "true_positive": 1,
+          "independent_group_support": 4,
+          "recall_wilson95": [
+            0.04558726080970055,
+            0.6993581574175981
+          ],
+          "precision_wilson95": [
+            0.20654931437723745,
+            1.0
+          ]
+        },
+        "rosacea": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 1.0,
+          "predicted_count": 0,
+          "true_positive": 0,
+          "independent_group_support": 1,
+          "recall_wilson95": [
+            0.0,
+            0.7934506856227626
+          ],
+          "precision_wilson95": null
+        },
+        "folliculitis": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 2.0,
+          "predicted_count": 5,
+          "true_positive": 0,
+          "independent_group_support": 2,
+          "recall_wilson95": [
+            0.0,
+            0.6576197724933469
+          ],
+          "precision_wilson95": [
+            0.0,
+            0.43448246478317476
+          ]
+        },
+        "urticaria": {
+          "precision": 0.3,
+          "recall": 0.25,
+          "f1-score": 0.2727272727272727,
+          "support": 12.0,
+          "predicted_count": 10,
+          "true_positive": 3,
+          "independent_group_support": 12,
+          "recall_wilson95": [
+            0.08894166839405471,
+            0.5323053349335657
+          ],
+          "precision_wilson95": [
+            0.10779126740630099,
+            0.6032218525388546
+          ]
+        },
+        "lichen_planus": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 0.0,
+          "predicted_count": 1,
+          "true_positive": 0,
+          "independent_group_support": 0,
+          "recall_wilson95": null,
+          "precision_wilson95": [
+            0.0,
+            0.7934506856227626
+          ]
+        },
+        "basal_cell_carcinoma": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 1.0,
+          "predicted_count": 0,
+          "true_positive": 0,
+          "independent_group_support": 1,
+          "recall_wilson95": [
+            0.0,
+            0.7934506856227626
+          ],
+          "precision_wilson95": null
+        },
+        "squamous_cell_carcinoma": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 0.0,
+          "predicted_count": 0,
+          "true_positive": 0,
+          "independent_group_support": 0,
+          "recall_wilson95": null,
+          "precision_wilson95": null
+        },
+        "melanoma": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 0.0,
+          "predicted_count": 0,
+          "true_positive": 0,
+          "independent_group_support": 0,
+          "recall_wilson95": null,
+          "precision_wilson95": null
+        },
+        "actinic_keratosis": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 1.0,
+          "predicted_count": 2,
+          "true_positive": 0,
+          "independent_group_support": 1,
+          "recall_wilson95": [
+            0.0,
+            0.7934506856227626
+          ],
+          "precision_wilson95": [
+            0.0,
+            0.6576197724933469
+          ]
+        },
+        "melanocytic_nevus": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 0.0,
+          "predicted_count": 0,
+          "true_positive": 0,
+          "independent_group_support": 0,
+          "recall_wilson95": null,
+          "precision_wilson95": null
+        },
+        "seborrheic_keratosis": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 0.0,
+          "predicted_count": 0,
+          "true_positive": 0,
+          "independent_group_support": 0,
+          "recall_wilson95": null,
+          "precision_wilson95": null
+        },
+        "other": {
+          "precision": 0.5806451612903226,
+          "recall": 0.32142857142857145,
+          "f1-score": 0.41379310344827586,
+          "support": 56.0,
+          "predicted_count": 31,
+          "true_positive": 18,
+          "independent_group_support": 56,
+          "recall_wilson95": [
+            0.21400994792551523,
+            0.45177360090261476
+          ],
+          "precision_wilson95": [
+            0.4076626249536972,
+            0.7358445693268778
+          ]
+        }
+      },
+      "ece_10": 0.19309500036834132,
+      "calibration_bins": [
+        {
+          "lower": 0.0,
+          "upper": 0.1,
+          "n": 0,
+          "accuracy": null,
+          "mean_score": null
+        },
+        {
+          "lower": 0.1,
+          "upper": 0.2,
+          "n": 0,
+          "accuracy": null,
+          "mean_score": null
+        },
+        {
+          "lower": 0.2,
+          "upper": 0.3,
+          "n": 1,
+          "accuracy": 0.0,
+          "mean_score": 0.28225248154136046
+        },
+        {
+          "lower": 0.3,
+          "upper": 0.4,
+          "n": 6,
+          "accuracy": 0.5,
+          "mean_score": 0.35039931919795403
+        },
+        {
+          "lower": 0.4,
+          "upper": 0.5,
+          "n": 23,
+          "accuracy": 0.43478260869565216,
+          "mean_score": 0.455323329422389
+        },
+        {
+          "lower": 0.5,
+          "upper": 0.6,
+          "n": 31,
+          "accuracy": 0.3548387096774194,
+          "mean_score": 0.5477212532516252
+        },
+        {
+          "lower": 0.6,
+          "upper": 0.7,
+          "n": 21,
+          "accuracy": 0.38095238095238093,
+          "mean_score": 0.6528978034774434
+        },
+        {
+          "lower": 0.7,
+          "upper": 0.8,
+          "n": 15,
+          "accuracy": 0.5333333333333333,
+          "mean_score": 0.7478454982139893
+        },
+        {
+          "lower": 0.8,
+          "upper": 0.9,
+          "n": 15,
+          "accuracy": 0.7333333333333333,
+          "mean_score": 0.8495467648969357
+        },
+        {
+          "lower": 0.9,
+          "upper": 1.0,
+          "n": 11,
+          "accuracy": 0.45454545454545453,
+          "mean_score": 0.9497541119769841
+        }
+      ],
+      "brier_multiclass": 0.7333524175555941,
+      "nll": 1.5276305216358776
+    }
+  },
+  "candidates": [
+    {
+      "C": 0.001,
+      "converged": true,
+      "iterations": 143,
+      "validation": {
+        "n": 1192,
+        "accuracy": 0.3263422818791946,
+        "macro_f1": 0.29811347302322755,
+        "balanced_accuracy": 0.49184744764803817,
+        "balanced_accuracy_definition": "Mean recall across categories represented in this subset",
+        "confusion_matrix": [
+          [
+            34,
+            0,
+            0,
+            2,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            2,
+            50,
+            9,
+            1,
+            9,
+            7,
+            3,
+            0,
+            2,
+            1,
+            4,
+            2,
+            0,
+            10
+          ],
+          [
+            2,
+            4,
+            37,
+            0,
+            2,
+            4,
+            2,
+            0,
+            0,
+            2,
+            1,
+            1,
+            0,
+            3
+          ],
+          [
+            2,
+            0,
+            0,
+            5,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            2,
+            0,
+            2,
+            0,
+            7,
+            2,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            7,
+            2,
+            0,
+            0,
+            10,
+            1,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            3
+          ],
+          [
+            1,
+            2,
+            4,
+            1,
+            2,
+            4,
+            15,
+            1,
+            2,
+            2,
+            0,
+            1,
+            0,
+            3
+          ],
+          [
+            1,
+            2,
+            0,
+            1,
+            2,
+            0,
+            0,
+            28,
+            6,
+            6,
+            1,
+            2,
+            0,
+            1
+          ],
+          [
+            1,
+            0,
+            3,
+            0,
+            0,
+            0,
+            1,
+            5,
+            25,
+            0,
+            2,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            7,
+            4,
+            23,
+            1,
+            2,
+            3,
+            2
+          ],
+          [
+            0,
+            1,
+            0,
+            2,
+            0,
+            0,
+            0,
+            1,
+            3,
+            0,
+            6,
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            0,
+            2,
+            0,
+            0,
+            0,
+            1,
+            1,
+            0,
+            4,
+            0,
+            6,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1
+          ],
+          [
+            35,
+            76,
+            95,
+            33,
+            39,
+            62,
+            100,
+            22,
+            46,
+            28,
+            29,
+            28,
+            10,
+            142
+          ]
+        ],
+        "class_order": [
+          "acne",
+          "dermatitis",
+          "psoriasis",
+          "rosacea",
+          "folliculitis",
+          "urticaria",
+          "lichen_planus",
+          "basal_cell_carcinoma",
+          "squamous_cell_carcinoma",
+          "melanoma",
+          "actinic_keratosis",
+          "melanocytic_nevus",
+          "seborrheic_keratosis",
+          "other"
+        ],
+        "per_class": {
+          "acne": {
+            "precision": 0.4146341463414634,
+            "recall": 0.8717948717948718,
+            "f1-score": 0.5619834710743802,
+            "support": 39.0,
+            "predicted_count": 82,
+            "true_positive": 34,
+            "independent_group_support": 39,
+            "recall_wilson95": [
+              0.7329425662025455,
+              0.9439718246302862
+            ],
+            "precision_wilson95": [
+              0.3141656014131662,
+              0.5227430416558754
+            ]
+          },
+          "dermatitis": {
+            "precision": 0.352112676056338,
+            "recall": 0.5,
+            "f1-score": 0.4132231404958678,
+            "support": 100.0,
+            "predicted_count": 142,
+            "true_positive": 50,
+            "independent_group_support": 99,
+            "recall_wilson95": [
+              0.4038315303659956,
+              0.5961684696340044
+            ],
+            "precision_wilson95": [
+              0.2783929960862804,
+              0.43362304969644033
+            ]
+          },
+          "psoriasis": {
+            "precision": 0.23717948717948717,
+            "recall": 0.6379310344827587,
+            "f1-score": 0.34579439252336447,
+            "support": 58.0,
+            "predicted_count": 156,
+            "true_positive": 37,
+            "independent_group_support": 58,
+            "recall_wilson95": [
+              0.509275237048117,
+              0.7494508717002409
+            ],
+            "precision_wilson95": [
+              0.17725337497525034,
+              0.3097382941136472
+            ]
+          },
+          "rosacea": {
+            "precision": 0.1111111111111111,
+            "recall": 0.625,
+            "f1-score": 0.18867924528301888,
+            "support": 8.0,
+            "predicted_count": 45,
+            "true_positive": 5,
+            "independent_group_support": 8,
+            "recall_wilson95": [
+              0.30574239460262737,
+              0.8631557141764026
+            ],
+            "precision_wilson95": [
+              0.04840471794567186,
+              0.2349909699576858
+            ]
+          },
+          "folliculitis": {
+            "precision": 0.1111111111111111,
+            "recall": 0.4666666666666667,
+            "f1-score": 0.1794871794871795,
+            "support": 15.0,
+            "predicted_count": 63,
+            "true_positive": 7,
+            "independent_group_support": 15,
+            "recall_wilson95": [
+              0.24809535365737387,
+              0.698830199745016
+            ],
+            "precision_wilson95": [
+              0.05487548662383722,
+              0.21204655750082524
+            ]
+          },
+          "urticaria": {
+            "precision": 0.11235955056179775,
+            "recall": 0.4,
+            "f1-score": 0.17543859649122806,
+            "support": 25.0,
+            "predicted_count": 89,
+            "true_positive": 10,
+            "independent_group_support": 25,
+            "recall_wilson95": [
+              0.23403302377747973,
+              0.5926054264103301
+            ],
+            "precision_wilson95": [
+              0.06218743336655998,
+              0.1946101129401976
+            ]
+          },
+          "lichen_planus": {
+            "precision": 0.12096774193548387,
+            "recall": 0.39473684210526316,
+            "f1-score": 0.18518518518518517,
+            "support": 38.0,
+            "predicted_count": 124,
+            "true_positive": 15,
+            "independent_group_support": 38,
+            "recall_wilson95": [
+              0.25598075748160104,
+              0.5528213200395746
+            ],
+            "precision_wilson95": [
+              0.07469498060109575,
+              0.19001929231845027
+            ]
+          },
+          "basal_cell_carcinoma": {
+            "precision": 0.42424242424242425,
+            "recall": 0.56,
+            "f1-score": 0.4827586206896552,
+            "support": 50.0,
+            "predicted_count": 66,
+            "true_positive": 28,
+            "independent_group_support": 50,
+            "recall_wilson95": [
+              0.4230602802165686,
+              0.6883780078874284
+            ],
+            "precision_wilson95": [
+              0.3124251014854188,
+              0.5443934677590571
+            ]
+          },
+          "squamous_cell_carcinoma": {
+            "precision": 0.2777777777777778,
+            "recall": 0.6756756756756757,
+            "f1-score": 0.3937007874015748,
+            "support": 37.0,
+            "predicted_count": 90,
+            "true_positive": 25,
+            "independent_group_support": 37,
+            "recall_wilson95": [
+              0.514636672419722,
+              0.8036673347185581
+            ],
+            "precision_wilson95": [
+              0.19579689194686647,
+              0.3779522749706121
+            ]
+          },
+          "melanoma": {
+            "precision": 0.3484848484848485,
+            "recall": 0.5348837209302325,
+            "f1-score": 0.42201834862385323,
+            "support": 43.0,
+            "predicted_count": 66,
+            "true_positive": 23,
+            "independent_group_support": 43,
+            "recall_wilson95": [
+              0.38915640472313967,
+              0.6748894229587816
+            ],
+            "precision_wilson95": [
+              0.2447587406192953,
+              0.4688783978696565
+            ]
+          },
+          "actinic_keratosis": {
+            "precision": 0.13333333333333333,
+            "recall": 0.42857142857142855,
+            "f1-score": 0.2033898305084746,
+            "support": 14.0,
+            "predicted_count": 45,
+            "true_positive": 6,
+            "independent_group_support": 14,
+            "recall_wilson95": [
+              0.21380798904474121,
+              0.6740935542034926
+            ],
+            "precision_wilson95": [
+              0.06257148747568075,
+              0.2617730182617707
+            ]
+          },
+          "melanocytic_nevus": {
+            "precision": 0.14285714285714285,
+            "recall": 0.4,
+            "f1-score": 0.21052631578947367,
+            "support": 15.0,
+            "predicted_count": 42,
+            "true_positive": 6,
+            "independent_group_support": 15,
+            "recall_wilson95": [
+              0.1982449614134158,
+              0.6425316987937539
+            ],
+            "precision_wilson95": [
+              0.06715967015962647,
+              0.27841089474444775
+            ]
+          },
+          "seborrheic_keratosis": {
+            "precision": 0.06666666666666667,
+            "recall": 0.2,
+            "f1-score": 0.1,
+            "support": 5.0,
+            "predicted_count": 15,
+            "true_positive": 1,
+            "independent_group_support": 5,
+            "recall_wilson95": [
+              0.03622410863243014,
+              0.6244653702374747
+            ],
+            "precision_wilson95": [
+              0.011866895493268553,
+              0.2981652987378003
+            ]
+          },
+          "other": {
+            "precision": 0.8502994011976048,
+            "recall": 0.1906040268456376,
+            "f1-score": 0.31140350877192985,
+            "support": 745.0,
+            "predicted_count": 167,
+            "true_positive": 142,
+            "independent_group_support": 744,
+            "recall_wilson95": [
+              0.1640145091990445,
+              0.2203678663093823
+            ],
+            "precision_wilson95": [
+              0.7883465789437719,
+              0.8964988959640304
+            ]
+          }
+        },
+        "ece_10": 0.11968193975709492,
+        "calibration_bins": [
+          {
+            "lower": 0.0,
+            "upper": 0.1,
+            "n": 0,
+            "accuracy": null,
+            "mean_score": null
+          },
+          {
+            "lower": 0.1,
+            "upper": 0.2,
+            "n": 29,
+            "accuracy": 0.27586206896551724,
+            "mean_score": 0.18382434373707443
+          },
+          {
+            "lower": 0.2,
+            "upper": 0.3,
+            "n": 262,
+            "accuracy": 0.25190839694656486,
+            "mean_score": 0.2591222230260442
+          },
+          {
+            "lower": 0.3,
+            "upper": 0.4,
+            "n": 312,
+            "accuracy": 0.2692307692307692,
+            "mean_score": 0.3511786217455587
+          },
+          {
+            "lower": 0.4,
+            "upper": 0.5,
+            "n": 228,
+            "accuracy": 0.31140350877192985,
+            "mean_score": 0.4452133740792746
+          },
+          {
+            "lower": 0.5,
+            "upper": 0.6,
+            "n": 133,
+            "accuracy": 0.38345864661654133,
+            "mean_score": 0.5450598801728942
+          },
+          {
+            "lower": 0.6,
+            "upper": 0.7,
+            "n": 89,
+            "accuracy": 0.3595505617977528,
+            "mean_score": 0.6489973896854336
+          },
+          {
+            "lower": 0.7,
+            "upper": 0.8,
+            "n": 79,
+            "accuracy": 0.43037974683544306,
+            "mean_score": 0.7454162138316952
+          },
+          {
+            "lower": 0.8,
+            "upper": 0.9,
+            "n": 42,
+            "accuracy": 0.6190476190476191,
+            "mean_score": 0.852926066730873
+          },
+          {
+            "lower": 0.9,
+            "upper": 1.0,
+            "n": 18,
+            "accuracy": 0.9444444444444444,
+            "mean_score": 0.9410628327266287
+          }
+        ],
+        "brier_multiclass": 0.7890821411782658,
+        "nll": 1.7228957837554706
+      }
+    },
+    {
+      "C": 0.01,
+      "converged": true,
+      "iterations": 239,
+      "validation": {
+        "n": 1192,
+        "accuracy": 0.48322147651006714,
+        "macro_f1": 0.37127987074190993,
+        "balanced_accuracy": 0.5195484137680255,
+        "balanced_accuracy_definition": "Mean recall across categories represented in this subset",
+        "confusion_matrix": [
+          [
+            34,
+            0,
+            0,
+            2,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            1,
+            54,
+            7,
+            1,
+            6,
+            4,
+            2,
+            0,
+            3,
+            1,
+            2,
+            1,
+            0,
+            18
+          ],
+          [
+            1,
+            2,
+            39,
+            0,
+            4,
+            2,
+            2,
+            0,
+            0,
+            3,
+            1,
+            0,
+            0,
+            4
+          ],
+          [
+            1,
+            1,
+            0,
+            6,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1,
+            1,
+            0,
+            7,
+            1,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2
+          ],
+          [
+            0,
+            6,
+            1,
+            0,
+            1,
+            11,
+            1,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            4
+          ],
+          [
+            1,
+            2,
+            2,
+            1,
+            1,
+            3,
+            16,
+            1,
+            1,
+            2,
+            0,
+            0,
+            0,
+            8
+          ],
+          [
+            1,
+            1,
+            0,
+            0,
+            2,
+            0,
+            0,
+            32,
+            6,
+            5,
+            0,
+            0,
+            0,
+            3
+          ],
+          [
+            1,
+            0,
+            3,
+            0,
+            0,
+            0,
+            1,
+            6,
+            23,
+            1,
+            0,
+            0,
+            0,
+            2
+          ],
+          [
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            9,
+            3,
+            23,
+            0,
+            3,
+            2,
+            2
+          ],
+          [
+            1,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            3,
+            0,
+            4,
+            0,
+            1,
+            1
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            4,
+            0,
+            6,
+            0,
+            3
+          ],
+          [
+            1,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1
+          ],
+          [
+            25,
+            82,
+            62,
+            19,
+            26,
+            36,
+            64,
+            13,
+            39,
+            24,
+            17,
+            12,
+            6,
+            320
+          ]
+        ],
+        "class_order": [
+          "acne",
+          "dermatitis",
+          "psoriasis",
+          "rosacea",
+          "folliculitis",
+          "urticaria",
+          "lichen_planus",
+          "basal_cell_carcinoma",
+          "squamous_cell_carcinoma",
+          "melanoma",
+          "actinic_keratosis",
+          "melanocytic_nevus",
+          "seborrheic_keratosis",
+          "other"
+        ],
+        "per_class": {
+          "acne": {
+            "precision": 0.4927536231884058,
+            "recall": 0.8717948717948718,
+            "f1-score": 0.6296296296296297,
+            "support": 39.0,
+            "predicted_count": 69,
+            "true_positive": 34,
+            "independent_group_support": 39,
+            "recall_wilson95": [
+              0.7329425662025455,
+              0.9439718246302862
+            ],
+            "precision_wilson95": [
+              0.3783242300928733,
+              0.6079473243736349
+            ]
+          },
+          "dermatitis": {
+            "precision": 0.3576158940397351,
+            "recall": 0.54,
+            "f1-score": 0.4302788844621514,
+            "support": 100.0,
+            "predicted_count": 151,
+            "true_positive": 54,
+            "independent_group_support": 99,
+            "recall_wilson95": [
+              0.44264860323368227,
+              0.6343919169097589
+            ],
+            "precision_wilson95": [
+              0.28557207961635744,
+              0.4367245176419141
+            ]
+          },
+          "psoriasis": {
+            "precision": 0.3333333333333333,
+            "recall": 0.6724137931034483,
+            "f1-score": 0.44571428571428573,
+            "support": 58.0,
+            "predicted_count": 117,
+            "true_positive": 39,
+            "independent_group_support": 58,
+            "recall_wilson95": [
+              0.544240546784708,
+              0.7791670891507392
+            ],
+            "precision_wilson95": [
+              0.25441546280057303,
+              0.42284761908700474
+            ]
+          },
+          "rosacea": {
+            "precision": 0.20689655172413793,
+            "recall": 0.75,
+            "f1-score": 0.32432432432432434,
+            "support": 8.0,
+            "predicted_count": 29,
+            "true_positive": 6,
+            "independent_group_support": 8,
+            "recall_wilson95": [
+              0.40927543031016883,
+              0.9285207872478909
+            ],
+            "precision_wilson95": [
+              0.09846070197841039,
+              0.38390090403867905
+            ]
+          },
+          "folliculitis": {
+            "precision": 0.14285714285714285,
+            "recall": 0.4666666666666667,
+            "f1-score": 0.21875,
+            "support": 15.0,
+            "predicted_count": 49,
+            "true_positive": 7,
+            "independent_group_support": 15,
+            "recall_wilson95": [
+              0.24809535365737387,
+              0.698830199745016
+            ],
+            "precision_wilson95": [
+              0.0709642372040676,
+              0.26667706223914406
+            ]
+          },
+          "urticaria": {
+            "precision": 0.19298245614035087,
+            "recall": 0.44,
+            "f1-score": 0.2682926829268293,
+            "support": 25.0,
+            "predicted_count": 57,
+            "true_positive": 11,
+            "independent_group_support": 25,
+            "recall_wilson95": [
+              0.26665638881067344,
+              0.6293266813020123
+            ],
+            "precision_wilson95": [
+              0.11132746980050533,
+              0.3134069024776395
+            ]
+          },
+          "lichen_planus": {
+            "precision": 0.1839080459770115,
+            "recall": 0.42105263157894735,
+            "f1-score": 0.256,
+            "support": 38.0,
+            "predicted_count": 87,
+            "true_positive": 16,
+            "independent_group_support": 38,
+            "recall_wilson95": [
+              0.27852501157758713,
+              0.5780765465632945
+            ],
+            "precision_wilson95": [
+              0.11649466965641427,
+              0.2780549036990641
+            ]
+          },
+          "basal_cell_carcinoma": {
+            "precision": 0.48484848484848486,
+            "recall": 0.64,
+            "f1-score": 0.5517241379310345,
+            "support": 50.0,
+            "predicted_count": 66,
+            "true_positive": 32,
+            "independent_group_support": 50,
+            "recall_wilson95": [
+              0.501410168761127,
+              0.7586125034815325
+            ],
+            "precision_wilson95": [
+              0.3684696267060676,
+              0.6028940871428276
+            ]
+          },
+          "squamous_cell_carcinoma": {
+            "precision": 0.2911392405063291,
+            "recall": 0.6216216216216216,
+            "f1-score": 0.39655172413793105,
+            "support": 37.0,
+            "predicted_count": 79,
+            "true_positive": 23,
+            "independent_group_support": 37,
+            "recall_wilson95": [
+              0.46100430439217654,
+              0.7593600082420173
+            ],
+            "precision_wilson95": [
+              0.20251993313819472,
+              0.39912880084382363
+            ]
+          },
+          "melanoma": {
+            "precision": 0.36507936507936506,
+            "recall": 0.5348837209302325,
+            "f1-score": 0.4339622641509434,
+            "support": 43.0,
+            "predicted_count": 63,
+            "true_positive": 23,
+            "independent_group_support": 43,
+            "recall_wilson95": [
+              0.38915640472313967,
+              0.6748894229587816
+            ],
+            "precision_wilson95": [
+              0.25715392865036535,
+              0.4885129029847216
+            ]
+          },
+          "actinic_keratosis": {
+            "precision": 0.16666666666666666,
+            "recall": 0.2857142857142857,
+            "f1-score": 0.21052631578947367,
+            "support": 14.0,
+            "predicted_count": 24,
+            "true_positive": 4,
+            "independent_group_support": 14,
+            "recall_wilson95": [
+              0.11721378644576919,
+              0.5464908432989318
+            ],
+            "precision_wilson95": [
+              0.06678676328632951,
+              0.3585307064969906
+            ]
+          },
+          "melanocytic_nevus": {
+            "precision": 0.2727272727272727,
+            "recall": 0.4,
+            "f1-score": 0.32432432432432434,
+            "support": 15.0,
+            "predicted_count": 22,
+            "true_positive": 6,
+            "independent_group_support": 15,
+            "recall_wilson95": [
+              0.1982449614134158,
+              0.6425316987937539
+            ],
+            "precision_wilson95": [
+              0.13150760287989469,
+              0.4815173401240238
+            ]
+          },
+          "seborrheic_keratosis": {
+            "precision": 0.1,
+            "recall": 0.2,
+            "f1-score": 0.13333333333333333,
+            "support": 5.0,
+            "predicted_count": 10,
+            "true_positive": 1,
+            "independent_group_support": 5,
+            "recall_wilson95": [
+              0.03622410863243014,
+              0.6244653702374747
+            ],
+            "precision_wilson95": [
+              0.017876213095072896,
+              0.4041500267952385
+            ]
+          },
+          "other": {
+            "precision": 0.8672086720867209,
+            "recall": 0.42953020134228187,
+            "f1-score": 0.5745062836624776,
+            "support": 745.0,
+            "predicted_count": 369,
+            "true_positive": 320,
+            "independent_group_support": 744,
+            "recall_wilson95": [
+              0.39443577013317327,
+              0.46534763426679376
+            ],
+            "precision_wilson95": [
+              0.8287725774570665,
+              0.8980779204923277
+            ]
+          }
+        },
+        "ece_10": 0.13296878189763545,
+        "calibration_bins": [
+          {
+            "lower": 0.0,
+            "upper": 0.1,
+            "n": 0,
+            "accuracy": null,
+            "mean_score": null
+          },
+          {
+            "lower": 0.1,
+            "upper": 0.2,
+            "n": 3,
+            "accuracy": 0.6666666666666666,
+            "mean_score": 0.18645151756970624
+          },
+          {
+            "lower": 0.2,
+            "upper": 0.3,
+            "n": 65,
+            "accuracy": 0.36923076923076925,
+            "mean_score": 0.2702047303793187
+          },
+          {
+            "lower": 0.3,
+            "upper": 0.4,
+            "n": 172,
+            "accuracy": 0.3953488372093023,
+            "mean_score": 0.3529990108095005
+          },
+          {
+            "lower": 0.4,
+            "upper": 0.5,
+            "n": 231,
+            "accuracy": 0.4588744588744589,
+            "mean_score": 0.447774917344907
+          },
+          {
+            "lower": 0.5,
+            "upper": 0.6,
+            "n": 203,
+            "accuracy": 0.43349753694581283,
+            "mean_score": 0.5451408861577446
+          },
+          {
+            "lower": 0.6,
+            "upper": 0.7,
+            "n": 151,
+            "accuracy": 0.5165562913907285,
+            "mean_score": 0.6452635820941041
+          },
+          {
+            "lower": 0.7,
+            "upper": 0.8,
+            "n": 141,
+            "accuracy": 0.475177304964539,
+            "mean_score": 0.7480861269072587
+          },
+          {
+            "lower": 0.8,
+            "upper": 0.9,
+            "n": 117,
+            "accuracy": 0.5470085470085471,
+            "mean_score": 0.8488287417789476
+          },
+          {
+            "lower": 0.9,
+            "upper": 1.0,
+            "n": 109,
+            "accuracy": 0.7247706422018348,
+            "mean_score": 0.9530438380455202
+          }
+        ],
+        "brier_multiclass": 0.6993331832021835,
+        "nll": 1.4563299297511172
+      }
+    },
+    {
+      "C": 0.1,
+      "converged": true,
+      "iterations": 242,
+      "validation": {
+        "n": 1192,
+        "accuracy": 0.5771812080536913,
+        "macro_f1": 0.4252734359763911,
+        "balanced_accuracy": 0.4972334920136464,
+        "balanced_accuracy_definition": "Mean recall across categories represented in this subset",
+        "confusion_matrix": [
+          [
+            36,
+            0,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            1,
+            56,
+            2,
+            0,
+            6,
+            2,
+            2,
+            0,
+            3,
+            0,
+            1,
+            0,
+            0,
+            27
+          ],
+          [
+            0,
+            6,
+            33,
+            0,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            1,
+            0,
+            0,
+            14
+          ],
+          [
+            1,
+            1,
+            0,
+            6,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            1,
+            0,
+            5,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            7
+          ],
+          [
+            0,
+            10,
+            1,
+            0,
+            0,
+            7,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            6
+          ],
+          [
+            1,
+            2,
+            2,
+            1,
+            1,
+            3,
+            14,
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            11
+          ],
+          [
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            33,
+            5,
+            4,
+            0,
+            0,
+            0,
+            6
+          ],
+          [
+            1,
+            0,
+            4,
+            0,
+            0,
+            0,
+            0,
+            4,
+            21,
+            2,
+            0,
+            0,
+            0,
+            5
+          ],
+          [
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            10,
+            3,
+            23,
+            0,
+            3,
+            0,
+            3
+          ],
+          [
+            0,
+            2,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            2,
+            1,
+            4,
+            0,
+            0,
+            3
+          ],
+          [
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            4,
+            0,
+            5,
+            0,
+            5
+          ],
+          [
+            1,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1
+          ],
+          [
+            14,
+            80,
+            38,
+            10,
+            18,
+            20,
+            51,
+            11,
+            28,
+            17,
+            9,
+            4,
+            1,
+            444
+          ]
+        ],
+        "class_order": [
+          "acne",
+          "dermatitis",
+          "psoriasis",
+          "rosacea",
+          "folliculitis",
+          "urticaria",
+          "lichen_planus",
+          "basal_cell_carcinoma",
+          "squamous_cell_carcinoma",
+          "melanoma",
+          "actinic_keratosis",
+          "melanocytic_nevus",
+          "seborrheic_keratosis",
+          "other"
+        ],
+        "per_class": {
+          "acne": {
+            "precision": 0.6545454545454545,
+            "recall": 0.9230769230769231,
+            "f1-score": 0.7659574468085106,
+            "support": 39.0,
+            "predicted_count": 55,
+            "true_positive": 36,
+            "independent_group_support": 39,
+            "recall_wilson95": [
+              0.7967892883204503,
+              0.9734926046962203
+            ],
+            "precision_wilson95": [
+              0.5225390350756162,
+              0.7663729045791027
+            ]
+          },
+          "dermatitis": {
+            "precision": 0.35,
+            "recall": 0.56,
+            "f1-score": 0.4307692307692308,
+            "support": 100.0,
+            "predicted_count": 160,
+            "true_positive": 56,
+            "independent_group_support": 99,
+            "recall_wilson95": [
+              0.4622810465167699,
+              0.6532797336983921
+            ],
+            "precision_wilson95": [
+              0.2803979974382879,
+              0.4266358611131637
+            ]
+          },
+          "psoriasis": {
+            "precision": 0.38823529411764707,
+            "recall": 0.5689655172413793,
+            "f1-score": 0.46153846153846156,
+            "support": 58.0,
+            "predicted_count": 85,
+            "true_positive": 33,
+            "independent_group_support": 58,
+            "recall_wilson95": [
+              0.44118104569962746,
+              0.6881820086745516
+            ],
+            "precision_wilson95": [
+              0.29161299694689413,
+              0.49452288767036445
+            ]
+          },
+          "rosacea": {
+            "precision": 0.3333333333333333,
+            "recall": 0.75,
+            "f1-score": 0.46153846153846156,
+            "support": 8.0,
+            "predicted_count": 18,
+            "true_positive": 6,
+            "independent_group_support": 8,
+            "recall_wilson95": [
+              0.40927543031016883,
+              0.9285207872478909
+            ],
+            "precision_wilson95": [
+              0.1627877475083369,
+              0.5625053270405489
+            ]
+          },
+          "folliculitis": {
+            "precision": 0.15625,
+            "recall": 0.3333333333333333,
+            "f1-score": 0.2127659574468085,
+            "support": 15.0,
+            "predicted_count": 32,
+            "true_positive": 5,
+            "independent_group_support": 15,
+            "recall_wilson95": [
+              0.1517632443971473,
+              0.5828645226148023
+            ],
+            "precision_wilson95": [
+              0.0686442028250571,
+              0.3175414959753039
+            ]
+          },
+          "urticaria": {
+            "precision": 0.21875,
+            "recall": 0.28,
+            "f1-score": 0.24561403508771928,
+            "support": 25.0,
+            "predicted_count": 32,
+            "true_positive": 7,
+            "independent_group_support": 25,
+            "recall_wilson95": [
+              0.14283853850956563,
+              0.47576605190361576
+            ],
+            "precision_wilson95": [
+              0.11023836252604186,
+              0.3875499364924353
+            ]
+          },
+          "lichen_planus": {
+            "precision": 0.2,
+            "recall": 0.3684210526315789,
+            "f1-score": 0.25925925925925924,
+            "support": 38.0,
+            "predicted_count": 70,
+            "true_positive": 14,
+            "independent_group_support": 38,
+            "recall_wilson95": [
+              0.23384219247155955,
+              0.5271604044299099
+            ],
+            "precision_wilson95": [
+              0.12304739248362952,
+              0.30816644496253065
+            ]
+          },
+          "basal_cell_carcinoma": {
+            "precision": 0.5409836065573771,
+            "recall": 0.66,
+            "f1-score": 0.5945945945945946,
+            "support": 50.0,
+            "predicted_count": 61,
+            "true_positive": 33,
+            "independent_group_support": 50,
+            "recall_wilson95": [
+              0.521538260502326,
+              0.7756305077749992
+            ],
+            "precision_wilson95": [
+              0.41724048130756475,
+              0.6598706770614424
+            ]
+          },
+          "squamous_cell_carcinoma": {
+            "precision": 0.328125,
+            "recall": 0.5675675675675675,
+            "f1-score": 0.4158415841584158,
+            "support": 37.0,
+            "predicted_count": 64,
+            "true_positive": 21,
+            "independent_group_support": 37,
+            "recall_wilson95": [
+              0.4091418109016808,
+              0.7132828072284269
+            ],
+            "precision_wilson95": [
+              0.22570557904469185,
+              0.45000894150908505
+            ]
+          },
+          "melanoma": {
+            "precision": 0.4339622641509434,
+            "recall": 0.5348837209302325,
+            "f1-score": 0.4791666666666667,
+            "support": 43.0,
+            "predicted_count": 53,
+            "true_positive": 23,
+            "independent_group_support": 43,
+            "recall_wilson95": [
+              0.38915640472313967,
+              0.6748894229587816
+            ],
+            "precision_wilson95": [
+              0.30950396559750293,
+              0.5673464857239271
+            ]
+          },
+          "actinic_keratosis": {
+            "precision": 0.26666666666666666,
+            "recall": 0.2857142857142857,
+            "f1-score": 0.27586206896551724,
+            "support": 14.0,
+            "predicted_count": 15,
+            "true_positive": 4,
+            "independent_group_support": 14,
+            "recall_wilson95": [
+              0.11721378644576919,
+              0.5464908432989318
+            ],
+            "precision_wilson95": [
+              0.10897453325692374,
+              0.5195043405598057
+            ]
+          },
+          "melanocytic_nevus": {
+            "precision": 0.4166666666666667,
+            "recall": 0.3333333333333333,
+            "f1-score": 0.37037037037037035,
+            "support": 15.0,
+            "predicted_count": 12,
+            "true_positive": 5,
+            "independent_group_support": 15,
+            "recall_wilson95": [
+              0.1517632443971473,
+              0.5828645226148023
+            ],
+            "precision_wilson95": [
+              0.19326031365875665,
+              0.6804886874504503
+            ]
+          },
+          "seborrheic_keratosis": {
+            "precision": 0.5,
+            "recall": 0.2,
+            "f1-score": 0.2857142857142857,
+            "support": 5.0,
+            "predicted_count": 2,
+            "true_positive": 1,
+            "independent_group_support": 5,
+            "recall_wilson95": [
+              0.03622410863243014,
+              0.6244653702374747
+            ],
+            "precision_wilson95": [
+              0.09453120573423074,
+              0.9054687942657693
+            ]
+          },
+          "other": {
+            "precision": 0.8330206378986866,
+            "recall": 0.5959731543624162,
+            "f1-score": 0.6948356807511737,
+            "support": 745.0,
+            "predicted_count": 533,
+            "true_positive": 444,
+            "independent_group_support": 744,
+            "recall_wilson95": [
+              0.5603317239374331,
+              0.6306299253083262
+            ],
+            "precision_wilson95": [
+              0.7989988749252354,
+              0.8622764311583256
+            ]
+          }
+        },
+        "ece_10": 0.15815704869610964,
+        "calibration_bins": [
+          {
+            "lower": 0.0,
+            "upper": 0.1,
+            "n": 0,
+            "accuracy": null,
+            "mean_score": null
+          },
+          {
+            "lower": 0.1,
+            "upper": 0.2,
+            "n": 0,
+            "accuracy": null,
+            "mean_score": null
+          },
+          {
+            "lower": 0.2,
+            "upper": 0.3,
+            "n": 5,
+            "accuracy": 0.2,
+            "mean_score": 0.2930913425589793
+          },
+          {
+            "lower": 0.3,
+            "upper": 0.4,
+            "n": 54,
+            "accuracy": 0.46296296296296297,
+            "mean_score": 0.3621254615575157
+          },
+          {
+            "lower": 0.4,
+            "upper": 0.5,
+            "n": 142,
+            "accuracy": 0.44366197183098594,
+            "mean_score": 0.4602945507949494
+          },
+          {
+            "lower": 0.5,
+            "upper": 0.6,
+            "n": 160,
+            "accuracy": 0.41875,
+            "mean_score": 0.5496492887413533
+          },
+          {
+            "lower": 0.6,
+            "upper": 0.7,
+            "n": 188,
+            "accuracy": 0.48936170212765956,
+            "mean_score": 0.6493139297077957
+          },
+          {
+            "lower": 0.7,
+            "upper": 0.8,
+            "n": 138,
+            "accuracy": 0.6376811594202898,
+            "mean_score": 0.7482449871677712
+          },
+          {
+            "lower": 0.8,
+            "upper": 0.9,
+            "n": 164,
+            "accuracy": 0.6524390243902439,
+            "mean_score": 0.84807998761619
+          },
+          {
+            "lower": 0.9,
+            "upper": 1.0,
+            "n": 341,
+            "accuracy": 0.718475073313783,
+            "mean_score": 0.9586300963703847
+          }
+        ],
+        "brier_multiclass": 0.6149786748576711,
+        "nll": 1.396678929882174
+      }
+    },
+    {
+      "C": 1.0,
+      "converged": true,
+      "iterations": 288,
+      "validation": {
+        "n": 1192,
+        "accuracy": 0.6166107382550335,
+        "macro_f1": 0.4318821845531059,
+        "balanced_accuracy": 0.4586954155368343,
+        "balanced_accuracy_definition": "Mean recall across categories represented in this subset",
+        "confusion_matrix": [
+          [
+            34,
+            0,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            3
+          ],
+          [
+            0,
+            55,
+            1,
+            0,
+            5,
+            2,
+            3,
+            0,
+            2,
+            0,
+            1,
+            0,
+            0,
+            31
+          ],
+          [
+            0,
+            5,
+            29,
+            0,
+            1,
+            0,
+            0,
+            0,
+            3,
+            3,
+            0,
+            0,
+            0,
+            17
+          ],
+          [
+            0,
+            4,
+            0,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            1,
+            0,
+            3,
+            0,
+            0,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            8
+          ],
+          [
+            0,
+            7,
+            0,
+            0,
+            0,
+            8,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            9
+          ],
+          [
+            1,
+            1,
+            1,
+            0,
+            0,
+            2,
+            12,
+            1,
+            2,
+            1,
+            0,
+            0,
+            0,
+            17
+          ],
+          [
+            0,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            32,
+            5,
+            4,
+            0,
+            1,
+            0,
+            5
+          ],
+          [
+            1,
+            1,
+            3,
+            0,
+            0,
+            0,
+            0,
+            5,
+            20,
+            2,
+            0,
+            0,
+            0,
+            5
+          ],
+          [
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            5,
+            3,
+            24,
+            0,
+            2,
+            1,
+            7
+          ],
+          [
+            0,
+            2,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            2,
+            1,
+            3,
+            0,
+            0,
+            4
+          ],
+          [
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            4,
+            0,
+            5,
+            0,
+            5
+          ],
+          [
+            1,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1
+          ],
+          [
+            12,
+            79,
+            28,
+            5,
+            12,
+            14,
+            40,
+            9,
+            17,
+            14,
+            8,
+            2,
+            0,
+            505
+          ]
+        ],
+        "class_order": [
+          "acne",
+          "dermatitis",
+          "psoriasis",
+          "rosacea",
+          "folliculitis",
+          "urticaria",
+          "lichen_planus",
+          "basal_cell_carcinoma",
+          "squamous_cell_carcinoma",
+          "melanoma",
+          "actinic_keratosis",
+          "melanocytic_nevus",
+          "seborrheic_keratosis",
+          "other"
+        ],
+        "per_class": {
+          "acne": {
+            "precision": 0.6938775510204082,
+            "recall": 0.8717948717948718,
+            "f1-score": 0.7727272727272727,
+            "support": 39.0,
+            "predicted_count": 49,
+            "true_positive": 34,
+            "independent_group_support": 39,
+            "recall_wilson95": [
+              0.7329425662025455,
+              0.9439718246302862
+            ],
+            "precision_wilson95": [
+              0.5547210644108935,
+              0.8048450873199342
+            ]
+          },
+          "dermatitis": {
+            "precision": 0.34591194968553457,
+            "recall": 0.55,
+            "f1-score": 0.4247104247104247,
+            "support": 100.0,
+            "predicted_count": 159,
+            "true_positive": 55,
+            "independent_group_support": 99,
+            "recall_wilson95": [
+              0.45244602997442135,
+              0.6438546202048803
+            ],
+            "precision_wilson95": [
+              0.2763987587797403,
+              0.422695069322388
+            ]
+          },
+          "psoriasis": {
+            "precision": 0.4393939393939394,
+            "recall": 0.5,
+            "f1-score": 0.46774193548387094,
+            "support": 58.0,
+            "predicted_count": 66,
+            "true_positive": 29,
+            "independent_group_support": 58,
+            "recall_wilson95": [
+              0.3753827301422442,
+              0.6246172698577558
+            ],
+            "precision_wilson95": [
+              0.3262812091954944,
+              0.5591736462000862
+            ]
+          },
+          "rosacea": {
+            "precision": 0.4,
+            "recall": 0.5,
+            "f1-score": 0.4444444444444444,
+            "support": 8.0,
+            "predicted_count": 10,
+            "true_positive": 4,
+            "independent_group_support": 8,
+            "recall_wilson95": [
+              0.21521606221387757,
+              0.7847839377861224
+            ],
+            "precision_wilson95": [
+              0.16818032970623614,
+              0.6873262302663417
+            ]
+          },
+          "folliculitis": {
+            "precision": 0.13636363636363635,
+            "recall": 0.2,
+            "f1-score": 0.16216216216216217,
+            "support": 15.0,
+            "predicted_count": 22,
+            "true_positive": 3,
+            "independent_group_support": 15,
+            "recall_wilson95": [
+              0.07047549346981563,
+              0.45185448715169363
+            ],
+            "precision_wilson95": [
+              0.04749003714055253,
+              0.33334987166571717
+            ]
+          },
+          "urticaria": {
+            "precision": 0.3076923076923077,
+            "recall": 0.32,
+            "f1-score": 0.3137254901960784,
+            "support": 25.0,
+            "predicted_count": 26,
+            "true_positive": 8,
+            "independent_group_support": 25,
+            "recall_wilson95": [
+              0.17205190306907978,
+              0.5158973072689775
+            ],
+            "precision_wilson95": [
+              0.16501315595463767,
+              0.4998825832219837
+            ]
+          },
+          "lichen_planus": {
+            "precision": 0.21052631578947367,
+            "recall": 0.3157894736842105,
+            "f1-score": 0.25263157894736843,
+            "support": 38.0,
+            "predicted_count": 57,
+            "true_positive": 12,
+            "independent_group_support": 38,
+            "recall_wilson95": [
+              0.1908460367559618,
+              0.4745575989060954
+            ],
+            "precision_wilson95": [
+              0.12474548303034583,
+              0.33286121083190506
+            ]
+          },
+          "basal_cell_carcinoma": {
+            "precision": 0.5925925925925926,
+            "recall": 0.64,
+            "f1-score": 0.6153846153846154,
+            "support": 50.0,
+            "predicted_count": 54,
+            "true_positive": 32,
+            "independent_group_support": 50,
+            "recall_wilson95": [
+              0.501410168761127,
+              0.7586125034815325
+            ],
+            "precision_wilson95": [
+              0.4596684934349057,
+              0.7132178791408542
+            ]
+          },
+          "squamous_cell_carcinoma": {
+            "precision": 0.36363636363636365,
+            "recall": 0.5405405405405406,
+            "f1-score": 0.43478260869565216,
+            "support": 37.0,
+            "predicted_count": 55,
+            "true_positive": 20,
+            "independent_group_support": 37,
+            "recall_wilson95": [
+              0.3838404689217949,
+              0.6896143019562697
+            ],
+            "precision_wilson95": [
+              0.2493053153030725,
+              0.4957723850015874
+            ]
+          },
+          "melanoma": {
+            "precision": 0.4528301886792453,
+            "recall": 0.5581395348837209,
+            "f1-score": 0.5,
+            "support": 43.0,
+            "predicted_count": 53,
+            "true_positive": 24,
+            "independent_group_support": 43,
+            "recall_wilson95": [
+              0.41107614452824104,
+              0.6956669016082949
+            ],
+            "precision_wilson95": [
+              0.3265757915292224,
+              0.5854602451289419
+            ]
+          },
+          "actinic_keratosis": {
+            "precision": 0.25,
+            "recall": 0.21428571428571427,
+            "f1-score": 0.23076923076923078,
+            "support": 14.0,
+            "predicted_count": 12,
+            "true_positive": 3,
+            "independent_group_support": 14,
+            "recall_wilson95": [
+              0.07571386712693184,
+              0.47589230586600295
+            ],
+            "precision_wilson95": [
+              0.08894166839405471,
+              0.5323053349335657
+            ]
+          },
+          "melanocytic_nevus": {
+            "precision": 0.5,
+            "recall": 0.3333333333333333,
+            "f1-score": 0.4,
+            "support": 15.0,
+            "predicted_count": 10,
+            "true_positive": 5,
+            "independent_group_support": 15,
+            "recall_wilson95": [
+              0.1517632443971473,
+              0.5828645226148023
+            ],
+            "precision_wilson95": [
+              0.236593090512564,
+              0.7634069094874361
+            ]
+          },
+          "seborrheic_keratosis": {
+            "precision": 0.5,
+            "recall": 0.2,
+            "f1-score": 0.2857142857142857,
+            "support": 5.0,
+            "predicted_count": 2,
+            "true_positive": 1,
+            "independent_group_support": 5,
+            "recall_wilson95": [
+              0.03622410863243014,
+              0.6244653702374747
+            ],
+            "precision_wilson95": [
+              0.09453120573423074,
+              0.9054687942657693
+            ]
+          },
+          "other": {
+            "precision": 0.8184764991896273,
+            "recall": 0.6778523489932886,
+            "f1-score": 0.7415565345080763,
+            "support": 745.0,
+            "predicted_count": 617,
+            "true_positive": 505,
+            "independent_group_support": 744,
+            "recall_wilson95": [
+              0.643458136659849,
+              0.7104218427116628
+            ],
+            "precision_wilson95": [
+              0.786122089915428,
+              0.8468897594325757
+            ]
+          }
+        },
+        "ece_10": 0.22963367814334673,
+        "calibration_bins": [
+          {
+            "lower": 0.0,
+            "upper": 0.1,
+            "n": 0,
+            "accuracy": null,
+            "mean_score": null
+          },
+          {
+            "lower": 0.1,
+            "upper": 0.2,
+            "n": 0,
+            "accuracy": null,
+            "mean_score": null
+          },
+          {
+            "lower": 0.2,
+            "upper": 0.3,
+            "n": 2,
+            "accuracy": 0.0,
+            "mean_score": 0.29788250087065377
+          },
+          {
+            "lower": 0.3,
+            "upper": 0.4,
+            "n": 8,
+            "accuracy": 0.625,
+            "mean_score": 0.35254304705527517
+          },
+          {
+            "lower": 0.4,
+            "upper": 0.5,
+            "n": 37,
+            "accuracy": 0.2972972972972973,
+            "mean_score": 0.45901741644547916
+          },
+          {
+            "lower": 0.5,
+            "upper": 0.6,
+            "n": 114,
+            "accuracy": 0.43859649122807015,
+            "mean_score": 0.5489633673793857
+          },
+          {
+            "lower": 0.6,
+            "upper": 0.7,
+            "n": 108,
+            "accuracy": 0.5925925925925926,
+            "mean_score": 0.6508022449966363
+          },
+          {
+            "lower": 0.7,
+            "upper": 0.8,
+            "n": 121,
+            "accuracy": 0.39669421487603307,
+            "mean_score": 0.7512564171905253
+          },
+          {
+            "lower": 0.8,
+            "upper": 0.9,
+            "n": 167,
+            "accuracy": 0.6287425149700598,
+            "mean_score": 0.853227118197145
+          },
+          {
+            "lower": 0.9,
+            "upper": 1.0,
+            "n": 635,
+            "accuracy": 0.7118110236220473,
+            "mean_score": 0.9727635555168882
+          }
+        ],
+        "brier_multiclass": 0.6200768495921208,
+        "nll": 1.8626153914539656
+      }
+    },
+    {
+      "C": 10.0,
+      "converged": true,
+      "iterations": 327,
+      "validation": {
+        "n": 1192,
+        "accuracy": 0.6115771812080537,
+        "macro_f1": 0.40524547455678184,
+        "balanced_accuracy": 0.41576887081374914,
+        "balanced_accuracy_definition": "Mean recall across categories represented in this subset",
+        "confusion_matrix": [
+          [
+            34,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            4
+          ],
+          [
+            1,
+            47,
+            2,
+            0,
+            6,
+            0,
+            2,
+            0,
+            1,
+            0,
+            1,
+            0,
+            0,
+            40
+          ],
+          [
+            0,
+            5,
+            25,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1,
+            3,
+            0,
+            0,
+            0,
+            23
+          ],
+          [
+            0,
+            4,
+            1,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            1,
+            2,
+            0,
+            0,
+            3,
+            0,
+            0,
+            1,
+            1,
+            0,
+            1,
+            0,
+            0,
+            6
+          ],
+          [
+            0,
+            6,
+            0,
+            0,
+            0,
+            8,
+            1,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            9
+          ],
+          [
+            1,
+            1,
+            1,
+            0,
+            0,
+            2,
+            11,
+            2,
+            0,
+            1,
+            0,
+            0,
+            0,
+            19
+          ],
+          [
+            0,
+            3,
+            0,
+            0,
+            1,
+            0,
+            0,
+            32,
+            5,
+            3,
+            0,
+            1,
+            0,
+            5
+          ],
+          [
+            1,
+            1,
+            3,
+            0,
+            0,
+            0,
+            0,
+            4,
+            19,
+            2,
+            0,
+            0,
+            0,
+            7
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            5,
+            4,
+            23,
+            1,
+            1,
+            0,
+            9
+          ],
+          [
+            0,
+            2,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            2,
+            2,
+            1,
+            0,
+            0,
+            6
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            4,
+            0,
+            5,
+            0,
+            6
+          ],
+          [
+            1,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1
+          ],
+          [
+            11,
+            80,
+            27,
+            6,
+            9,
+            13,
+            37,
+            6,
+            18,
+            14,
+            3,
+            3,
+            0,
+            518
+          ]
+        ],
+        "class_order": [
+          "acne",
+          "dermatitis",
+          "psoriasis",
+          "rosacea",
+          "folliculitis",
+          "urticaria",
+          "lichen_planus",
+          "basal_cell_carcinoma",
+          "squamous_cell_carcinoma",
+          "melanoma",
+          "actinic_keratosis",
+          "melanocytic_nevus",
+          "seborrheic_keratosis",
+          "other"
+        ],
+        "per_class": {
+          "acne": {
+            "precision": 0.68,
+            "recall": 0.8717948717948718,
+            "f1-score": 0.7640449438202247,
+            "support": 39.0,
+            "predicted_count": 50,
+            "true_positive": 34,
+            "independent_group_support": 39,
+            "recall_wilson95": [
+              0.7329425662025455,
+              0.9439718246302862
+            ],
+            "precision_wilson95": [
+              0.5418970269185592,
+              0.7924178373934316
+            ]
+          },
+          "dermatitis": {
+            "precision": 0.31125827814569534,
+            "recall": 0.47,
+            "f1-score": 0.3745019920318725,
+            "support": 100.0,
+            "predicted_count": 151,
+            "true_positive": 47,
+            "independent_group_support": 99,
+            "recall_wilson95": [
+              0.3751081795934127,
+              0.5671114302990063
+            ],
+            "precision_wilson95": [
+              0.24286279733030897,
+              0.38901873857019037
+            ]
+          },
+          "psoriasis": {
+            "precision": 0.4098360655737705,
+            "recall": 0.43103448275862066,
+            "f1-score": 0.42016806722689076,
+            "support": 58.0,
+            "predicted_count": 61,
+            "true_positive": 25,
+            "independent_group_support": 58,
+            "recall_wilson95": [
+              0.3118179913254485,
+              0.5588189543003725
+            ],
+            "precision_wilson95": [
+              0.2953533743182536,
+              0.5350020772699307
+            ]
+          },
+          "rosacea": {
+            "precision": 0.25,
+            "recall": 0.25,
+            "f1-score": 0.25,
+            "support": 8.0,
+            "predicted_count": 8,
+            "true_positive": 2,
+            "independent_group_support": 8,
+            "recall_wilson95": [
+              0.071479212752109,
+              0.5907245696898311
+            ],
+            "precision_wilson95": [
+              0.071479212752109,
+              0.5907245696898311
+            ]
+          },
+          "folliculitis": {
+            "precision": 0.14285714285714285,
+            "recall": 0.2,
+            "f1-score": 0.16666666666666666,
+            "support": 15.0,
+            "predicted_count": 21,
+            "true_positive": 3,
+            "independent_group_support": 15,
+            "recall_wilson95": [
+              0.07047549346981563,
+              0.45185448715169363
+            ],
+            "precision_wilson95": [
+              0.04981012499725268,
+              0.34636060280620945
+            ]
+          },
+          "urticaria": {
+            "precision": 0.34782608695652173,
+            "recall": 0.32,
+            "f1-score": 0.3333333333333333,
+            "support": 25.0,
+            "predicted_count": 23,
+            "true_positive": 8,
+            "independent_group_support": 25,
+            "recall_wilson95": [
+              0.17205190306907978,
+              0.5158973072689775
+            ],
+            "precision_wilson95": [
+              0.1881127593879773,
+              0.55109664622737
+            ]
+          },
+          "lichen_planus": {
+            "precision": 0.21153846153846154,
+            "recall": 0.2894736842105263,
+            "f1-score": 0.24444444444444444,
+            "support": 38.0,
+            "predicted_count": 52,
+            "true_positive": 11,
+            "independent_group_support": 38,
+            "recall_wilson95": [
+              0.17003277828483065,
+              0.44757137675752057
+            ],
+            "precision_wilson95": [
+              0.12244370532487485,
+              0.34032104628504567
+            ]
+          },
+          "basal_cell_carcinoma": {
+            "precision": 0.64,
+            "recall": 0.64,
+            "f1-score": 0.64,
+            "support": 50.0,
+            "predicted_count": 50,
+            "true_positive": 32,
+            "independent_group_support": 50,
+            "recall_wilson95": [
+              0.501410168761127,
+              0.7586125034815325
+            ],
+            "precision_wilson95": [
+              0.501410168761127,
+              0.7586125034815325
+            ]
+          },
+          "squamous_cell_carcinoma": {
+            "precision": 0.36538461538461536,
+            "recall": 0.5135135135135135,
+            "f1-score": 0.42696629213483145,
+            "support": 37.0,
+            "predicted_count": 52,
+            "true_positive": 19,
+            "independent_group_support": 37,
+            "recall_wilson95": [
+              0.358948966656188,
+              0.6655359569698336
+            ],
+            "precision_wilson95": [
+              0.24800699873813392,
+              0.501283218679829
+            ]
+          },
+          "melanoma": {
+            "precision": 0.4423076923076923,
+            "recall": 0.5348837209302325,
+            "f1-score": 0.4842105263157895,
+            "support": 43.0,
+            "predicted_count": 52,
+            "true_positive": 23,
+            "independent_group_support": 43,
+            "recall_wilson95": [
+              0.38915640472313967,
+              0.6748894229587816
+            ],
+            "precision_wilson95": [
+              0.3159505681940129,
+              0.5766023821279712
+            ]
+          },
+          "actinic_keratosis": {
+            "precision": 0.14285714285714285,
+            "recall": 0.07142857142857142,
+            "f1-score": 0.09523809523809523,
+            "support": 14.0,
+            "predicted_count": 7,
+            "true_positive": 1,
+            "independent_group_support": 14,
+            "recall_wilson95": [
+              0.012722215247890939,
+              0.31468704424151117
+            ],
+            "precision_wilson95": [
+              0.02567962434474355,
+              0.5131278292743189
+            ]
+          },
+          "melanocytic_nevus": {
+            "precision": 0.5,
+            "recall": 0.3333333333333333,
+            "f1-score": 0.4,
+            "support": 15.0,
+            "predicted_count": 10,
+            "true_positive": 5,
+            "independent_group_support": 15,
+            "recall_wilson95": [
+              0.1517632443971473,
+              0.5828645226148023
+            ],
+            "precision_wilson95": [
+              0.236593090512564,
+              0.7634069094874361
+            ]
+          },
+          "seborrheic_keratosis": {
+            "precision": 1.0,
+            "recall": 0.2,
+            "f1-score": 0.3333333333333333,
+            "support": 5.0,
+            "predicted_count": 1,
+            "true_positive": 1,
+            "independent_group_support": 5,
+            "recall_wilson95": [
+              0.03622410863243014,
+              0.6244653702374747
+            ],
+            "precision_wilson95": [
+              0.20654931437723745,
+              1.0
+            ]
+          },
+          "other": {
+            "precision": 0.7920489296636085,
+            "recall": 0.6953020134228188,
+            "f1-score": 0.7405289492494639,
+            "support": 745.0,
+            "predicted_count": 654,
+            "true_positive": 518,
+            "independent_group_support": 744,
+            "recall_wilson95": [
+              0.6613182793270199,
+              0.7272819999073573
+            ],
+            "precision_wilson95": [
+              0.7592836376158543,
+              0.8214033879249312
+            ]
+          }
+        },
+        "ece_10": 0.30068191388660626,
+        "calibration_bins": [
+          {
+            "lower": 0.0,
+            "upper": 0.1,
+            "n": 0,
+            "accuracy": null,
+            "mean_score": null
+          },
+          {
+            "lower": 0.1,
+            "upper": 0.2,
+            "n": 0,
+            "accuracy": null,
+            "mean_score": null
+          },
+          {
+            "lower": 0.2,
+            "upper": 0.3,
+            "n": 0,
+            "accuracy": null,
+            "mean_score": null
+          },
+          {
+            "lower": 0.3,
+            "upper": 0.4,
+            "n": 2,
+            "accuracy": 0.0,
+            "mean_score": 0.3819708465116018
+          },
+          {
+            "lower": 0.4,
+            "upper": 0.5,
+            "n": 15,
+            "accuracy": 0.13333333333333333,
+            "mean_score": 0.46480482383731814
+          },
+          {
+            "lower": 0.5,
+            "upper": 0.6,
+            "n": 63,
+            "accuracy": 0.42857142857142855,
+            "mean_score": 0.55321310946986
+          },
+          {
+            "lower": 0.6,
+            "upper": 0.7,
+            "n": 70,
+            "accuracy": 0.38571428571428573,
+            "mean_score": 0.6544967141027785
+          },
+          {
+            "lower": 0.7,
+            "upper": 0.8,
+            "n": 62,
+            "accuracy": 0.5161290322580645,
+            "mean_score": 0.7541400621317991
+          },
+          {
+            "lower": 0.8,
+            "upper": 0.9,
+            "n": 110,
+            "accuracy": 0.4727272727272727,
+            "mean_score": 0.8595965937249573
+          },
+          {
+            "lower": 0.9,
+            "upper": 1.0,
+            "n": 870,
+            "accuracy": 0.6770114942528735,
+            "mean_score": 0.9858589910994703
+          }
+        ],
+        "brier_multiclass": 0.6687252205285967,
+        "nll": 3.037833615432872
+      }
+    }
+  ],
+  "cohort": {
+    "cohort_sha256": "a697c5e5656ee618b713a1e9e56089d3e6c471771193acff1f28319d20ca46a2",
+    "invalid_or_ambiguous_ids": [
+      "scin:-1003358831658393077",
+      "scin:-1031911667791094656",
+      "scin:-1056928533969389753",
+      "scin:-1067542267811956200",
+      "scin:-1089800692688279258",
+      "scin:-1131745754224368828",
+      "scin:-1175252715545111648",
+      "scin:-1287537139414408239",
+      "scin:-1333015211845690309",
+      "scin:-1410373638686722492",
+      "scin:-1425393958987146449",
+      "scin:-1490620546587137533",
+      "scin:-1499518133606453111",
+      "scin:-1506234296954769772",
+      "scin:-1514456898517312171",
+      "scin:-1538047329824227087",
+      "scin:-1607687872846341789",
+      "scin:-1647208460985153529",
+      "scin:-1679749674012412690",
+      "scin:-1829482998281419916",
+      "scin:-1849137245283207036",
+      "scin:-185529518023482284",
+      "scin:-1885006961985571245",
+      "scin:-1909214615567585672",
+      "scin:-1913879392504838169",
+      "scin:-1937936622693861461",
+      "scin:-1942650442362782039",
+      "scin:-1981350712289441637",
+      "scin:-2005856048520510588",
+      "scin:-2040254933737839525",
+      "scin:-2041150285640312578",
+      "scin:-2064087285742963892",
+      "scin:-2086724705849419892",
+      "scin:-2117370401055716418",
+      "scin:-2160078793405903722",
+      "scin:-2174164248374069977",
+      "scin:-2219827066341789081",
+      "scin:-2278432090169603776",
+      "scin:-2458386020616457489",
+      "scin:-2476666525066355593",
+      "scin:-2497369499064387207",
+      "scin:-250190786256081369",
+      "scin:-2568835947642432686",
+      "scin:-2618609792423828453",
+      "scin:-2720193912587488455",
+      "scin:-2773247639729699222",
+      "scin:-2973481794307902887",
+      "scin:-3001645697280649972",
+      "scin:-3011928481980409600",
+      "scin:-3051547885479914363",
+      "scin:-3060263520815794413",
+      "scin:-3108375201572495508",
+      "scin:-3165884193421554204",
+      "scin:-3328747717411237446",
+      "scin:-3342777860023762750",
+      "scin:-3368700702387238612",
+      "scin:-341609823223596940",
+      "scin:-3426382639481624876",
+      "scin:-3508263302029113573",
+      "scin:-3564384504278644399",
+      "scin:-3706986546510711962",
+      "scin:-3736850922923665026",
+      "scin:-3753220776898215006",
+      "scin:-3836665857980310045",
+      "scin:-3841091253724337986",
+      "scin:-3914623735036915534",
+      "scin:-3969569173710538759",
+      "scin:-3986995536806137754",
+      "scin:-4100557201656682452",
+      "scin:-4118522682722481510",
+      "scin:-412127215807292326",
+      "scin:-4154592516831070190",
+      "scin:-4189733889619361017",
+      "scin:-4254925982535474930",
+      "scin:-4286082051204058372",
+      "scin:-4291115963826712170",
+      "scin:-4299406694606216536",
+      "scin:-4333750609008930141",
+      "scin:-4347462665711716883",
+      "scin:-4374212557647415088",
+      "scin:-4460944419727821614",
+      "scin:-4468688474789172461",
+      "scin:-452822633947944015",
+      "scin:-4534768867628142547",
+      "scin:-4550841138827406706",
+      "scin:-4572573838215927835",
+      "scin:-4573383150487721045",
+      "scin:-4574517859891367319",
+      "scin:-457463002444974882",
+      "scin:-4676367052308783677",
+      "scin:-4680173445753225482",
+      "scin:-471440034184389209",
+      "scin:-4802790114654552929",
+      "scin:-488576905143143801",
+      "scin:-4891251457248539910",
+      "scin:-4941904797314668780",
+      "scin:-495867650501344143",
+      "scin:-4998326269769441287",
+      "scin:-5007684126286758763",
+      "scin:-5044676517013712087",
+      "scin:-5045653350822644000",
+      "scin:-5053547823727699517",
+      "scin:-5122446773279036270",
+      "scin:-5124788669621739310",
+      "scin:-5139442979899798140",
+      "scin:-5156504397670032550",
+      "scin:-5192928078818607178",
+      "scin:-5197414973622050223",
+      "scin:-5296431265976524306",
+      "scin:-5299338011667275243",
+      "scin:-5356942280110434868",
+      "scin:-5460662618660534242",
+      "scin:-560232169955476365",
+      "scin:-5617567426295287720",
+      "scin:-5622592879226801910",
+      "scin:-5688515675906851592",
+      "scin:-5795848744377372288",
+      "scin:-5830755717212226400",
+      "scin:-5834260533212723742",
+      "scin:-5929266828166903949",
+      "scin:-5950615716792877384",
+      "scin:-6003166513555222439",
+      "scin:-6012562319822542066",
+      "scin:-6040679108556222451",
+      "scin:-6107847576493924285",
+      "scin:-6110101408648949573",
+      "scin:-6118687420139087611",
+      "scin:-6127435219858267063",
+      "scin:-6167391094061656671",
+      "scin:-6195806766943101605",
+      "scin:-6198797786287096681",
+      "scin:-6200583977661299719",
+      "scin:-620363894904676897",
+      "scin:-6229433733209363727",
+      "scin:-6289614905936431714",
+      "scin:-6373557826683572513",
+      "scin:-6386186782988466925",
+      "scin:-6413100458548426751",
+      "scin:-647678337844118583",
+      "scin:-6478295772214874640",
+      "scin:-6512147186058965264",
+      "scin:-6554787190715943588",
+      "scin:-6567195502359681708",
+      "scin:-6636023414037584085",
+      "scin:-6680963814538219752",
+      "scin:-6697488905255684793",
+      "scin:-6768039405201694865",
+      "scin:-6774500748419127436",
+      "scin:-6776940077739990895",
+      "scin:-6786920411352035207",
+      "scin:-6797572867783147052",
+      "scin:-6882671634270429823",
+      "scin:-6889586106738432811",
+      "scin:-689454616923919051",
+      "scin:-6922602187232971164",
+      "scin:-6957259172476906779",
+      "scin:-6965537796166785189",
+      "scin:-6980590649360403084",
+      "scin:-6990753820375520856",
+      "scin:-7061003704301409540",
+      "scin:-707950849867291642",
+      "scin:-7105941887546454236",
+      "scin:-7178041833489571545",
+      "scin:-7219610623311492560",
+      "scin:-7275764427572709680",
+      "scin:-7300017047423236412",
+      "scin:-7306184791674493368",
+      "scin:-7321154270792471222",
+      "scin:-7364311670007978282",
+      "scin:-736839246514769800",
+      "scin:-7396365076293199303",
+      "scin:-7498807146603140091",
+      "scin:-75535091576112971",
+      "scin:-7596615648821174505",
+      "scin:-7609697586211899286",
+      "scin:-7627550629690915266",
+      "scin:-7711091231416269014",
+      "scin:-7756770492493474322",
+      "scin:-7787364237773333632",
+      "scin:-7819133539519710397",
+      "scin:-7851195646036204419",
+      "scin:-7917987345757592250",
+      "scin:-7923370243531317753",
+      "scin:-7934007217638224487",
+      "scin:-7974971392219935294",
+      "scin:-8045978879867751489",
+      "scin:-8111705603355719488",
+      "scin:-8117626302996219311",
+      "scin:-8145157822996018868",
+      "scin:-821110872479093372",
+      "scin:-826036110615567654",
+      "scin:-8269030899358756664",
+      "scin:-8269845029180831223",
+      "scin:-8315449379611711348",
+      "scin:-8357007819558089292",
+      "scin:-8425743791157482594",
+      "scin:-8463684650171812258",
+      "scin:-8490024681950036495",
+      "scin:-8531554322625259799",
+      "scin:-8555709419997689501",
+      "scin:-8678691577997949005",
+      "scin:-8684573061351687299",
+      "scin:-871000789648050928",
+      "scin:-8714014630063136316",
+      "scin:-8724002829883390371",
+      "scin:-8733132539249310652",
+      "scin:-8842677550709077167",
+      "scin:-89247052115172663",
+      "scin:-8933122876369538878",
+      "scin:-9001435403216911939",
+      "scin:-909798029746539072",
+      "scin:-9099005241992076854",
+      "scin:-9121690728078156914",
+      "scin:-9130798652776451156",
+      "scin:-9150805037763734176",
+      "scin:-938104201292224991",
+      "scin:-975795300119644647",
+      "scin:-989098544351209988",
+      "scin:1030861607933967063",
+      "scin:1102146410303841803",
+      "scin:1114663446458712487",
+      "scin:1239121639034845096",
+      "scin:1320087784849034495",
+      "scin:1330382506320065118",
+      "scin:1339647873939722982",
+      "scin:1339661251231389364",
+      "scin:1345721193150322031",
+      "scin:13835625549189005",
+      "scin:1435283655405315411",
+      "scin:1589466904862954952",
+      "scin:163582330313428766",
+      "scin:1717394648501814629",
+      "scin:1723772007141599544",
+      "scin:1724238275387613430",
+      "scin:1778674063246442248",
+      "scin:1849272957809101239",
+      "scin:1856336286028503634",
+      "scin:1869579634565343385",
+      "scin:188158235839126462",
+      "scin:1934779251461132347",
+      "scin:1984523699625180217",
+      "scin:2068196966908686742",
+      "scin:2072464786047257400",
+      "scin:2084168231290015263",
+      "scin:2093973831515705574",
+      "scin:2103712614285052297",
+      "scin:2159533560793220630",
+      "scin:2196057992530730820",
+      "scin:2218174942281598048",
+      "scin:2268826759148483851",
+      "scin:2277312965706901390",
+      "scin:2324900476779413450",
+      "scin:2399958022456496252",
+      "scin:2458798159426055234",
+      "scin:2497680448814826742",
+      "scin:2587272973956808849",
+      "scin:2590438816095675472",
+      "scin:259823481436186851",
+      "scin:2606087520572543875",
+      "scin:2612069093017318963",
+      "scin:2632344213652091222",
+      "scin:266503187712568557",
+      "scin:2669401123043295329",
+      "scin:2718854131676367612",
+      "scin:2736598056265195695",
+      "scin:2745593098746371055",
+      "scin:2781474809771093064",
+      "scin:2837225222027144453",
+      "scin:2862514195730627482",
+      "scin:3026283035103971117",
+      "scin:3048596608278672157",
+      "scin:3054184823275693364",
+      "scin:3196685170029792231",
+      "scin:3202537012170118816",
+      "scin:3375457960029368063",
+      "scin:3440433832353798400",
+      "scin:344220635633407294",
+      "scin:3505973849558187912",
+      "scin:351764756337097579",
+      "scin:3623323873565698897",
+      "scin:3625927970563316170",
+      "scin:3818341938433690215",
+      "scin:3854838007785418240",
+      "scin:3908037707863400902",
+      "scin:3911133436257776280",
+      "scin:3947352846309906865",
+      "scin:4028963398061607780",
+      "scin:4045630925436019833",
+      "scin:406830451339834742",
+      "scin:4114118200793307561",
+      "scin:4122224617524604252",
+      "scin:4148131065686866883",
+      "scin:4163743239541170511",
+      "scin:4164337558517481425",
+      "scin:4165954497042374324",
+      "scin:4168671109103152917",
+      "scin:4189491602742739164",
+      "scin:4201330480450077270",
+      "scin:4211028498970634596",
+      "scin:4211680797398835347",
+      "scin:4215633443487366134",
+      "scin:422866452062523150",
+      "scin:4248509947650410269",
+      "scin:4296604084486352915",
+      "scin:438143701832911692",
+      "scin:4534189502966996346",
+      "scin:461344679725709543",
+      "scin:4667087707045961077",
+      "scin:4685575002898621346",
+      "scin:4728669609841894296",
+      "scin:4735748123656222129",
+      "scin:4806337231044817573",
+      "scin:4860862531174713006",
+      "scin:4902156049186817329",
+      "scin:4952453591761677988",
+      "scin:5016025779516745101",
+      "scin:5208342959218766049",
+      "scin:5215259434558337668",
+      "scin:5237006312106515211",
+      "scin:5258645229346156312",
+      "scin:5348328447228099084",
+      "scin:5387035143799276836",
+      "scin:5420139034833530457",
+      "scin:543166546984254596",
+      "scin:5518990053129063187",
+      "scin:5631214067666296721",
+      "scin:5638485555901716918",
+      "scin:5642859456660035960",
+      "scin:5711995052278432478",
+      "scin:5804402476916294581",
+      "scin:584355901132193714",
+      "scin:5874158619662441175",
+      "scin:5889346702438178384",
+      "scin:5936306006842485858",
+      "scin:6049746348803202577",
+      "scin:6055835778532338513",
+      "scin:61468711460774041",
+      "scin:6164498714829238815",
+      "scin:6165277088916834017",
+      "scin:6167025301817280836",
+      "scin:6179262866346286996",
+      "scin:6317542003263234425",
+      "scin:6347677850823564715",
+      "scin:6355469165466318386",
+      "scin:6386040824107040991",
+      "scin:638722916707851230",
+      "scin:6417054567822131010",
+      "scin:6478808856238069889",
+      "scin:6527306476712657067",
+      "scin:6564125194979270985",
+      "scin:6565997786593076076",
+      "scin:6581614902116054259",
+      "scin:6620185406881342210",
+      "scin:6651883265161294231",
+      "scin:6659875776791910345",
+      "scin:6675143408858735444",
+      "scin:6734639099366451232",
+      "scin:6813528661648037419",
+      "scin:6833735103241008862",
+      "scin:6888555102487653108",
+      "scin:6890284886068672473",
+      "scin:6905822377340514025",
+      "scin:697357039728625523",
+      "scin:6978248153770900528",
+      "scin:7017910132346459992",
+      "scin:7065103690130891995",
+      "scin:7144842245725764407",
+      "scin:720266459463264671",
+      "scin:7230755869642234629",
+      "scin:7235439692769072121",
+      "scin:7264554845156707334",
+      "scin:7347419344161762585",
+      "scin:7384973860134767193",
+      "scin:7463553353557413034",
+      "scin:7477906497801637159",
+      "scin:7481898033541383122",
+      "scin:7502150881881139289",
+      "scin:7547636948083772648",
+      "scin:7586686040225873699",
+      "scin:7682157759013654664",
+      "scin:7693220514236792335",
+      "scin:7766253481783555886",
+      "scin:7795095055139932194",
+      "scin:783060102460426052",
+      "scin:7847072988135265602",
+      "scin:7852655105845680010",
+      "scin:792402490224297680",
+      "scin:7948232149813529685",
+      "scin:7983361504090468022",
+      "scin:7999126737267845902",
+      "scin:8011488534754691744",
+      "scin:8061243186366141102",
+      "scin:806772568129758879",
+      "scin:8112286852583517886",
+      "scin:8187090160093201589",
+      "scin:8199317997534897211",
+      "scin:8242900516684026470",
+      "scin:8353361916006195791",
+      "scin:8366685296281366557",
+      "scin:8370988571035598148",
+      "scin:8486753479245175785",
+      "scin:849421289568872090",
+      "scin:8579033044441938004",
+      "scin:8717740982554888430",
+      "scin:8718834558652706682",
+      "scin:8751100562164689123",
+      "scin:8773806236538349731",
+      "scin:8775541043281471206",
+      "scin:8858580079281238438",
+      "scin:8876568324686727458",
+      "scin:892392881379564588",
+      "scin:8936435227237247498",
+      "scin:8950716050989485559",
+      "scin:8996459521035623846",
+      "scin:9008681283053360434",
+      "scin:9032393467447326209",
+      "scin:9033109747957812158",
+      "scin:9076222836036925266",
+      "scin:9100469124329671676",
+      "scin:9149077865725302027",
+      "scin:9210062012872504495"
+    ],
+    "finer_category_conflict_ids": [
+      "fitz:22bb9a02ca24e603e9ee6dfcf9298a9d",
+      "fitz:26cc0690eb555af7ceb4fdd1ee05d4a1",
+      "fitz:31101499ce05d4685f06fe3267e50c20",
+      "fitz:70b94d67c5a1f6b7774a04683db0b431",
+      "fitz:91b9cb946d6da44d95f21d89132628a5",
+      "fitz:95a8f9006a704737cd5287b1523ccee3",
+      "fitz:9e2e352037f326a815f8a801e3f1fa02",
+      "fitz:a381a9e534ccc7feb6a1b03cd7b99025",
+      "fitz:bf099025b4eb00a75d473a3b366952f5",
+      "fitz:c577aa2189733e241b477d55293d9588",
+      "fitz:cd1ed84433f045c5ace76f06b3b72f3f",
+      "scin:-3453153335285314118",
+      "scin:-6730981266210803106",
+      "scin:-6772369724422737325",
+      "scin:-7916510062591897740",
+      "scin:-9090002530881354580",
+      "scin:8040879229476600711"
+    ],
+    "case_counts": {
+      "train": {
+        "squamous_cell_carcinoma": 248,
+        "other": 5282,
+        "folliculitis": 135,
+        "dermatitis": 837,
+        "psoriasis": 391,
+        "urticaria": 140,
+        "melanoma": 290,
+        "lichen_planus": 251,
+        "acne": 313,
+        "basal_cell_carcinoma": 346,
+        "rosacea": 61,
+        "melanocytic_nevus": 102,
+        "actinic_keratosis": 88,
+        "seborrheic_keratosis": 35
+      },
+      "validation": {
+        "lichen_planus": 38,
+        "other": 745,
+        "psoriasis": 58,
+        "actinic_keratosis": 14,
+        "melanoma": 43,
+        "acne": 39,
+        "urticaria": 25,
+        "dermatitis": 100,
+        "squamous_cell_carcinoma": 37,
+        "basal_cell_carcinoma": 50,
+        "folliculitis": 15,
+        "rosacea": 8,
+        "melanocytic_nevus": 15,
+        "seborrheic_keratosis": 5
+      },
+      "test": {
+        "other": 1461,
+        "basal_cell_carcinoma": 99,
+        "acne": 80,
+        "dermatitis": 159,
+        "folliculitis": 37,
+        "squamous_cell_carcinoma": 72,
+        "melanoma": 85,
+        "lichen_planus": 75,
+        "psoriasis": 111,
+        "urticaria": 37,
+        "actinic_keratosis": 28,
+        "melanocytic_nevus": 30,
+        "rosacea": 18,
+        "seborrheic_keratosis": 11
+      }
+    },
+    "source_case_counts": {
+      "SCIN": {
+        "train": {
+          "dermatitis": 482,
+          "urticaria": 54,
+          "basal_cell_carcinoma": 3,
+          "other": 413,
+          "acne": 34,
+          "psoriasis": 12,
+          "folliculitis": 31,
+          "lichen_planus": 6,
+          "actinic_keratosis": 4,
+          "rosacea": 6
+        },
+        "validation": {
+          "urticaria": 12,
+          "other": 56,
+          "psoriasis": 4,
+          "dermatitis": 46,
+          "folliculitis": 2,
+          "rosacea": 1,
+          "actinic_keratosis": 1,
+          "basal_cell_carcinoma": 1
+        },
+        "test": {
+          "other": 76,
+          "basal_cell_carcinoma": 1,
+          "dermatitis": 55,
+          "urticaria": 14,
+          "psoriasis": 4,
+          "actinic_keratosis": 1,
+          "rosacea": 3,
+          "folliculitis": 4,
+          "lichen_planus": 1
+        }
+      },
+      "Fitzpatrick17k-C": {
+        "train": {
+          "squamous_cell_carcinoma": 248,
+          "other": 4869,
+          "folliculitis": 104,
+          "dermatitis": 355,
+          "psoriasis": 379,
+          "urticaria": 86,
+          "melanoma": 290,
+          "lichen_planus": 245,
+          "acne": 279,
+          "basal_cell_carcinoma": 343,
+          "rosacea": 55,
+          "melanocytic_nevus": 102,
+          "actinic_keratosis": 84,
+          "seborrheic_keratosis": 35
+        },
+        "validation": {
+          "lichen_planus": 38,
+          "other": 689,
+          "psoriasis": 54,
+          "actinic_keratosis": 13,
+          "melanoma": 43,
+          "acne": 39,
+          "urticaria": 13,
+          "dermatitis": 54,
+          "squamous_cell_carcinoma": 37,
+          "basal_cell_carcinoma": 49,
+          "folliculitis": 13,
+          "rosacea": 7,
+          "melanocytic_nevus": 15,
+          "seborrheic_keratosis": 5
+        },
+        "test": {
+          "other": 1385,
+          "basal_cell_carcinoma": 98,
+          "acne": 80,
+          "dermatitis": 104,
+          "folliculitis": 33,
+          "squamous_cell_carcinoma": 72,
+          "melanoma": 85,
+          "lichen_planus": 74,
+          "psoriasis": 107,
+          "urticaria": 23,
+          "actinic_keratosis": 27,
+          "melanocytic_nevus": 30,
+          "rosacea": 15,
+          "seborrheic_keratosis": 11
+        }
+      }
+    },
+    "category_assignment_sha256": "1bd07dba144ce362b78e638343e2cf0c90cb833bf44dcdd62ed0191d4f906abd"
+  },
+  "artifact": {
+    "backbone": "dinov2_vitb14",
+    "backbone_provenance": {
+      "name": "dinov2_vitb14",
+      "sha256": "0b8b82f85de91b424aded121c7e1dcc2b7bc6d0adeea651bf73a13307fad8c73",
+      "bytes": 346378731,
+      "source_commit": "7764ea0f912e53c92e82eb78a2a1631e92725fc8",
+      "url": "https://dl.fbaipublicfiles.com/dinov2/dinov2_vitb14/dinov2_vitb14_pretrain.pth"
+    },
+    "head_sha256": "baaec482d2b30ed52f64e99753b1edbfabcfa7985bafe5bb1cbeba5d1dff5242",
+    "cohort_sha256": "a697c5e5656ee618b713a1e9e56089d3e6c471771193acff1f28319d20ca46a2",
+    "protocol_sha256": "10fead40829a070e4b865a5aebdd5cb10a3ae23c14c6cfad348f35378f3fa18c",
+    "preprocessing_sha256": "d1937c6f6c67fcda9782ae2957af5d6fda3ac571ed6df5d122f40ce1b216f0da",
+    "feature_index_sha256": "932c9c774707fd39f3c5f469eb1287f6c720c8b1f0b3762e2ed9acdaa6cc0aa8"
+  },
+  "test_opened": false,
+  "available": false
+}

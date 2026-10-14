@@ -16,6 +16,7 @@ function researchSample(): string {
 
 async function selectSample(page: Page) {
   await page.goto("/analysis/");
+  await page.getByRole("button", { name: "Save preferences", exact: true }).click();
   await page.getByLabel("Choose a skin image", { exact: true }).setInputFiles(researchSample());
   await expect(page.getByAltText("Your selected skin image")).toBeVisible();
   await page.getByRole("radio", { name: "Dermoscopic image", exact: true }).check();
@@ -69,6 +70,7 @@ for (const imageType of ["Other image", "Not sure"]) test(`${imageType} receives
 for (const sampleIndex of [1, 2]) test(`additional licensed sample ${sampleIndex} matches real PyTorch inference and uncertainty`, async ({ page }) => {
   const expected = parityArtifact().samples[sampleIndex];
   await page.goto("/analysis/");
+  await page.getByRole("button", { name: "Save preferences", exact: true }).click();
   await page.getByLabel("Choose a skin image", { exact: true }).setInputFiles(join("public/demo", expected.filename));
   await page.getByRole("radio", { name: "Dermoscopic image", exact: true }).check();
   await page.getByRole("checkbox", { name: consent, exact: true }).check();
@@ -87,6 +89,7 @@ for (const sampleIndex of [1, 2]) test(`additional licensed sample ${sampleIndex
 
 test("blank low-quality images are rejected with retake guidance", async ({ page }) => {
   await page.goto("/analysis/");
+  await page.getByRole("button", { name: "Save preferences", exact: true }).click();
   // Generated technical test input, not a skin image and never a demo prediction.
   const base64 = await page.evaluate(() => {
     const canvas = document.createElement("canvas");

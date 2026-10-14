@@ -4,11 +4,20 @@ import { assessClinicalQuality } from "./browser-clinical-inference";
 import { normalizePixels, resizeNearest, temperatureScores } from "./browser-inference";
 import { decodeImage, validateDimensions, validateImageFile } from "./image-validation";
 import { ModelSchema, type AnalyzeResponse, type ModelInfo } from "./types";
+import { PHOTO_PRODUCT_MATCHING_ENABLED, PHOTO_PRODUCT_RESTRICTION } from "./photo-release-policy";
 
 export { PHOTO_MODEL_VERSION } from "./clinical-task";
 const INPUT_SIZE = PHOTO_MODEL_INPUT_SIZE;
 const MANIFEST_URL = "/model-photo/manifest.json";
 const MAX_MODEL_BYTES = 512 * 1024 * 1024;
+const sha = z.string().regex(/^[a-f0-9]{64}$/);
+const tensorNames = { sha256: sha, input_name: z.literal("image"), logits_output: z.literal("logits") };
+const splitArtifact = z.object({ ...tensorNames,
+  bytes: z.number().int().positive().max(MAX_MODEL_BYTES),
+  parts: z.array(z.object({ url: z.string().regex(/^\/model-photo\/model\.part-[1-9][0-9]*\.bin$/), sha256: sha,
+    bytes: z.number().int().positive().max(20 * 1024 * 1024) })).min(1).max(32),
+}).refine(value => value.parts.reduce((sum, part) => sum + part.bytes, 0) === value.bytes
+  && value.parts.every((part, index) => part.url === `/model-photo/model.part-${index + 1}.bin`), "Invalid model part order or size.");
 
 /** Research readiness checks are required independently of a declared available flag. */
 export const PhotoManifestSchema = ModelSchema.extend({
@@ -49,15 +58,14 @@ export const PhotoManifestSchema = ModelSchema.extend({
   test_group_support: z.object({
     acne: z.number().int().min(30), dermatitis: z.number().int().min(30), other: z.number().int().nonnegative(),
   }),
-  deployment_validation: z.object({
+  deployment_validation: z.union([z.looseObject({
     onnx_verified: z.literal(true), quantized_benchmark_passed: z.literal(true), preprocessing_verified: z.literal(true),
-  }),
-  onnx: z.object({
-    url: z.literal("/model-photo/model.onnx"),
-    sha256: z.string().regex(/^[a-f0-9]{64}$/),
-    input_name: z.literal("image"),
-    logits_output: z.literal("logits"),
-  }),
+  }).refine(value => value.format === undefined && value.artifact_benchmark_passed === undefined,
+  "Floating artifacts must satisfy their own deployment checks."), z.object({ onnx_verified: z.literal(true), artifact_benchmark_passed: z.literal(true),
+    preprocessing_verified: z.literal(true), browser_verified: z.literal(true),
+    format: z.enum(["float32", "float16_constants_float32_compute"]),
+  })]),
+  onnx: z.union([z.object({ ...tensorNames, url: z.literal("/model-photo/model.onnx") }), splitArtifact]),
 }).refine(value => value.classes.length === CLINICAL_CLASSES.length
   && CLINICAL_CLASSES.every((item, index) => value.classes[index].id === item.id && value.classes[index].label === item.label),
 "The photo artifact has an incompatible class mapping.");
@@ -103,21 +111,41 @@ function getManifest(): Promise<PhotoManifest> {
   return manifestPromise;
 }
 
-function getSession(manifest: PhotoManifest): Promise<Session> {
-  const key = `${manifest.onnx.url}:${manifest.onnx.sha256}`;
+async function verifyHash(bytes: ArrayBuffer, expected: string) {
+  const hash = await crypto.subtle.digest("SHA-256", bytes);
+  const digest = Array.from(new Uint8Array(hash), value => value.toString(16).padStart(2, "0")).join("");
+  if (digest !== expected) throw new Error("Photo model integrity verification failed.");
+}
+
+function getSession(manifest: PhotoManifest, onProgress?: (stage: string) => void): Promise<Session> {
+  const key = manifest.onnx.sha256;
   if (!sessionCache || sessionCache.key !== key) {
     const pending = (async () => {
-      const response = await fetch(manifest.onnx.url, { redirect: "error" });
+      const fetchBytes = async (url: string, limit: number) => {
+      const response = await fetch(url, { redirect: "error" });
       if (!response.ok) throw new Error("The verified photo model is unavailable.");
       const declaredSize = response.headers.get("content-length");
-      if (declaredSize !== null && (!Number.isFinite(Number(declaredSize)) || Number(declaredSize) <= 0 || Number(declaredSize) > MAX_MODEL_BYTES)) {
+      if (declaredSize !== null && (!Number.isFinite(Number(declaredSize)) || Number(declaredSize) <= 0 || Number(declaredSize) > limit)) {
         throw new Error("Photo model download has an invalid size.");
       }
       const bytes = await response.arrayBuffer();
-      if (!bytes.byteLength || bytes.byteLength > MAX_MODEL_BYTES) throw new Error("Photo model download has an invalid size.");
-      const hash = await crypto.subtle.digest("SHA-256", bytes);
-      const digest = Array.from(new Uint8Array(hash), value => value.toString(16).padStart(2, "0")).join("");
-      if (digest !== manifest.onnx.sha256) throw new Error("Photo model integrity verification failed.");
+      if (!bytes.byteLength || bytes.byteLength > limit) throw new Error("Photo model download has an invalid size.");
+      return bytes;
+      };
+      let bytes: ArrayBuffer;
+      if ("parts" in manifest.onnx) {
+        const combined = new Uint8Array(manifest.onnx.bytes);
+        let offset = 0;
+        for (const [index, part] of manifest.onnx.parts.entries()) {
+          onProgress?.(`Loading verified model files (${index + 1} of ${manifest.onnx.parts.length})…`);
+          const chunk = await fetchBytes(part.url, part.bytes);
+          if (chunk.byteLength !== part.bytes) throw new Error("Incomplete photo model part.");
+          await verifyHash(chunk, part.sha256);
+          combined.set(new Uint8Array(chunk), offset); offset += chunk.byteLength;
+        }
+        bytes = combined.buffer;
+      } else bytes = await fetchBytes(manifest.onnx.url, MAX_MODEL_BYTES);
+      await verifyHash(bytes, manifest.onnx.sha256);
       const ort = await import("onnxruntime-web/wasm");
       ort.env.wasm.numThreads = 1;
       ort.env.wasm.proxy = false;
@@ -186,7 +214,7 @@ export async function analyzePhotoImage(file: File, signal?: AbortSignal, onProg
   checkAbort(signal);
   onProgress?.("Loading the verified photo model on your device…");
   let session: Session;
-  try { session = await waitFor(getSession(manifest), signal); }
+  try { session = await waitFor(getSession(manifest, onProgress), signal); }
   catch {
     checkAbort(signal);
     return empty("unavailable", "The photo model could not load on this device. No prediction or appearance-based product selection is available. You can retry the analysis.", quality, { ...model, available: false });
@@ -219,12 +247,13 @@ export async function analyzePhotoImage(file: File, signal?: AbortSignal, onProg
   if (scores[0].score < manifest.uncertainty.max_score_threshold) reasons.push("The leading model score is below the documented research threshold.");
   if (margin < manifest.uncertainty.margin_threshold) reasons.push("The leading appearance categories are too close under the research separation rule.");
   if (scores[0].id === "other") reasons.push("Other / unsupported appearance does not identify a condition. It cannot select condition-based products and is not a validated detector of every unsupported image.");
+  if (!PHOTO_PRODUCT_MATCHING_ENABLED) reasons.push(PHOTO_PRODUCT_RESTRICTION);
   const rejected = reasons.length > 0;
   onProgress?.("Preparing the research result and its limitations…");
   return {
     status: rejected ? "uncertain" : "assessed",
     message: rejected
-      ? "Unable to select a supported appearance reliably from this photo. General survey guidance remains available."
+      ? "Research inference completed. The category ranking cannot reliably identify your condition or choose condition-specific products. Your survey still personalizes the routine below."
       : "A research appearance category is available. This is not a diagnosis or a measure of condition severity.",
     model, scores, quality, explanation: null,
     uncertainty: { rejected, reasons, score_type: "temperature_scaled_model_score", threshold: manifest.uncertainty.max_score_threshold, margin },

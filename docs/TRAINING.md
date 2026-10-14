@@ -1,6 +1,6 @@
 # Reproducing the research model
 
-The active task is seven-category image-pattern classification for dermoscopic lesions. It does not classify rosacea, acne, eczema, arbitrary rashes or smartphone facial photos. `SkinCNN` is trained from scratch; no pretrained backbone or external diagnostic model is substituted.
+This document reproduces the retained seven-category dermoscopic lesion task. It does not classify rosacea, acne, eczema, arbitrary rashes or smartphone facial photos. `SkinCNN` is trained from scratch; no pretrained backbone or external diagnostic model is substituted for that task. The separate DINOv2 ordinary-photo experiment has [its own source-access/ordered worker instructions](OVERNIGHT_TRAINING.md), [model card](PHOTO_MODEL_CARD.md) and [measured report](PHOTO_EVALUATION_REPORT.md). Do not transfer results between these models or rerun selection on an opened holdout.
 
 ## Environment and commands
 

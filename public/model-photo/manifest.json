@@ -1,0 +1,232 @@
+{
+  "version": "skinsnap-photo-dinov2-v2",
+  "architecture": "Frozen DINOv2 dinov2_vitb14 CLS + mean patch features with trained linear three-class head; float32 ONNX",
+  "available": true,
+  "backbone": "dinov2_vitb14",
+  "head": "linear",
+  "input_size": 224,
+  "supported_image_type": "clinical_photo",
+  "classes": [
+    {
+      "id": "acne",
+      "label": "Acne-like appearance"
+    },
+    {
+      "id": "dermatitis",
+      "label": "Dermatitis-like appearance"
+    },
+    {
+      "id": "other",
+      "label": "Other / unsupported appearance"
+    }
+  ],
+  "preprocessing": {
+    "mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "std": [
+      0.229,
+      0.224,
+      0.225
+    ],
+    "resize": "nearest",
+    "coordinate_rule": "floor((coordinate+0.5)*source_size/224)",
+    "exif_orientation": true,
+    "alpha": "white",
+    "layout": "NCHW"
+  },
+  "temperature": 1.85,
+  "uncertainty": {
+    "max_score_threshold": 0.65,
+    "margin_threshold": 0.15,
+    "always_reject_classes": [
+      "other"
+    ]
+  },
+  "readiness": {
+    "passed": true,
+    "benchmark_minimums_passed": true,
+    "minimums": {
+      "macro_f1": 0.6,
+      "balanced_accuracy": 0.6,
+      "acne_recall": 0.5,
+      "dermatitis_recall": 0.5
+    },
+    "measured": {
+      "macro_f1": 0.6574972622469414,
+      "balanced_accuracy": 0.7605516182032064,
+      "acne_recall": 0.8,
+      "dermatitis_recall": 0.6212121212121212
+    },
+    "independent_holdout": true,
+    "blocked_by_previously_examined_test": false,
+    "clinical_validation": false,
+    "sufficient_supported_class_samples": true,
+    "scin_dermatitis_recall_minimum_passed": true
+  },
+  "test_group_support": {
+    "acne": 80,
+    "dermatitis": 198,
+    "other": 2077
+  },
+  "deployment_validation": {
+    "onnx_verified": true,
+    "preprocessing_verified": true,
+    "artifact_benchmark_passed": true,
+    "format": "float32",
+    "onnx_sha256": "7352670e61bf99e4f5264f1e5106eed8f3b63a5c1614e433becee9e84cf1baf8",
+    "onnx_bytes": 346452970,
+    "pytorch_float32_max_logit_error": 3.4332275390625e-05,
+    "browser_verified": true,
+    "test_reference_comparison": {
+      "n": 2356,
+      "maximum_absolute_logit_error": 0.00010013580322265625,
+      "matching_top_labels": true,
+      "passed": true
+    },
+    "browser_verification": {
+      "report_path": "models/photo-v2/browser-parity.json",
+      "report_sha256": "6cd0b2de18020a07f5c84a3d658ab2e7c610bf69a5f16b66def978dacaeee4e6",
+      "repair_lock_sha256": "7a82cf6e46d21fe36b1efdb1ed6c4d70074671b1f69dad3289833029aca86ab6",
+      "evaluation_sha256": "75cb8a9da0c899b390864090d7d5ecd53b96af7a6e075a6fca78bd8ae43882c3",
+      "cohort_sha256": "a697c5e5656ee618b713a1e9e56089d3e6c471771193acff1f28319d20ca46a2",
+      "head_sha256": "39a6b34489203e317c911e9aefeadf654a7d9881aea2d40872979e213dd16401",
+      "preprocessing_sha256": "d1937c6f6c67fcda9782ae2957af5d6fda3ac571ed6df5d122f40ce1b216f0da",
+      "browser_preprocessing_source_sha256": "95104d938f05be8fbe1c1517bec8323943ad370d6774cebddf7bc36a5dde7294",
+      "protocol_sha256": "ac1ee235307e5f1283a78e553b580ae4545949c11adc83320ebd5fc482cb7898",
+      "onnx_sha256": "7352670e61bf99e4f5264f1e5106eed8f3b63a5c1614e433becee9e84cf1baf8",
+      "reference_sha256": "00f169d9a3eea574a6a1b50dc0a94be83c9b4c291be7e9b75a03b938d03de2cc",
+      "n": 12,
+      "maximum_absolute_logit_error": 3.1948089599609375e-05,
+      "maximum_absolute_tensor_error": 4.76837158203125e-07,
+      "runtime": {
+        "engine": "Chromium WASM",
+        "browser_version": "156.0.8078.4",
+        "onnxruntime_web_version": "1.30.0",
+        "threads": 1
+      }
+    },
+    "condition_product_matching": false,
+    "condition_product_matching_restriction": {
+      "reason": "Accepted photo labels are not reliable enough to select products for a detected condition; use preferences and general-care constraints.",
+      "evaluation_path": "models/photo-v2/evaluation.json",
+      "evaluation_sha256": "091317aadaa595dac2ea6a39a2da84ecdda39f5e547e374ae25e84bd67ed8c3e",
+      "accepted_correct": 147,
+      "accepted_count": 308,
+      "accepted_accuracy": 0.4772727272727273,
+      "policy_timing": "Product-policy restriction after reviewing measured errors; not a pretuned model-selection or release gate.",
+      "clinical_validation": false
+    }
+  },
+  "onnx": {
+    "sha256": "7352670e61bf99e4f5264f1e5106eed8f3b63a5c1614e433becee9e84cf1baf8",
+    "bytes": 346452970,
+    "parts": [
+      {
+        "url": "/model-photo/model.part-1.bin",
+        "bytes": 20971520,
+        "sha256": "2cd1191eab70ed7f7cd82db10dae818c76966489e02698cd66f8e78faf10a4c5"
+      },
+      {
+        "url": "/model-photo/model.part-2.bin",
+        "bytes": 20971520,
+        "sha256": "d7b981babd8eaccb2a8b080630d0d8396dabf7cb3ed39898a3b780095416423f"
+      },
+      {
+        "url": "/model-photo/model.part-3.bin",
+        "bytes": 20971520,
+        "sha256": "cb31f16b4aa6b0cda5491b6f95d7a15da740c21a13fa3447ff02f7f22806cf74"
+      },
+      {
+        "url": "/model-photo/model.part-4.bin",
+        "bytes": 20971520,
+        "sha256": "49cae19d408398e2b870e3102a5eda05d2283aa8ecf3b51095aa361d4b5f2c82"
+      },
+      {
+        "url": "/model-photo/model.part-5.bin",
+        "bytes": 20971520,
+        "sha256": "42b65603e06765c7c07c0cf55a63e58ad5dcf8ff31b879188e8105c18e940596"
+      },
+      {
+        "url": "/model-photo/model.part-6.bin",
+        "bytes": 20971520,
+        "sha256": "4a656bd6f9d1c429eec8260f1bbaad91d2663f938a9df71ec00d7ae7b2ad087b"
+      },
+      {
+        "url": "/model-photo/model.part-7.bin",
+        "bytes": 20971520,
+        "sha256": "26474b860b5ae737488a71b42614a994f85b8b8708f804683173df6484c6223a"
+      },
+      {
+        "url": "/model-photo/model.part-8.bin",
+        "bytes": 20971520,
+        "sha256": "792d7ae185a549ff0148592ec516d812e0d81932286255850b23d757dd69bf4d"
+      },
+      {
+        "url": "/model-photo/model.part-9.bin",
+        "bytes": 20971520,
+        "sha256": "a1ad2617500467b6a12b6e8fd8455f5dcc64cbd50a9bb9e186187b73f535d2d9"
+      },
+      {
+        "url": "/model-photo/model.part-10.bin",
+        "bytes": 20971520,
+        "sha256": "6cae5a6f34e277880dfe932b9a1dc34cc4a95765c7d0b8252312285ff3cbb932"
+      },
+      {
+        "url": "/model-photo/model.part-11.bin",
+        "bytes": 20971520,
+        "sha256": "bce0de45318e9127e305277bd30359c046163d6154f2611d755f6bfb1c04369f"
+      },
+      {
+        "url": "/model-photo/model.part-12.bin",
+        "bytes": 20971520,
+        "sha256": "6092cc08d3897f996902aa263cd4edd89636a541b09bf2894c8b5bc51a1e49ce"
+      },
+      {
+        "url": "/model-photo/model.part-13.bin",
+        "bytes": 20971520,
+        "sha256": "e454d857a70cba77943719c0753f5e5ee5dc5d4b243659bac0ad9faa058473c9"
+      },
+      {
+        "url": "/model-photo/model.part-14.bin",
+        "bytes": 20971520,
+        "sha256": "48e1790423dc1b76e56809711526ec9d901fc8a6abcffee201d14479c18847fc"
+      },
+      {
+        "url": "/model-photo/model.part-15.bin",
+        "bytes": 20971520,
+        "sha256": "6257bc8e093f6ad4724fc33cb9a91d089d7ab002031d46f2f5ac5f130e9f9496"
+      },
+      {
+        "url": "/model-photo/model.part-16.bin",
+        "bytes": 20971520,
+        "sha256": "39d8e9481e99d533ce5ebf178282e96c150c4b3772a3672bcddfa42c89597e3a"
+      },
+      {
+        "url": "/model-photo/model.part-17.bin",
+        "bytes": 10908650,
+        "sha256": "1bb50567154c14bea1202fbf3c84601c3af0d40fe04ca49abd53c303380439c2"
+      }
+    ],
+    "input_name": "image",
+    "logits_output": "logits"
+  },
+  "dataset": "SCIN + corrected Fitzpatrick17k-C",
+  "licenses": [
+    "SCIN Data Use License",
+    "Fitzpatrick17k images: CC BY-NC-SA3.0 per authors, original atlas rights not commercially cleared",
+    "Corrected metadata: CC BY4.0",
+    "DINOv2: Apache2.0"
+  ],
+  "limitations": [
+    "Untouched for this experiment does not imply unseen during DINOv2 pretraining.",
+    "No patient identifiers; no proven patient independence.",
+    "Corrected atlas images and US volunteer differentials do not validate arbitrary smartphone faces.",
+    "Other is a finite heterogeneous class, not a validated OOD detector.",
+    "No disease severity, diagnosis, serious-disease exclusion, or best-product efficacy established.",
+    "Research/noncommercial data terms; commercial deployment not cleared.",
+    "Deployment serialization was repaired after original test opening; the same test is remeasured, not an independent new validation."
+  ]
+}

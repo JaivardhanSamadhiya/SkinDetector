@@ -1,0 +1,273 @@
+{
+  "passed": true,
+  "model_version": "skinsnap-photo-dinov2-v2",
+  "protocol": {
+    "version": 1,
+    "purpose": "Browser WASM serialization and preprocessing verification; not classification accuracy or clinical validation",
+    "sample_policy": "First12 validation cases in unchanged combined-cohort order; same fixed cases as deployment repair",
+    "reference": "Fresh PyTorch execution of the locked backbone and trained head; original validation-selected temperature unchanged",
+    "image_decode": "Pillow EXIF-oriented, alpha-on-white RGB decoded pixels saved losslessly to PNG; browser decodes this canonical PNG",
+    "preprocessing": "Actual resizeNearest and normalizePixels functions extracted from lib/browser-inference.ts; tensor compared with shared Python preprocess",
+    "maximum_absolute_tensor_error": 0.000001,
+    "maximum_absolute_logit_error": 0.005,
+    "require_matching_top_labels": true,
+    "runtime": "Actual Chromium onnxruntime-web WASM, one thread, local same-origin model parts verified individually and together",
+    "release_policy": "Write a separate verification report; never alter manifests, model selection, final-test or export locks",
+    "clinical_validation": false
+  },
+  "binding": {
+    "repair_lock_sha256": "7a82cf6e46d21fe36b1efdb1ed6c4d70074671b1f69dad3289833029aca86ab6",
+    "evaluation_sha256": "75cb8a9da0c899b390864090d7d5ecd53b96af7a6e075a6fca78bd8ae43882c3",
+    "cohort_sha256": "a697c5e5656ee618b713a1e9e56089d3e6c471771193acff1f28319d20ca46a2",
+    "head_sha256": "39a6b34489203e317c911e9aefeadf654a7d9881aea2d40872979e213dd16401",
+    "preprocessing_sha256": "d1937c6f6c67fcda9782ae2957af5d6fda3ac571ed6df5d122f40ce1b216f0da",
+    "browser_preprocessing_source_sha256": "95104d938f05be8fbe1c1517bec8323943ad370d6774cebddf7bc36a5dde7294",
+    "protocol_sha256": "ac1ee235307e5f1283a78e553b580ae4545949c11adc83320ebd5fc482cb7898",
+    "onnx_sha256": "7352670e61bf99e4f5264f1e5106eed8f3b63a5c1614e433becee9e84cf1baf8"
+  },
+  "reference_sha256": "00f169d9a3eea574a6a1b50dc0a94be83c9b4c291be7e9b75a03b938d03de2cc",
+  "runtime": {
+    "engine": "Chromium WASM",
+    "browser_version": "156.0.8078.4",
+    "onnxruntime_web_version": "1.30.0",
+    "threads": 1
+  },
+  "n": 12,
+  "samples": [
+    {
+      "id": "fitz:0052eda5ef19c8cf004d72d4a5a7a2e3",
+      "source": "Fitzpatrick17k-C",
+      "split": "validation",
+      "original_image_sha256": "948481871ebba60c1b27693b9efc164046657c40d4c2b78e86574da1c83cd561",
+      "browser_logits": [
+        -11.50800609588623,
+        5.275903701782227,
+        6.232246398925781
+      ],
+      "pytorch_logits": [
+        -11.508003234863281,
+        5.275903224945068,
+        6.232243537902832
+      ],
+      "maximum_absolute_tensor_error": 2.384185791015625e-7,
+      "maximum_absolute_logit_error": 0.00000286102294921875,
+      "matching_top_label": true
+    },
+    {
+      "id": "fitz:0084b12b1c39776635f79548e8b47e1f",
+      "source": "Fitzpatrick17k-C",
+      "split": "validation",
+      "original_image_sha256": "58c7a605bf68c018febdae6817bcd705ea579c139bfb5199f326a3a8f8d6736f",
+      "browser_logits": [
+        -10.550787925720215,
+        -0.7670106887817383,
+        11.317941665649414
+      ],
+      "pytorch_logits": [
+        -10.550763130187988,
+        -0.7670328617095947,
+        11.317938804626465
+      ],
+      "maximum_absolute_tensor_error": 4.76837158203125e-7,
+      "maximum_absolute_logit_error": 0.0000247955322265625,
+      "matching_top_label": true
+    },
+    {
+      "id": "fitz:008645fdf0de0e02e196cd639efe1441",
+      "source": "Fitzpatrick17k-C",
+      "split": "validation",
+      "original_image_sha256": "d030aec4bf4758a877e116f7c2307911ba889452dc5c0a968f462e3bf5f03b71",
+      "browser_logits": [
+        -6.336991786956787,
+        0.4963747262954712,
+        5.840766906738281
+      ],
+      "pytorch_logits": [
+        -6.3369598388671875,
+        0.4963674545288086,
+        5.840741157531738
+      ],
+      "maximum_absolute_tensor_error": 2.384185791015625e-7,
+      "maximum_absolute_logit_error": 0.000031948089599609375,
+      "matching_top_label": true
+    },
+    {
+      "id": "fitz:00c67e6f49ebec99a9db8dc74064cbd3",
+      "source": "Fitzpatrick17k-C",
+      "split": "validation",
+      "original_image_sha256": "89113ecada8609505a9e76d5be0f21234581e3d53e4aa4eb353a8d9905b9391e",
+      "browser_logits": [
+        -10.029804229736328,
+        2.1174511909484863,
+        7.912386894226074
+      ],
+      "pytorch_logits": [
+        -10.029802322387695,
+        2.1174275875091553,
+        7.912406921386719
+      ],
+      "maximum_absolute_tensor_error": 2.384185791015625e-7,
+      "maximum_absolute_logit_error": 0.000023603439331054688,
+      "matching_top_label": true
+    },
+    {
+      "id": "fitz:018023141989920b3b7e89223d90d8a0",
+      "source": "Fitzpatrick17k-C",
+      "split": "validation",
+      "original_image_sha256": "7c23e23fd77dfef12e2f679fbf46c915e861748fdadb6bacec130719ceb2fe67",
+      "browser_logits": [
+        -13.213629722595215,
+        4.1074442863464355,
+        9.106297492980957
+      ],
+      "pytorch_logits": [
+        -13.21363639831543,
+        4.107442855834961,
+        9.106304168701172
+      ],
+      "maximum_absolute_tensor_error": 2.384185791015625e-7,
+      "maximum_absolute_logit_error": 0.00000667572021484375,
+      "matching_top_label": true
+    },
+    {
+      "id": "fitz:01d1e597bf5f33da0ee11b63b77c9b16",
+      "source": "Fitzpatrick17k-C",
+      "split": "validation",
+      "original_image_sha256": "6e36eee65a2d9e73d166eaa7d96c8c1aafa9947639f9c6522b97d66faba360ea",
+      "browser_logits": [
+        -8.254037857055664,
+        2.739994525909424,
+        5.5142107009887695
+      ],
+      "pytorch_logits": [
+        -8.254044532775879,
+        2.7400009632110596,
+        5.514211654663086
+      ],
+      "maximum_absolute_tensor_error": 4.76837158203125e-7,
+      "maximum_absolute_logit_error": 0.00000667572021484375,
+      "matching_top_label": true
+    },
+    {
+      "id": "fitz:01dcb2df48d5866d2a32db2ff2d91d60",
+      "source": "Fitzpatrick17k-C",
+      "split": "validation",
+      "original_image_sha256": "97fb99a8dc2c01d009426f58464a05beae18de24980955d660d8c6a03101dabd",
+      "browser_logits": [
+        -11.076335906982422,
+        4.211620330810547,
+        6.864751815795898
+      ],
+      "pytorch_logits": [
+        -11.076327323913574,
+        4.211617469787598,
+        6.864743232727051
+      ],
+      "maximum_absolute_tensor_error": 2.384185791015625e-7,
+      "maximum_absolute_logit_error": 0.00000858306884765625,
+      "matching_top_label": true
+    },
+    {
+      "id": "fitz:01ed6482ab261012f398c19db7dfcc6c",
+      "source": "Fitzpatrick17k-C",
+      "split": "validation",
+      "original_image_sha256": "19b0c9c01eb11bcdd11d01910ece6e0fa3e4ac3b52ae45ff14090e1584676f00",
+      "browser_logits": [
+        -9.056397438049316,
+        -0.8239792585372925,
+        9.880386352539062
+      ],
+      "pytorch_logits": [
+        -9.056395530700684,
+        -0.8239855766296387,
+        9.880389213562012
+      ],
+      "maximum_absolute_tensor_error": 2.384185791015625e-7,
+      "maximum_absolute_logit_error": 0.000006318092346191406,
+      "matching_top_label": true
+    },
+    {
+      "id": "fitz:02b13fc1158bdb2c18c5cacc24cbfb3d",
+      "source": "Fitzpatrick17k-C",
+      "split": "validation",
+      "original_image_sha256": "216632459df76cf590674d941d4c5f607b3debc485c5f0f62e0df6be6d84353b",
+      "browser_logits": [
+        -5.769106388092041,
+        -0.1963007003068924,
+        5.965431213378906
+      ],
+      "pytorch_logits": [
+        -5.769138336181641,
+        -0.1962733268737793,
+        5.965437889099121
+      ],
+      "maximum_absolute_tensor_error": 2.384185791015625e-7,
+      "maximum_absolute_logit_error": 0.000031948089599609375,
+      "matching_top_label": true
+    },
+    {
+      "id": "fitz:02cf3ed8e245eb520cce87fefbf5d574",
+      "source": "Fitzpatrick17k-C",
+      "split": "validation",
+      "original_image_sha256": "4d05f0165c331a7f04fc21c7ee006a7c9140bda5d6454b4535ab07b0b84dddcf",
+      "browser_logits": [
+        -8.990493774414062,
+        4.26229190826416,
+        4.728316783905029
+      ],
+      "pytorch_logits": [
+        -8.990501403808594,
+        4.262289524078369,
+        4.728326797485352
+      ],
+      "maximum_absolute_tensor_error": 4.76837158203125e-7,
+      "maximum_absolute_logit_error": 0.000010013580322265625,
+      "matching_top_label": true
+    },
+    {
+      "id": "fitz:02f11821915d67f20fb15a8e8b96c1d3",
+      "source": "Fitzpatrick17k-C",
+      "split": "validation",
+      "original_image_sha256": "a4c65e0da4e6d685499fc7a0eb9e1fc038b5e1378130b5610248582b3a3e4003",
+      "browser_logits": [
+        -8.396065711975098,
+        -0.5637102127075195,
+        8.95980453491211
+      ],
+      "pytorch_logits": [
+        -8.396087646484375,
+        -0.5637059211730957,
+        8.959817886352539
+      ],
+      "maximum_absolute_tensor_error": 2.384185791015625e-7,
+      "maximum_absolute_logit_error": 0.00002193450927734375,
+      "matching_top_label": true
+    },
+    {
+      "id": "fitz:03238c6e0b3e80fe0971889690bdec9e",
+      "source": "Fitzpatrick17k-C",
+      "split": "validation",
+      "original_image_sha256": "1126af6c5d674927edf253081da38568f887d11bed3b5d73049d2e6855f79257",
+      "browser_logits": [
+        -8.926758766174316,
+        2.6188619136810303,
+        6.308067798614502
+      ],
+      "pytorch_logits": [
+        -8.926738739013672,
+        2.61885666847229,
+        6.308052062988281
+      ],
+      "maximum_absolute_tensor_error": 4.76837158203125e-7,
+      "maximum_absolute_logit_error": 0.00002002716064453125,
+      "matching_top_label": true
+    }
+  ],
+  "maximum_absolute_tensor_error": 4.76837158203125e-7,
+  "maximum_absolute_logit_error": 0.000031948089599609375,
+  "matching_top_labels": true,
+  "image_posts": 0,
+  "unexpected_requests": [],
+  "elapsed_seconds": 33.588,
+  "limitation": "Numerical parity on twelve fixed validation images is serialization evidence, not disease-identification accuracy, clinical validation or arbitrary-face suitability."
+}

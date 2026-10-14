@@ -5,6 +5,7 @@ import {
   type SkincareStepId,
 } from "@/lib/skincare-preferences";
 import { getProductOffer, type ProductOffer } from "@/lib/product-offers";
+import { chooseBudgetBasket, type RoutineBudgetSelection } from "@/lib/routine-selection";
 
 export type SkincareProduct = {
   id: string;
@@ -34,6 +35,10 @@ export type SkincareRoutineStep = {
   reuseOwned: boolean;
   product: SkincareProduct | null;
   alternatives: SkincareProduct[];
+  /** Original preference order, retained even when the cap changes the starting choice. */
+  rankedProductIds?: string[];
+  preferenceReason?: string;
+  budgetReason?: string;
 };
 
 export type SkincareRoutine = {
@@ -41,6 +46,7 @@ export type SkincareRoutine = {
   steps: SkincareRoutineStep[];
   notes: string[];
   references: { title: string; url: string }[];
+  budgetSelection?: RoutineBudgetSelection;
 };
 
 const VERIFIED_DATE = "2026-10-11";
@@ -153,8 +159,11 @@ const REFERENCES: SkincareRoutine["references"] = [
 ];
 
 function publicProduct(product: CatalogProduct): SkincareProduct {
-  const { step: _step, texture: _texture, contains: _contains, botanicalIngredients: _botanical, ...facts } = product;
-  return { ...facts, offer: getProductOffer(product.id) };
+  return {
+    id: product.id, name: product.name, brand: product.brand, url: product.url,
+    description: product.description, ingredientNote: product.ingredientNote,
+    sourceDate: product.sourceDate, offer: getProductOffer(product.id),
+  };
 }
 
 function orderedCandidates(step: SkincareStepId, profile: SkincarePreferences): CatalogProduct[] {
@@ -231,10 +240,10 @@ export function buildSkincareRoutine(preferences: SkincarePreferences): Skincare
       reason,
       reuseOwned,
       product,
-      alternatives: reuseOwned ? [] : candidates.slice(1, 2).map(publicProduct),
+      alternatives: reuseOwned ? [] : candidates.slice(1).map(publicProduct),
     };
   });
-  return {
+  return chooseBudgetBasket({
     summary: profile.budget === "minimal"
       ? "A simple three-step routine that reuses your existing basics and keeps optional product examples to the gaps."
       : "A simple three-step routine with optional examples matched to your texture and ingredient preferences, reusing basics you already own.",
@@ -245,10 +254,8 @@ export function buildSkincareRoutine(preferences: SkincarePreferences): Skincare
       "Ingredient filters cover fragrance, niacinamide and oat only. They do not guarantee allergy safety; if you have other allergies or unexplained reactions, ask a qualified professional to review the full label before choosing a product.",
       "Test a new product on a small area first, following AAD guidance for seven to ten days and the product's directions. Stop if a reaction develops; get professional help for severe or persistent reactions.",
       "Examples use dated US manufacturer ingredient information. Retail prices are dated US-dollar snapshots for the stated sizes, excluding tax and delivery; prices, sellers, stock and local formulas can change. Recheck the linked listing and your package. No affiliate links or checkout are used.",
-      profile.budget === "minimal"
-        ? "The budget choice minimizes extra products and avoids duplicate purchases; it does not calculate the cheapest basket. Compare current local prices and sizes before buying."
-        : "Alternatives are optional texture or formulation examples, not add-on purchases. Compare current local costs if you choose to buy.",
+      "The dollar cap applies to one listed package for each missing basic. Among complete eligible combinations within it, the engine favors the lowest sum of category preference ranks, then lower dated cost. If none fits, it shows the cheapest eligible combination and the shortfall without dropping a step. This is catalog matching, not a medical effectiveness score.",
     ],
     references: REFERENCES.map((reference) => ({ ...reference })),
-  };
+  }, profile.totalBudgetUsd);
 }

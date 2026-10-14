@@ -4,6 +4,7 @@ import { buildConditionAwareRoutine, CONDITION_MATCHING_MODEL_VERSION, CONDITION
 import { DEFAULT_SKINCARE_PREFERENCES, type SkincarePreferences } from "@/lib/skincare-preferences";
 import { buildSkincareRoutine, SKINCARE_PRODUCT_CATALOG, type SkincareRoutine } from "@/lib/skincare-routine";
 import { AnalysisSchema } from "@/lib/types";
+import { PHOTO_MODEL_VERSION } from "@/lib/clinical-task";
 
 const CLASSES = [
   { id: "acne", label: "Acne-like appearance" },
@@ -42,6 +43,45 @@ function productIds(routine: SkincareRoutine): string[] {
 }
 
 describe("condition-aware basic cosmetic-care policy", () => {
+  it.each(["acne", "dermatitis"] as const)("keeps even a high-score v2 %s ranking out of condition-specific product selection", condition => {
+    const fixture = clinicalFixture(condition);
+    fixture.model.version = PHOTO_MODEL_VERSION;
+    fixture.model.input_size = 224;
+    const answers = preferences({ totalBudgetUsd: 39, texture: "rich" });
+    const output = buildConditionAwareRoutine(answers, fixture);
+    expect(output.decision.status).toBe("general_only");
+    expect(output.decision.conditionId).toBeUndefined();
+    expect(output.decision.explanation).toContain("too many incorrect");
+    expect(output.routine).toEqual(buildSkincareRoutine(answers));
+  });
+  it("combines accepted appearance criteria with the numeric cap without adding excluded formulas", () => {
+    const output = buildConditionAwareRoutine(preferences({ totalBudgetUsd: 39, avoid: ["niacinamide", "oat"] }), clinicalFixture("acne"));
+    expect(output.decision.status).toBe("condition_matched");
+    expect(output.routine.budgetSelection).toMatchObject({ status: "within_budget", subtotalCents: 3866, adjustedSteps: ["moisturizer"] });
+    expect(output.routine.steps[1].product?.id).toBe("vanicream-moisturizing-cream");
+    expect(output.routine.steps[1].reason).toContain("eligible substitute");
+    expect(productIds(output.routine)).not.toContain("cerave-foaming-cleanser");
+    expect(productIds(output.routine)).not.toContain("aveeno-oat-gel");
+  });
+
+  it("keeps the accepted-category explicit texture restriction even when it makes the cap infeasible", () => {
+    const output = buildConditionAwareRoutine(preferences({ totalBudgetUsd: 39, texture: "light" }), clinicalFixture("dermatitis"));
+    expect(output.decision.status).toBe("condition_matched");
+    expect(output.routine.steps[1].product?.id).toBe("vanicream-daily-moisturizer");
+    expect(output.routine.steps[1].alternatives).toEqual([]);
+    expect(output.routine.budgetSelection).toMatchObject({ status: "over_budget", subtotalCents: 3946, minimumSubtotalCents: 3946 });
+    expect(output.routine.steps.filter(step => step.product)).toHaveLength(3);
+  });
+
+  it("uses the same budgeted survey basket after a failed photo and never infers a care condition from budget", () => {
+    const answers = preferences({ totalBudgetUsd: 39, skinFeel: "dry" });
+    const fixture = clinicalFixture("acne");
+    const failed = { ...fixture, status: "unavailable", scores: [], quality: null, uncertainty: null, explanation: null };
+    const output = buildConditionAwareRoutine(answers, failed);
+    expect(output.decision.status).toBe("general_only");
+    expect(output.routine).toEqual(buildSkincareRoutine(answers));
+  });
+
   it("uses no appearance branch without an image-analysis result", () => {
     for (const result of [null, undefined]) {
       const output = buildConditionAwareRoutine(preferences(), result);
@@ -218,11 +258,11 @@ describe("condition-aware basic cosmetic-care policy", () => {
     expect(buildConditionAwareRoutine(preferences(), result).routine.steps[1].product?.id).toBe("vanicream-daily-moisturizer");
   });
 
-  it("explains sensitivity and purchasing priority without pretending to predict tolerance or optimize cheapest prices", () => {
+  it("explains sensitivity and purchasing priority without claiming tolerance or treatment effectiveness", () => {
     const minimal = buildConditionAwareRoutine(preferences({ sensitivity: "yes", budget: "minimal" }), clinicalFixture());
     expect(minimal.decision.reasons.join(" ")).toContain("sensitivity is reported or unknown");
     expect(minimal.decision.reasons.join(" ")).toContain("sunscreen contains aloe");
-    expect(minimal.decision.reasons.join(" ")).toContain("not a cheapest-basket calculation");
+    expect(minimal.decision.reasons.join(" ")).toContain("dollar cap applies to dated prices");
     const flexible = buildConditionAwareRoutine(preferences({ sensitivity: "no", budget: "flexible" }), clinicalFixture());
     expect(flexible.decision.reasons.join(" ")).toContain("does not predict tolerance");
     expect(flexible.decision.reasons.join(" ")).toContain("flexible purchasing priority");
@@ -301,7 +341,7 @@ describe("condition-aware basic cosmetic-care policy", () => {
     expect(notes).toContain("US manufacturer");
     expect(notes).toContain("No affiliate links or checkout");
     expect(notes).toContain("Ingredient filters cover fragrance, niacinamide and oat only");
-    expect(notes).toContain("does not calculate the cheapest basket");
+    expect(notes).toContain("not a medical effectiveness score");
     expect(notes).not.toContain("not the image or the model category");
   });
 

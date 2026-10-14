@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "purpose": "Browser WASM serialization and preprocessing verification; not classification accuracy or clinical validation",
+  "sample_policy": "First12 validation cases in unchanged combined-cohort order; same fixed cases as deployment repair",
+  "reference": "Fresh PyTorch execution of the locked backbone and trained head; original validation-selected temperature unchanged",
+  "image_decode": "Pillow EXIF-oriented, alpha-on-white RGB decoded pixels saved losslessly to PNG; browser decodes this canonical PNG",
+  "preprocessing": "Actual resizeNearest and normalizePixels functions extracted from lib/browser-inference.ts; tensor compared with shared Python preprocess",
+  "maximum_absolute_tensor_error": 1e-06,
+  "maximum_absolute_logit_error": 0.005,
+  "require_matching_top_labels": true,
+  "runtime": "Actual Chromium onnxruntime-web WASM, one thread, local same-origin model parts verified individually and together",
+  "release_policy": "Write a separate verification report; never alter manifests, model selection, final-test or export locks",
+  "clinical_validation": false
+}

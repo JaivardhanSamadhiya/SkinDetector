@@ -1,0 +1,770 @@
+{
+  "version": "skinsnap-photo-dinov2-v2",
+  "backbone": "dinov2_vitb14",
+  "head": "linear",
+  "head_C": 0.1,
+  "gamma": null,
+  "temperature": 1.85,
+  "test": {
+    "n": 2356,
+    "accuracy": 0.8382852292020373,
+    "macro_f1": 0.6574972622469414,
+    "balanced_accuracy": 0.7605516182032064,
+    "confusion_matrix": [
+      [
+        64,
+        2,
+        14
+      ],
+      [
+        3,
+        123,
+        72
+      ],
+      [
+        58,
+        232,
+        1788
+      ]
+    ],
+    "per_class": {
+      "acne": {
+        "precision": 0.512,
+        "recall": 0.8,
+        "f1-score": 0.624390243902439,
+        "support": 80.0
+      },
+      "dermatitis": {
+        "precision": 0.3445378151260504,
+        "recall": 0.6212121212121212,
+        "f1-score": 0.44324324324324327,
+        "support": 198.0
+      },
+      "other": {
+        "precision": 0.9541088580576307,
+        "recall": 0.8604427333974976,
+        "f1-score": 0.9048582995951417,
+        "support": 2078.0
+      }
+    },
+    "ece_10": 0.01636958757251517,
+    "brier_multiclass": 0.23780299084171147,
+    "nll": 0.40434598806384553
+  },
+  "test_group_support": {
+    "acne": 80,
+    "dermatitis": 198,
+    "other": 2077
+  },
+  "source_test": {
+    "Fitzpatrick17k-C": {
+      "n": 2144,
+      "accuracy": 0.8652052238805971,
+      "macro_f1": 0.6214411573768385,
+      "balanced_accuracy": 0.716941391941392,
+      "confusion_matrix": [
+        [
+          64,
+          2,
+          14
+        ],
+        [
+          3,
+          48,
+          53
+        ],
+        [
+          54,
+          163,
+          1743
+        ]
+      ],
+      "per_class": {
+        "acne": {
+          "precision": 0.5289256198347108,
+          "recall": 0.8,
+          "f1-score": 0.6368159203980099,
+          "support": 80.0
+        },
+        "dermatitis": {
+          "precision": 0.22535211267605634,
+          "recall": 0.46153846153846156,
+          "f1-score": 0.3028391167192429,
+          "support": 104.0
+        },
+        "other": {
+          "precision": 0.9629834254143647,
+          "recall": 0.8892857142857142,
+          "f1-score": 0.9246684350132626,
+          "support": 1960.0
+        }
+      },
+      "ece_10": 0.024425814089003094,
+      "brier_multiclass": 0.19947923025026304,
+      "nll": 0.3446548027608494
+    },
+    "SCIN": {
+      "n": 212,
+      "accuracy": 0.5660377358490566,
+      "macro_f1": 0.3749191984486102,
+      "balanced_accuracy": 0.5896141363144609,
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          75,
+          19
+        ],
+        [
+          4,
+          69,
+          45
+        ]
+      ],
+      "per_class": {
+        "acne": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 0.0
+        },
+        "dermatitis": {
+          "precision": 0.5208333333333334,
+          "recall": 0.7978723404255319,
+          "f1-score": 0.6302521008403361,
+          "support": 94.0
+        },
+        "other": {
+          "precision": 0.703125,
+          "recall": 0.3813559322033898,
+          "f1-score": 0.4945054945054945,
+          "support": 118.0
+        }
+      },
+      "ece_10": 0.2297070751404346,
+      "brier_multiclass": 0.6253791356910768,
+      "nll": 1.0080153337696176
+    }
+  },
+  "validation": {
+    "n": 1230,
+    "accuracy": 0.8406504065040651,
+    "macro_f1": 0.7096997200246596,
+    "balanced_accuracy": 0.7965856690868449,
+    "confusion_matrix": [
+      [
+        34,
+        0,
+        5
+      ],
+      [
+        1,
+        84,
+        43
+      ],
+      [
+        19,
+        128,
+        916
+      ]
+    ],
+    "per_class": {
+      "acne": {
+        "precision": 0.6296296296296297,
+        "recall": 0.8717948717948718,
+        "f1-score": 0.7311827956989247,
+        "support": 39.0
+      },
+      "dermatitis": {
+        "precision": 0.39622641509433965,
+        "recall": 0.65625,
+        "f1-score": 0.49411764705882355,
+        "support": 128.0
+      },
+      "other": {
+        "precision": 0.950207468879668,
+        "recall": 0.8617121354656632,
+        "f1-score": 0.9037987173162308,
+        "support": 1063.0
+      }
+    },
+    "ece_10": 0.008654338341004436,
+    "brier_multiclass": 0.2324971476315477,
+    "nll": 0.3869217075678762
+  },
+  "source_validation": {
+    "Fitzpatrick17k-C": {
+      "n": 1069,
+      "accuracy": 0.8849391955098223,
+      "macro_f1": 0.6754987792933195,
+      "balanced_accuracy": 0.747856436722557,
+      "confusion_matrix": [
+        [
+          34,
+          0,
+          5
+        ],
+        [
+          1,
+          25,
+          28
+        ],
+        [
+          15,
+          74,
+          887
+        ]
+      ],
+      "per_class": {
+        "acne": {
+          "precision": 0.68,
+          "recall": 0.8717948717948718,
+          "f1-score": 0.7640449438202247,
+          "support": 39.0
+        },
+        "dermatitis": {
+          "precision": 0.25252525252525254,
+          "recall": 0.46296296296296297,
+          "f1-score": 0.32679738562091504,
+          "support": 54.0
+        },
+        "other": {
+          "precision": 0.9641304347826087,
+          "recall": 0.9088114754098361,
+          "f1-score": 0.9356540084388185,
+          "support": 976.0
+        }
+      },
+      "ece_10": 0.03524000980129084,
+      "brier_multiclass": 0.17817604496106562,
+      "nll": 0.3055405252672475
+    },
+    "SCIN": {
+      "n": 161,
+      "accuracy": 0.546583850931677,
+      "macro_f1": 0.357921378127934,
+      "balanced_accuracy": 0.5653153153153153,
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          59,
+          15
+        ],
+        [
+          4,
+          54,
+          29
+        ]
+      ],
+      "per_class": {
+        "acne": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 0.0
+        },
+        "dermatitis": {
+          "precision": 0.5221238938053098,
+          "recall": 0.7972972972972973,
+          "f1-score": 0.6310160427807486,
+          "support": 74.0
+        },
+        "other": {
+          "precision": 0.6590909090909091,
+          "recall": 0.3333333333333333,
+          "f1-score": 0.44274809160305345,
+          "support": 87.0
+        }
+      },
+      "ece_10": 0.2291657628058162,
+      "brier_multiclass": 0.5931757734374191,
+      "nll": 0.927272539116771
+    }
+  },
+  "readiness": {
+    "passed": true,
+    "benchmark_minimums_passed": true,
+    "minimums": {
+      "macro_f1": 0.6,
+      "balanced_accuracy": 0.6,
+      "acne_recall": 0.5,
+      "dermatitis_recall": 0.5
+    },
+    "measured": {
+      "macro_f1": 0.6574972622469414,
+      "balanced_accuracy": 0.7605516182032064,
+      "acne_recall": 0.8,
+      "dermatitis_recall": 0.6212121212121212
+    },
+    "independent_holdout": true,
+    "blocked_by_previously_examined_test": false,
+    "clinical_validation": false,
+    "sufficient_supported_class_samples": true,
+    "scin_dermatitis_recall_minimum_passed": true
+  },
+  "selective": {
+    "count": 308,
+    "coverage": 0.1307300509337861,
+    "accuracy": 0.4772727272727273
+  },
+  "lock": {
+    "backbone": "dinov2_vitb14",
+    "backbone_provenance": {
+      "name": "dinov2_vitb14",
+      "sha256": "0b8b82f85de91b424aded121c7e1dcc2b7bc6d0adeea651bf73a13307fad8c73",
+      "bytes": 346378731,
+      "source_commit": "7764ea0f912e53c92e82eb78a2a1631e92725fc8",
+      "url": "https://dl.fbaipublicfiles.com/dinov2/dinov2_vitb14/dinov2_vitb14_pretrain.pth"
+    },
+    "preprocessing_sha256": "d1937c6f6c67fcda9782ae2957af5d6fda3ac571ed6df5d122f40ce1b216f0da",
+    "head_sha256": "39a6b34489203e317c911e9aefeadf654a7d9881aea2d40872979e213dd16401",
+    "cohort_sha256": "a697c5e5656ee618b713a1e9e56089d3e6c471771193acff1f28319d20ca46a2",
+    "protocol_sha256": "b47d28472d2b3efcaff3796f0f50d4de58c91bf66a8e14c8336a3c846b5e6853",
+    "export_lock_sha256": "d566c312345d7918e86cd6dfc5410779222b735b5f7ee833177a452f37193884",
+    "categories_selection_lock_sha256": "56bcc070e128d5661609668807e734949c73ea78f612426189fc2b8d84cc3d54"
+  },
+  "protocol": {
+    "seed": 20261013,
+    "input_size": 224,
+    "backbones": [
+      "dinov2_vits14",
+      "dinov2_vitb14"
+    ],
+    "backbone_source_commit": "7764ea0f912e53c92e82eb78a2a1631e92725fc8",
+    "features": "Concatenated final CLS token and mean patch tokens, frozen DINOv2",
+    "preprocessing": "EXIF, white alpha composite, whole-image pixel-center nearest 224, ImageNet normalization",
+    "linear_C": [
+      0.001,
+      0.01,
+      0.1,
+      1.0,
+      10.0
+    ],
+    "rbf_C": [
+      0.1,
+      1.0,
+      10.0,
+      100.0
+    ],
+    "rbf_gamma": [
+      0.0003,
+      0.001,
+      0.003
+    ],
+    "rbf_landmarks_per_class": 256,
+    "model_selection": "Maximum pooled validation macro-F1; balanced accuracy tie-breaker; then simpler candidate order",
+    "training_views": "All train views, per-case and per-class equal aggregate loss weight",
+    "evaluation_views": "One first available image per case; never a best-view selection",
+    "calibration": "Validation-only NLL temperature grid 0.5 to 4.0 in 0.05 increments",
+    "minimums": {
+      "macro_f1": 0.6,
+      "balanced_accuracy": 0.6,
+      "acne_recall": 0.5,
+      "dermatitis_recall": 0.5
+    },
+    "score_threshold": 0.65,
+    "margin_threshold": 0.15,
+    "additional_release_requirements": [
+      "New test with at least 30 cases in each supported appearance",
+      "Both data sources reported separately",
+      "SCIN dermatitis recall >=0.5",
+      "No previously examined case/hash/group in test",
+      "No clinical or arbitrary-image validity claim"
+    ],
+    "clinical_validation": false,
+    "patient_ids_available": false,
+    "test_policy": "Only final validation-selected candidate can open test; test hash and model lock are persisted before predictions."
+  },
+  "limitations": [
+    "Untouched for this experiment does not imply unseen during DINOv2 pretraining.",
+    "No patient identifiers; no proven patient independence.",
+    "Corrected atlas images and US volunteer differentials do not validate arbitrary smartphone faces.",
+    "Other is a finite heterogeneous class, not a validated OOD detector.",
+    "No disease severity, diagnosis, serious-disease exclusion, or best-product efficacy established.",
+    "Research/noncommercial data terms; commercial deployment not cleared.",
+    "Deployment serialization was repaired after original test opening; the same test is remeasured, not an independent new validation."
+  ],
+  "deployment_validation": {
+    "onnx_verified": true,
+    "preprocessing_verified": true,
+    "artifact_benchmark_passed": true,
+    "format": "float32",
+    "onnx_sha256": "7352670e61bf99e4f5264f1e5106eed8f3b63a5c1614e433becee9e84cf1baf8",
+    "onnx_bytes": 346452970,
+    "pytorch_float32_max_logit_error": 3.4332275390625e-05,
+    "browser_verified": true,
+    "test_reference_comparison": {
+      "n": 2356,
+      "maximum_absolute_logit_error": 0.00010013580322265625,
+      "matching_top_labels": true,
+      "passed": true
+    },
+    "browser_verification": {
+      "report_path": "models/photo-v2/browser-parity.json",
+      "report_sha256": "6cd0b2de18020a07f5c84a3d658ab2e7c610bf69a5f16b66def978dacaeee4e6",
+      "repair_lock_sha256": "7a82cf6e46d21fe36b1efdb1ed6c4d70074671b1f69dad3289833029aca86ab6",
+      "evaluation_sha256": "75cb8a9da0c899b390864090d7d5ecd53b96af7a6e075a6fca78bd8ae43882c3",
+      "cohort_sha256": "a697c5e5656ee618b713a1e9e56089d3e6c471771193acff1f28319d20ca46a2",
+      "head_sha256": "39a6b34489203e317c911e9aefeadf654a7d9881aea2d40872979e213dd16401",
+      "preprocessing_sha256": "d1937c6f6c67fcda9782ae2957af5d6fda3ac571ed6df5d122f40ce1b216f0da",
+      "browser_preprocessing_source_sha256": "95104d938f05be8fbe1c1517bec8323943ad370d6774cebddf7bc36a5dde7294",
+      "protocol_sha256": "ac1ee235307e5f1283a78e553b580ae4545949c11adc83320ebd5fc482cb7898",
+      "onnx_sha256": "7352670e61bf99e4f5264f1e5106eed8f3b63a5c1614e433becee9e84cf1baf8",
+      "reference_sha256": "00f169d9a3eea574a6a1b50dc0a94be83c9b4c291be7e9b75a03b938d03de2cc",
+      "n": 12,
+      "maximum_absolute_logit_error": 3.1948089599609375e-05,
+      "maximum_absolute_tensor_error": 4.76837158203125e-07,
+      "runtime": {
+        "engine": "Chromium WASM",
+        "browser_version": "156.0.8078.4",
+        "onnxruntime_web_version": "1.30.0",
+        "threads": 1
+      }
+    },
+    "condition_product_matching": false,
+    "condition_product_matching_restriction": {
+      "reason": "Accepted photo labels are not reliable enough to select products for a detected condition; use preferences and general-care constraints.",
+      "evaluation_path": "models/photo-v2/evaluation.json",
+      "evaluation_sha256": "091317aadaa595dac2ea6a39a2da84ecdda39f5e547e374ae25e84bd67ed8c3e",
+      "accepted_correct": 147,
+      "accepted_count": 308,
+      "accepted_accuracy": 0.4772727272727273,
+      "policy_timing": "Product-policy restriction after reviewing measured errors; not a pretuned model-selection or release gate.",
+      "clinical_validation": false
+    }
+  },
+  "evaluation_artifact": "Actual deployed ONNX: float32",
+  "pytorch_reference_test": {
+    "n": 2356,
+    "accuracy": 0.8382852292020373,
+    "macro_f1": 0.6574972622469414,
+    "balanced_accuracy": 0.7605516182032064,
+    "confusion_matrix": [
+      [
+        64,
+        2,
+        14
+      ],
+      [
+        3,
+        123,
+        72
+      ],
+      [
+        58,
+        232,
+        1788
+      ]
+    ],
+    "per_class": {
+      "acne": {
+        "precision": 0.512,
+        "recall": 0.8,
+        "f1-score": 0.624390243902439,
+        "support": 80.0
+      },
+      "dermatitis": {
+        "precision": 0.3445378151260504,
+        "recall": 0.6212121212121212,
+        "f1-score": 0.44324324324324327,
+        "support": 198.0
+      },
+      "other": {
+        "precision": 0.9541088580576307,
+        "recall": 0.8604427333974976,
+        "f1-score": 0.9048582995951417,
+        "support": 2078.0
+      }
+    },
+    "ece_10": 0.016369636079089863,
+    "brier_multiclass": 0.2378029095649866,
+    "nll": 0.4043458832603643
+  },
+  "repair_lock": {
+    "version": 1,
+    "format": "float32",
+    "artifact_local_path": "data/photo-v2/export-float.onnx",
+    "onnx": {
+      "sha256": "7352670e61bf99e4f5264f1e5106eed8f3b63a5c1614e433becee9e84cf1baf8",
+      "bytes": 346452970,
+      "parts": [
+        {
+          "url": "/model-photo/model.part-1.bin",
+          "bytes": 20971520,
+          "sha256": "2cd1191eab70ed7f7cd82db10dae818c76966489e02698cd66f8e78faf10a4c5"
+        },
+        {
+          "url": "/model-photo/model.part-2.bin",
+          "bytes": 20971520,
+          "sha256": "d7b981babd8eaccb2a8b080630d0d8396dabf7cb3ed39898a3b780095416423f"
+        },
+        {
+          "url": "/model-photo/model.part-3.bin",
+          "bytes": 20971520,
+          "sha256": "cb31f16b4aa6b0cda5491b6f95d7a15da740c21a13fa3447ff02f7f22806cf74"
+        },
+        {
+          "url": "/model-photo/model.part-4.bin",
+          "bytes": 20971520,
+          "sha256": "49cae19d408398e2b870e3102a5eda05d2283aa8ecf3b51095aa361d4b5f2c82"
+        },
+        {
+          "url": "/model-photo/model.part-5.bin",
+          "bytes": 20971520,
+          "sha256": "42b65603e06765c7c07c0cf55a63e58ad5dcf8ff31b879188e8105c18e940596"
+        },
+        {
+          "url": "/model-photo/model.part-6.bin",
+          "bytes": 20971520,
+          "sha256": "4a656bd6f9d1c429eec8260f1bbaad91d2663f938a9df71ec00d7ae7b2ad087b"
+        },
+        {
+          "url": "/model-photo/model.part-7.bin",
+          "bytes": 20971520,
+          "sha256": "26474b860b5ae737488a71b42614a994f85b8b8708f804683173df6484c6223a"
+        },
+        {
+          "url": "/model-photo/model.part-8.bin",
+          "bytes": 20971520,
+          "sha256": "792d7ae185a549ff0148592ec516d812e0d81932286255850b23d757dd69bf4d"
+        },
+        {
+          "url": "/model-photo/model.part-9.bin",
+          "bytes": 20971520,
+          "sha256": "a1ad2617500467b6a12b6e8fd8455f5dcc64cbd50a9bb9e186187b73f535d2d9"
+        },
+        {
+          "url": "/model-photo/model.part-10.bin",
+          "bytes": 20971520,
+          "sha256": "6cae5a6f34e277880dfe932b9a1dc34cc4a95765c7d0b8252312285ff3cbb932"
+        },
+        {
+          "url": "/model-photo/model.part-11.bin",
+          "bytes": 20971520,
+          "sha256": "bce0de45318e9127e305277bd30359c046163d6154f2611d755f6bfb1c04369f"
+        },
+        {
+          "url": "/model-photo/model.part-12.bin",
+          "bytes": 20971520,
+          "sha256": "6092cc08d3897f996902aa263cd4edd89636a541b09bf2894c8b5bc51a1e49ce"
+        },
+        {
+          "url": "/model-photo/model.part-13.bin",
+          "bytes": 20971520,
+          "sha256": "e454d857a70cba77943719c0753f5e5ee5dc5d4b243659bac0ad9faa058473c9"
+        },
+        {
+          "url": "/model-photo/model.part-14.bin",
+          "bytes": 20971520,
+          "sha256": "48e1790423dc1b76e56809711526ec9d901fc8a6abcffee201d14479c18847fc"
+        },
+        {
+          "url": "/model-photo/model.part-15.bin",
+          "bytes": 20971520,
+          "sha256": "6257bc8e093f6ad4724fc33cb9a91d089d7ab002031d46f2f5ac5f130e9f9496"
+        },
+        {
+          "url": "/model-photo/model.part-16.bin",
+          "bytes": 20971520,
+          "sha256": "39d8e9481e99d533ce5ebf178282e96c150c4b3772a3672bcddfa42c89597e3a"
+        },
+        {
+          "url": "/model-photo/model.part-17.bin",
+          "bytes": 10908650,
+          "sha256": "1bb50567154c14bea1202fbf3c84601c3af0d40fe04ca49abd53c303380439c2"
+        }
+      ],
+      "input_name": "image",
+      "logits_output": "logits"
+    },
+    "backbone": "dinov2_vitb14",
+    "head": "linear",
+    "head_sha256": "39a6b34489203e317c911e9aefeadf654a7d9881aea2d40872979e213dd16401",
+    "temperature": 1.85,
+    "protocol_sha256": "402c130dce163291c509e2900132e3dec6ae360c39e852a9d6b61192c39a1d27",
+    "original_test_lock_sha256": "a653952d9fa6687fe5fd05801a3a9a38a6e815b0a5a487b2a3b893fe53e472dc",
+    "original_evaluation_sha256": "091317aadaa595dac2ea6a39a2da84ecdda39f5e547e374ae25e84bd67ed8c3e",
+    "failed_int8_evaluation_sha256": "6dc1117a7ba82dd48db680ee19598c20d4ef9098e0c9ff32845bf3cbd8a9ebf3",
+    "cohort_sha256": "a697c5e5656ee618b713a1e9e56089d3e6c471771193acff1f28319d20ca46a2",
+    "original_float32_sha256": "7352670e61bf99e4f5264f1e5106eed8f3b63a5c1614e433becee9e84cf1baf8",
+    "original_float32_pytorch_parity": {
+      "n": 12,
+      "maximum_absolute_logit_error": 3.4332275390625e-05,
+      "matching_top_labels": true,
+      "passed": true
+    },
+    "float16_storage_pytorch_parity": {
+      "n": 12,
+      "maximum_absolute_logit_error": 0.011153697967529297,
+      "matching_top_labels": true,
+      "passed": false
+    },
+    "conversion": {
+      "converted_initializer_count": 74,
+      "protected_head_initializers": [
+        "bias",
+        "onnx::MatMul_1429"
+      ],
+      "bytes": 173460376,
+      "sha256": "7ad63bca8b139915f4f8e1687f48a3a9d3b1b8f12bdf3e4cdfc4d27e378442b2"
+    },
+    "validation": {
+      "n": 1230,
+      "accuracy": 0.8406504065040651,
+      "macro_f1": 0.7096997200246596,
+      "balanced_accuracy": 0.7965856690868449,
+      "confusion_matrix": [
+        [
+          34,
+          0,
+          5
+        ],
+        [
+          1,
+          84,
+          43
+        ],
+        [
+          19,
+          128,
+          916
+        ]
+      ],
+      "per_class": {
+        "acne": {
+          "precision": 0.6296296296296297,
+          "recall": 0.8717948717948718,
+          "f1-score": 0.7311827956989247,
+          "support": 39.0
+        },
+        "dermatitis": {
+          "precision": 0.39622641509433965,
+          "recall": 0.65625,
+          "f1-score": 0.49411764705882355,
+          "support": 128.0
+        },
+        "other": {
+          "precision": 0.950207468879668,
+          "recall": 0.8617121354656632,
+          "f1-score": 0.9037987173162308,
+          "support": 1063.0
+        }
+      },
+      "ece_10": 0.008654338341004436,
+      "brier_multiclass": 0.2324971476315477,
+      "nll": 0.3869217075678762
+    },
+    "source_validation": {
+      "Fitzpatrick17k-C": {
+        "n": 1069,
+        "accuracy": 0.8849391955098223,
+        "macro_f1": 0.6754987792933195,
+        "balanced_accuracy": 0.747856436722557,
+        "confusion_matrix": [
+          [
+            34,
+            0,
+            5
+          ],
+          [
+            1,
+            25,
+            28
+          ],
+          [
+            15,
+            74,
+            887
+          ]
+        ],
+        "per_class": {
+          "acne": {
+            "precision": 0.68,
+            "recall": 0.8717948717948718,
+            "f1-score": 0.7640449438202247,
+            "support": 39.0
+          },
+          "dermatitis": {
+            "precision": 0.25252525252525254,
+            "recall": 0.46296296296296297,
+            "f1-score": 0.32679738562091504,
+            "support": 54.0
+          },
+          "other": {
+            "precision": 0.9641304347826087,
+            "recall": 0.9088114754098361,
+            "f1-score": 0.9356540084388185,
+            "support": 976.0
+          }
+        },
+        "ece_10": 0.03524000980129084,
+        "brier_multiclass": 0.17817604496106562,
+        "nll": 0.3055405252672475
+      },
+      "SCIN": {
+        "n": 161,
+        "accuracy": 0.546583850931677,
+        "macro_f1": 0.357921378127934,
+        "balanced_accuracy": 0.5653153153153153,
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            59,
+            15
+          ],
+          [
+            4,
+            54,
+            29
+          ]
+        ],
+        "per_class": {
+          "acne": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1-score": 0.0,
+            "support": 0.0
+          },
+          "dermatitis": {
+            "precision": 0.5221238938053098,
+            "recall": 0.7972972972972973,
+            "f1-score": 0.6310160427807486,
+            "support": 74.0
+          },
+          "other": {
+            "precision": 0.6590909090909091,
+            "recall": 0.3333333333333333,
+            "f1-score": 0.44274809160305345,
+            "support": 87.0
+          }
+        },
+        "ece_10": 0.2291657628058162,
+        "brier_multiclass": 0.5931757734374191,
+        "nll": 0.927272539116771
+      }
+    },
+    "format_selected_without_test_labels": true,
+    "test_was_already_opened_in_original_experiment": true
+  },
+  "repair_test_lock": {
+    "repair_lock_sha256": "7a82cf6e46d21fe36b1efdb1ed6c4d70074671b1f69dad3289833029aca86ab6",
+    "original_test_lock_sha256": "a653952d9fa6687fe5fd05801a3a9a38a6e815b0a5a487b2a3b893fe53e472dc",
+    "measurement": "Serialization repair of unchanged trained model; same previously opened test, not a new independent experiment"
+  },
+  "failed_int8_report": "models/photo-v2/onnx-evaluation.json",
+  "available": true
+}

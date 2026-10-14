@@ -38,6 +38,8 @@ New: the Next.js/TypeScript application, design system, upload/quality/results f
 
 AI coding assistance was used in this rebuild. Include that fact and the actual model/data provenance in any submission. Do not describe the January 2024 prototype, dataset images, pretrained components or existing project concept as work created during a new competition.
 
+**14 October 2026 additions:** the survey-first workflow, numeric USD-cap complete-basket selector, option-specific explanations and everyday-care guidance are new application work. Photo-v2 adds duplicate/exposure-controlled SCIN + corrected Fitzpatrick17k-C preparation, reproducible frozen-DINOv2 head experiments, locked evaluation, failed-export disclosure and a strict split-artifact browser adapter. DINOv2 architecture/official pretrained weights, source photographs and corrected atlas partitions are reused third-party research components. New trained heads and integration do not make them newly collected data or newly invented backbones. All v2 outputs remain uncertain after poor accepted accuracy; no cancer detector or condition-specific product validation is claimed. [The v2 card](PHOTO_MODEL_CARD.md) and [third-party notices](../THIRD_PARTY_NOTICES.md) give exact credit and rights boundaries.
+
 ## Verify preservation
 
 For each original tracked asset, compare its old Git blob with the corresponding `legacy/` file; ordinary file SHA-256 checks can also verify the inventory above. Do not rewrite Git timestamps or squash away the original provenance to imply eligibility. `legacy/` is outside the deployed `public/` directory and is not served by the application.

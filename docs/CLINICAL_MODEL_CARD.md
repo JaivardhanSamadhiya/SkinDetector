@@ -1,5 +1,7 @@
 # SkinSnap SCIN photograph research model
 
+**Historical baseline card:** this document records `skinsnap-scin-mobilenet-v1` and its preserved failed/exploratory evaluation. The later DINOv2 SCIN + Fitzpatrick17k-C experiment is documented separately in [PHOTO_MODEL_CARD.md](PHOTO_MODEL_CARD.md) and [PHOTO_EVALUATION_REPORT.md](PHOTO_EVALUATION_REPORT.md). Its results do not change or erase this baseline's limitations. V2 research scores remain uncertain and do not drive condition-specific products.
+
 Version: `skinsnap-scin-mobilenet-v1`. This is a separate model from the seven-class dermoscopic lesion model. It is an exploratory appearance classifier, not a diagnosis or a validated way to identify the best treatment or skincare product. **Inference is unavailable:** the corrected run fails the declared performance minimums and reuses previously examined test cases. Check `public/model-clinical/manifest.json` for the actual availability gate and `models/clinical/evaluation.json` for measured results.
 
 ## Source, permission, and label quality

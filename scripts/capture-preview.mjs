@@ -35,6 +35,7 @@ try {
     return route.continue({ headers });
   });
   let modelDownloaded = false;
+  const photoModelParts = new Set();
   let hostingSecurityPosts = 0;
   const posts = [];
   page.on('request', request => {
@@ -45,7 +46,7 @@ try {
     if (path.startsWith('/cdn-cgi/challenge-platform/')) hostingSecurityPosts++;
     else posts.push(path);
   });
-  page.on('response', response => { if (new URL(response.url()).pathname.endsWith('/model/model.onnx') && response.ok()) modelDownloaded = true; });
+  page.on('response', response => { const pathname = new URL(response.url()).pathname; if (pathname.endsWith('/model/model.onnx') && response.ok()) modelDownloaded = true; if (/^\/model-photo\/model\.part-[1-9][0-9]*\.bin$/.test(pathname) && response.ok()) photoModelParts.add(pathname); });
   for (const [name, route] of [['landing', '/'], ['analysis', '/analysis/'], ['research', '/research/'], ['startup', '/startup/'], ['routine', '/routine/']]) {
     await page.goto(new URL(route, baseURL).href);
     await page.evaluate(() => document.fonts.ready);
@@ -98,25 +99,32 @@ try {
   await page.goto(new URL('/analysis/', baseURL).href);
   await page.screenshot({ path: `${destination}/${prefix}mobile-survey.png`, fullPage: true });
   if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)) throw new Error('Mobile survey overflows horizontally.');
-  await page.getByTestId('photo-readiness').filter({ hasText: 'condition-based matching unavailable' }).waitFor();
-  const clinicalManifest = JSON.parse(await readFile('public/model-clinical/manifest.json', 'utf8'));
-  if (clinicalManifest.available || clinicalManifest.readiness.independent_holdout) throw new Error('This release must preserve the failed and previously examined skin-photo evaluation gate.');
+  await page.waitForFunction(() => document.querySelector('[data-testid="photo-readiness"]')?.getAttribute('data-state') !== 'checking');
+  const photoReady = await page.getByTestId('photo-readiness').getAttribute('data-state') === 'ready';
+  const photoManifest = JSON.parse(await readFile('public/model-photo/manifest.json', 'utf8'));
+  if (photoReady && (!photoManifest.available || !photoManifest.deployment_validation.browser_verified)) throw new Error('The available photo task lacks its recorded browser verification.');
+  // A fresh analysis visit requires explicit confirmation of the seven-question
+  // survey even when this session still holds the previously saved preferences.
+  await page.getByRole('button', { name: 'Save preferences', exact: true }).click();
   await page.getByLabel('Choose a skin image', { exact: true }).setInputFiles('public/demo-clinical/dermatitis.png');
   await page.getByRole('radio', { name: 'Close-up skin photo', exact: true }).check();
   await page.getByRole('checkbox', { name: 'I understand this is research, not a diagnosis, and I have permission to use this image.', exact: true }).check();
   await page.getByRole('button', { name: 'Analyze image', exact: true }).click();
-  await page.waitForURL('**/results/');
-  await page.getByRole('heading', { name: 'No classification was made.', exact: true }).waitFor();
-  if (await page.locator('.score-row').count() || await page.getByTestId('condition-match-decision').getAttribute('data-status') !== 'general_only') throw new Error('An unavailable photo model improperly supplied a condition-based decision.');
-  await page.screenshot({ path: `${destination}/${prefix}mobile-photo-unavailable.png`, fullPage: true });
+  await page.waitForURL('**/results/', { timeout: 300000 });
+  await page.getByRole('heading', { name: photoReady ? 'Unable to assess reliably.' : 'No classification was made.', exact: true }).waitFor();
+  if (await page.locator('.score-row').count() !== (photoReady ? 3 : 0) || await page.getByTestId('condition-match-decision').getAttribute('data-status') !== 'general_only') throw new Error('The photo result did not preserve the research-only category and general-care release policy.');
+  if (photoReady && photoModelParts.size !== photoManifest.onnx.parts.length) throw new Error('Actual photo results were shown without downloading the verified model parts.');
+  const photoCaptureName = photoReady ? 'photo-research-result' : 'photo-unavailable';
+  await page.screenshot({ path: `${destination}/${prefix}mobile-${photoCaptureName}.png`, fullPage: true });
   if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)) throw new Error('Mobile skin-photo result overflows horizontally.');
   await page.setViewportSize({ width: 1440, height: 1050 });
   await page.evaluate(() => { document.activeElement?.blur(); window.scrollTo({ top: 0, behavior: 'instant' }); });
-  await page.screenshot({ path: `${destination}/${prefix}photo-unavailable.png`, fullPage: true });
+  await page.screenshot({ path: `${destination}/${prefix}${photoCaptureName}.png`, fullPage: true });
   await page.goto(new URL('/research/', baseURL).href);
-  const photoReport = page.getByTestId('clinical-research-report');
-  await photoReport.getByText('Photo classification is unavailable in this release.', { exact: true }).waitFor();
+  const photoReport = page.getByTestId('photo-research-report');
+  await photoReport.waitFor();
+  if (photoReady) await page.waitForFunction(() => document.querySelector('[data-testid="photo-research-report"]')?.getAttribute('data-state') === 'measured');
   await photoReport.screenshot({ path: `${destination}/${prefix}photo-research.png` });
   if (posts.length) throw new Error('Unexpected application image POST during clinical failure-state verification.');
-  console.log(JSON.stringify({ origin, dermoscopic_real_inference: true, browser_pytorch_score_parity: true, personalized_routine: true, priced_product_options: true, result_aware_guidance: true, clinical_photo_unavailable_gate: true, clinical_condition_matching_active: false, image_posts: posts.length, hosting_security_posts: hostingSecurityPosts, desktop_mobile_screenshots: 15 }));
+  console.log(JSON.stringify({ origin, dermoscopic_real_inference: true, browser_pytorch_score_parity: true, personalized_routine: true, priced_product_options: true, result_aware_guidance: true, photo_real_inference: photoReady, photo_model_parts_downloaded: photoModelParts.size, clinical_condition_matching_active: false, image_posts: posts.length, hosting_security_posts: hostingSecurityPosts, desktop_mobile_screenshots: 15 }));
 } finally { await browser.close(); }

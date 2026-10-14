@@ -57,6 +57,25 @@ const intervals = z.object({
   limitations: z.string().min(1),
 }).passthrough();
 
+// Floating deployment repair and the failed int8 experiment are different
+// artifacts. A successful float export cannot turn the int8 failure into a pass.
+const deploymentValidation = z.object({
+  onnx_verified: z.boolean(), preprocessing_verified: z.boolean(),
+  quantized_benchmark_passed: z.boolean().optional(),
+  artifact_benchmark_passed: z.boolean().optional(),
+  format: z.enum(["float32", "float16_constants_float32_compute"]).optional(),
+  browser_verified: z.boolean().optional(),
+  quantized_test: PhotoMetricsSchema.optional(), onnx_sha256: hash.optional(),
+}).passthrough().superRefine((artifact, context) => {
+  if (artifact.format) {
+    if (artifact.artifact_benchmark_passed === undefined || artifact.browser_verified === undefined) {
+      context.addIssue({ code: "custom", message: "Floating artifact reports require their own benchmark and browser verification flags." });
+    }
+  } else if (artifact.quantized_benchmark_passed === undefined || artifact.artifact_benchmark_passed !== undefined) {
+    context.addIssue({ code: "custom", message: "An artifact benchmark needs a documented format; legacy int8 reports require the quantized benchmark flag." });
+  }
+});
+
 export const PhotoEvaluationSchema = z.object({
   version: z.literal(PHOTO_MODEL_VERSION), backbone, head: z.enum(["linear", "rbf"]),
   head_C: z.number().positive(), gamma: z.number().positive().nullable(), temperature: z.number().positive(),
@@ -83,10 +102,7 @@ export const PhotoEvaluationSchema = z.object({
   limitations: z.array(z.string().min(1)).min(1),
   // Export verification may arrive after the frozen PyTorch/feature-head test.
   // Its failure is a reportable result, never a reason to hide measured metrics.
-  deployment_validation: z.object({
-    onnx_verified: z.boolean(), quantized_benchmark_passed: z.boolean(), preprocessing_verified: z.boolean(),
-    quantized_test: PhotoMetricsSchema.optional(), onnx_sha256: hash.optional(),
-  }).passthrough().optional(),
+  deployment_validation: deploymentValidation.optional(),
   uncertainty_intervals: intervals.optional(),
   bootstrap: z.record(z.string(), z.unknown()).optional(),
   confidence_intervals: z.record(z.string(), z.unknown()).optional(),
@@ -138,8 +154,10 @@ export const PhotoEvaluationSchema = z.object({
     const quantized = report.deployment_validation.quantized_test;
     if (quantized.n !== report.test.n || ids.some(id => quantized.per_class[id].support !== report.test.per_class[id].support)) problem("Quantized evaluation uses different test case counts.");
   }
-  const deployedChecksPassed = report.deployment_validation && report.deployment_validation.onnx_verified
-    && report.deployment_validation.quantized_benchmark_passed && report.deployment_validation.preprocessing_verified;
+  const artifact = report.deployment_validation;
+  const deployedChecksPassed = artifact && artifact.onnx_verified && artifact.preprocessing_verified
+    && (artifact.format ? artifact.artifact_benchmark_passed && artifact.browser_verified : artifact.quantized_benchmark_passed);
+  if (artifact?.artifact_benchmark_passed && !report.readiness.passed) problem("Floating artifact benchmark contradicts the measured readiness gates.");
   if (report.available === true && (!report.readiness.passed || !deployedChecksPassed)) problem("Availability contradicts the measured evaluation or artifact checks.");
 });
 

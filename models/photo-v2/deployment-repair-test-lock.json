@@ -1,0 +1,5 @@
+{
+  "repair_lock_sha256": "7a82cf6e46d21fe36b1efdb1ed6c4d70074671b1f69dad3289833029aca86ab6",
+  "original_test_lock_sha256": "a653952d9fa6687fe5fd05801a3a9a38a6e815b0a5a487b2a3b893fe53e472dc",
+  "measurement": "Serialization repair of unchanged trained model; same previously opened test, not a new independent experiment"
+}

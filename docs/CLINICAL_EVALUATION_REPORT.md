@@ -1,5 +1,7 @@
 # SCIN photograph model — measured research evaluation
 
+**Historical baseline report:** these are preserved MobileNet-v1 measurements, including its corrected-cohort overlap. The later DINOv2 SCIN + Fitzpatrick17k-C experiment has a separate [photo-v2 measured report](PHOTO_EVALUATION_REPORT.md) and [model card](PHOTO_MODEL_CARD.md). Its new downstream evaluation does not retroactively validate this baseline; neither model provides condition-specific product-response evidence.
+
 Version `skinsnap-scin-mobilenet-v1`; seed `20261012`. All measurements below are from this repository's real training/inference run. The new photo model is separate from the existing dermoscopic classifier. **Engineering availability gate: failed; photo inference unavailable; clinical validation: not performed.** A passed gate is a modest internal research benchmark, not medical readiness.
 
 ## Metadata repair and previously examined evaluation
