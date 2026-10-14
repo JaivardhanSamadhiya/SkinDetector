@@ -9,5 +9,12 @@ import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { AnalysisProvider } from "@/components/analysis-provider";
-export const metadata: Metadata = { title: { default: "SkinSnap — Skin understanding, thoughtfully designed", template: "%s | SkinSnap" }, description: "Explore skin health education and transparent skin-photo and dermoscopic research analysis with preference-based cosmetic catalog matching. A student research project, not a medical diagnosis." };
+export const metadata: Metadata = {
+  title: { default: "SkinSnap — Skin understanding, thoughtfully designed", template: "%s | SkinSnap" },
+  description: "Explore skin health education and transparent skin-photo and dermoscopic research analysis with preference-based cosmetic catalog matching. A student research project, not a medical diagnosis.",
+  openGraph: {
+    title: "SkinSnap — Skin understanding, thoughtfully designed",
+    description: "Explore skin health education and transparent skin-photo and dermoscopic research analysis with preference-based cosmetic catalog matching. A student research project, not a medical diagnosis.",
+  },
+};
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) { return <html lang="en"><body><a className="skip-link" href="#main">Skip to content</a><AnalysisProvider><SiteHeader/><main id="main">{children}</main><SiteFooter/></AnalysisProvider></body></html>; }

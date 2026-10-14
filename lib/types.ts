@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { CLINICAL_CLASSES, CLINICAL_MODEL_VERSION, PHOTO_MODEL_VERSION, PHOTO_MODEL_INPUT_SIZE } from "./clinical-task";
+import { CLINICAL_CLASSES, CLINICAL_MODEL_VERSION } from "./clinical-task";
 export const ModelSchema = z.object({ version: z.string(), architecture: z.string(), input_size: z.number().optional(), supported_image_type: z.string(), classes: z.array(z.object({ id: z.string(), label: z.string() })), available: z.boolean() });
 export const AnalysisSchema = z.object({
   status: z.enum(["assessed", "uncertain", "unsupported", "unavailable", "quality_rejected"]), message: z.string(),
@@ -16,9 +16,7 @@ export const AnalysisSchema = z.object({
     return;
   }
   const classes = new Map(value.model.classes.map(c => [c.id, c.label]));
-  const recognizedPhotoVersion = (value.model.version === CLINICAL_MODEL_VERSION && value.model.input_size === 128)
-    || (value.model.version === PHOTO_MODEL_VERSION && value.model.input_size === PHOTO_MODEL_INPUT_SIZE);
-  const clinicalTask = recognizedPhotoVersion && value.model.supported_image_type === "clinical_photo" && value.model.classes.length === 3 && CLINICAL_CLASSES.every(item => classes.get(item.id) === item.label);
+  const clinicalTask = value.model.version === CLINICAL_MODEL_VERSION && value.model.supported_image_type === "clinical_photo" && value.model.input_size === 128 && value.model.classes.length === 3 && CLINICAL_CLASSES.every(item => classes.get(item.id) === item.label);
   const expectedCount = clinicalTask ? 3 : 7;
   if (!value.model.available || !value.quality?.passed || !value.uncertainty || value.scores.length !== expectedCount || classes.size !== expectedCount || new Set(value.scores.map(s => s.id)).size !== expectedCount || value.scores.some(s => classes.get(s.id) !== s.label) || Math.abs(value.scores.reduce((sum, s) => sum + s.score, 0) - 1) > 1e-4 || (!clinicalTask && value.model.supported_image_type !== "dermoscopic")) {
     context.addIssue({ code: "custom", message: "The model output does not match its validated class mapping and score contract.", path: ["scores"] });

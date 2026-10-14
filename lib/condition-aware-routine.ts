@@ -1,5 +1,5 @@
 import { AnalysisSchema } from "@/lib/types";
-import { CLINICAL_CLASSES, CLINICAL_MODEL_VERSION, PHOTO_MODEL_VERSION, PHOTO_MODEL_INPUT_SIZE } from "@/lib/clinical-task";
+import { CLINICAL_CLASSES, CLINICAL_MODEL_VERSION } from "@/lib/clinical-task";
 import { getProductOffer } from "@/lib/product-offers";
 import { SkincarePreferencesSchema, type SkincarePreferences } from "@/lib/skincare-preferences";
 import {
@@ -182,10 +182,9 @@ export function buildConditionAwareRoutine(preferences: SkincarePreferences, res
       source: { ...SOURCES.lesion },
     },
   };
-  const recognizedPhotoVersion = (analysis.model.version === CONDITION_MATCHING_MODEL_VERSION && analysis.model.input_size === 128)
-    || (analysis.model.version === PHOTO_MODEL_VERSION && analysis.model.input_size === PHOTO_MODEL_INPUT_SIZE);
-  const knownTask = recognizedPhotoVersion
+  const knownTask = analysis.model.version === CONDITION_MATCHING_MODEL_VERSION
     && analysis.model.supported_image_type === "clinical_photo"
+    && analysis.model.input_size === 128
     && analysis.model.classes.length === CLINICAL_CLASSES.length
     && analysis.model.classes.every(({ id, label }) => CLINICAL_CLASSES.some(item => item.id === id && item.label === label));
   if (!knownTask) return {

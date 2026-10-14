@@ -28,4 +28,3 @@ legacy/audit-contact-sheet.jpg
 public/ort/
 *.tsbuildinfo
 artifacts/
-output/pdf/

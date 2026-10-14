@@ -1,0 +1,6 @@
+{
+  "name": "SkinSnap",
+  "description": "Explore skin health education and transparent skin-photo and dermoscopic research analysis with preference-based cosmetic catalog matching. A student research project, not a medical diagnosis.",
+  "permissions": [],
+  "capabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
