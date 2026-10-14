@@ -6,6 +6,7 @@ import { Bar, BarChart, CartesianGrid, Legend, Line, LineChart, ResponsiveContai
 import { z } from "zod";
 import { Eyebrow } from "@/components/shared";
 import { CLINICAL_CLASSES, CLINICAL_MODEL_VERSION } from "@/lib/clinical-task";
+import { PhotoResearchDashboard } from "@/components/photo-research-dashboard";
 
 const rate = z.number().min(0).max(1);
 const count = z.number().int().nonnegative();
@@ -110,7 +111,7 @@ function ClinicalResearchDashboard() {
 }
 
 export function ResearchDashboard() {
-  return <><ClinicalResearchDashboard /><section className="report-section"><Eyebrow>SEPARATE LEGACY RESEARCH TASK</Eyebrow><h2>Dermoscopic lesion benchmark.</h2><p>The following seven-category model has different image inputs, data, weights and limitations. Its outputs never select a condition-specific cosmetic treatment.</p></section><DermoscopyResearchDashboard /></>;
+  return <><PhotoResearchDashboard /><ClinicalResearchDashboard /><section className="report-section"><Eyebrow>SEPARATE LEGACY RESEARCH TASK</Eyebrow><h2>Dermoscopic lesion benchmark.</h2><p>The following seven-category model has different image inputs, data, weights and limitations. Its outputs never select a condition-specific cosmetic treatment.</p></section><DermoscopyResearchDashboard /></>;
 }
 
 function DermoscopyResearchDashboard() {

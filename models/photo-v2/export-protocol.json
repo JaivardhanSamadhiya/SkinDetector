@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "format": "ONNX opset17 fixed [1,3,224,224] image -> float32 [1,3] logits",
+  "quantization": "Dynamic signed int8 constant weight MatMul/Gemm, per_channel false, reduce_range true; all attention data-data products remain floating point",
+  "model_selection": "Only original validation-selected backbone/head, no alternate selection from final test",
+  "calibration": "Recalibrate exported int8 ONNX on validation first views only with NLL temperature grid0.50..4.00 step0.05",
+  "parity": "Float32 ONNX vs PyTorch logits max abs error <0.005 on deterministic first12 validation cases",
+  "final_gate": "Quantized final test must independently satisfy the same registered photo benchmark and source requirements",
+  "explanations": "No CNN CAM is reused for this transformer; no overlay is claimed",
+  "clinical_validation": false
+}

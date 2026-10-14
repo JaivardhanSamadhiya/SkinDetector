@@ -1,0 +1,104 @@
+{
+  "schema_version": 2,
+  "protocol_id": "skinsnap-photo-v2-scin-development-20261012",
+  "seed": 20261012,
+  "source": "SCIN release 1.0.0",
+  "source_repository": "https://github.com/google-research-datasets/scin",
+  "source_license": "Custom SCIN Data Use License; models/clinical/licenses/SCIN_LICENSE.txt",
+  "classes": [
+    "acne",
+    "dermatitis",
+    "other"
+  ],
+  "dermatitis_source_labels": [
+    "Acute and chronic dermatitis",
+    "Acute constitutional eczema",
+    "Acute dermatitis",
+    "Acute dermatitis, NOS",
+    "Acute-on-chronic dyshidrotic eczema of hands",
+    "Allergic Contact Dermatitis",
+    "Allergic contact dermatitis caused by allergenic hapten derived from plant",
+    "CD - Contact dermatitis",
+    "Chronic dermatitis",
+    "Chronic dermatitis, NOS",
+    "Contact dermatitis caused by Rhus diversiloba",
+    "Contact dermatitis, NOS",
+    "Crusted eczematous dermatitis",
+    "Eczema",
+    "Irritant Contact Dermatitis",
+    "Lichenified eczema",
+    "Lichenified eczematous dermatitis",
+    "Pruritic dermatitis",
+    "resolving dermatitis"
+  ],
+  "explicitly_unsupported_dermatitis_like_labels": [
+    "Seborrheic Dermatitis",
+    "Perioral Dermatitis",
+    "Stasis Dermatitis",
+    "Photodermatitis",
+    "Infected eczema",
+    "Dermatitis herpetiformis",
+    "Fungal dermatitis",
+    "Bullous dermatitis",
+    "Bullous dermatitis, NOS",
+    "Acute vesicular dermatitis",
+    "Psoriasiform dermatitis",
+    "Inflammatory dermatosis",
+    "Phytophotodermatitis",
+    "Berloque dermatitis",
+    "Photocontact dermatitis [berloque dermatitis]"
+  ],
+  "taxonomy_rationale": "Combine retrospective eczema, contact, nonspecific, acute/chronic and lichenified eczematous differential labels into one broad research appearance class. This does not confirm eczema or determine etiology. Named infectious, vascular, seborrheic, perioral, autoimmune, bullous and photo-induced disorders are excluded from this broad class; they may enter other when its rule is satisfied.",
+  "label_rule": {
+    "acne": "Acne differential weight >= 0.50 and above summed dermatitis weight",
+    "dermatitis": "Summed listed dermatitis weights >= 0.50 and above Acne weight",
+    "other": "Maximum individual differential weight >= 0.50 and Acne + dermatitis weight < 0.20",
+    "weights_are_diagnostic_probabilities": false
+  },
+  "acquisition": {
+    "all_views_per_case": true,
+    "maximum_views": 3,
+    "parallel_downloads": 6,
+    "minimum_image_edge": 128,
+    "maximum_pixels": 40000000,
+    "verify_source_gcs_md5_and_size": true,
+    "exclude_genital_groin_and_buttock_case_flags": true,
+    "age_policy": "SCIN enrolled adults. Retain adult age bands and missing/AGE_UNKNOWN; do not infer a known participant age from missing metadata."
+  },
+  "split": {
+    "unit": "connected case duplicate group",
+    "fresh_test_fraction": 0.2,
+    "fresh_validation_fraction": 0.15,
+    "fresh_train_fraction": 0.65,
+    "previously_examined_groups": "train only, never validation/test",
+    "previous_experiments": [
+      {
+        "path": "models/clinical/cohort.json",
+        "sha256": "3f9479613d915a42ea593ca6a8ec62e2093726c4acecf50450af23ca599b7273",
+        "rows": 736
+      },
+      {
+        "path": "models/clinical/pre_audit_cohort.json",
+        "sha256": "d46eb851587de1d85e2785eb81fdc8d19cb166866858684138b9435ccbfb6326",
+        "rows": 742
+      }
+    ],
+    "all_acne_cases_already_examined": true,
+    "independent_acne_validation_required_before_release": true,
+    "test_must_remain_unopened_until_model_selection_and_calibration_locked": true
+  },
+  "predeclared_minimum_exploratory_gates": {
+    "macro_f1": 0.6,
+    "balanced_accuracy": 0.6,
+    "acne_recall": 0.5,
+    "dermatitis_recall": 0.5
+  },
+  "deployment": {
+    "blocked_without_fresh_independent_acne_validation": true,
+    "passing_numeric_gates_does_not_establish_clinical_validity": true,
+    "serious_disease_diagnosis_supported": false,
+    "arbitrary_face_or_body_diagnosis_supported": false
+  },
+  "planned_backbone": "DINOv2 self-supervised features; exact variant, preprocessing and weights must be recorded by the training protocol before evaluation.",
+  "evaluation_status": "Not evaluated by this acquisition script. No performance claims."
+}
